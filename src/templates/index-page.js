@@ -22,10 +22,11 @@ export const IndexPageTemplate = ({
             <div className="col-2">
               <h1>ยินดีต้อรับสู่</h1>
               <hr />
-              PROMPT Corpate Registration
+              PROMPT Corpate Registration<br />
+              ก้าวแรกสู่ความสำเร็จ
             </div>
             <div className="col-10">
-
+                fsfd
             </div>
         </div>
         
