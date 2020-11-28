@@ -18,7 +18,17 @@ export const IndexPageTemplate = ({
   <div>
    
       <div className="container">
-        Remove Home
+        <div className="row">
+            <div className="col-2">
+              <h1>ยินดีต้อรับสู่</h1>
+              <hr />
+              PROMPT Corpate Registration
+            </div>
+            <div className="col-10">
+
+            </div>
+        </div>
+        
       </div>
    
   </div>
