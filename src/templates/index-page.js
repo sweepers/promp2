@@ -19,13 +19,13 @@ export const IndexPageTemplate = ({
    
       <div className="container">
         <div className="row">
-            <div className="col-2">
+            <div className="col-lg-2">
               <h1>ยินดีต้อรับสู่</h1>
               <hr />
               PROMPT Corpate Registration<br />
               ก้าวแรกสู่ความสำเร็จ
             </div>
-            <div className="col-10">
+            <div className="col-lg-10">
                 fsfd
             </div>
         </div>
