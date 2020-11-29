@@ -5,7 +5,7 @@ import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Features from '../components/Features'
 import BlogRoll from '../components/BlogRoll'
-
+import '../css/home.css'
 export const IndexPageTemplate = ({
   image,
   title,
@@ -18,8 +18,8 @@ export const IndexPageTemplate = ({
   <div>
    
       <div className="container">
-        <div className="row">
-            <div className="col-lg-6" style={{
+        <div className="row mt-30 mb-30">
+            <div className="col-lg-6 bg-home-left" style={{
       backgroundImage: `url(${
         !!image.childImageSharp ? image.childImageSharp.fluid.src : image
       })`,
