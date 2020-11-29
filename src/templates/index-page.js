@@ -18,7 +18,7 @@ export const IndexPageTemplate = ({
   <div>
    
       <div className="container">
-        <div className="row mt-30 mb-30">
+        <div className="row mt-5 mb-5">
             <div className="col-lg-6 bg-home-left" style={{
       backgroundImage: `url(${
         !!image.childImageSharp ? image.childImageSharp.fluid.src : image

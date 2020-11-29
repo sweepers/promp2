@@ -1,10 +1,10 @@
 .bg-home-left{
     background-size: cover;
-    height: 100vh-60px;
+    height: calc(100vh - 100px);
 }
-.mt-30{
-    margin-top: 30px;
+.mt-5{
+    margin-top: 50px;
 }
-.mb-30{
-    margin-bottom: 30px;
+.mb-5{
+    margin-bottom: 50px;
 }
