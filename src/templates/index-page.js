@@ -19,13 +19,18 @@ export const IndexPageTemplate = ({
    
       <div className="container">
         <div className="row">
-            <div className="col-lg-4">
+            <div className="col-lg-6" style={{
+      backgroundImage: `url(${
+        !!image.childImageSharp ? image.childImageSharp.fluid.src : image
+      })`,
+      
+    }}>
               <h1>ยินดีต้อรับสู่</h1>
               <hr />
               PROMPT Corpate Registration<br />
               ก้าวแรกสู่ความสำเร็จ
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-6">
                 fsfd
             </div>
         </div>
