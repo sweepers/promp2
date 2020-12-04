@@ -30,8 +30,8 @@ export const IndexPageTemplate = ({
               PROMPT Corpate Registration<br />
               ก้าวแรกสู่ความสำเร็จ
             </div>
-            <div className="col-lg-6">
-                fsfd
+            <div className="col-lg-6 text-center">
+                <h1>สิ่งที่ต้องเรียน</h1>
             </div>
         </div>
         
