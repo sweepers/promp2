@@ -2,3 +2,8 @@
     font-family: "sukumvit";
     src: url("../fonts/SukhumvitSet-Light.woff2");
   }
+  @font-face {
+    font-family: "sukumvit-bold";
+    src: url("../fonts/sukhumvit-set_bold-webfont.woff2");
+  }
+  
