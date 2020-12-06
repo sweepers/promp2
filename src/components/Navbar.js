@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import github from '../img/github-icon.svg'
-import logo from '../img/logo.svg'
-
+//import logo from '../img/logo.svg'
+import Logo from '../assets/logo_prompt.svg'
+import Bell from '../assets/bell.svg'
 const Navbar = class extends React.Component {
   constructor(props) {
     super(props)
@@ -42,7 +43,7 @@ const Navbar = class extends React.Component {
         <div className="container">
           <div className="navbar-brand">
             <Link to="/" className="navbar-item" title="Logo">
-              <img src={logo} alt="Kaldi" style={{ width: '88px' }} />
+              <Logo  />
             </Link>
             {/* Hamburger menu */}
             <div
@@ -59,24 +60,20 @@ const Navbar = class extends React.Component {
             id="navMenu"
             className={`navbar-menu ${this.state.navBarActiveClass}`}
           >
-            <div className="navbar-start has-text-centered">
-              <Link className="navbar-item" to="/about">
-                About
-              </Link>
-              <Link className="navbar-item" to="/products">
-                Products
-              </Link>
-              <Link className="navbar-item" to="/blog">
-                Blog
+            
+            <div className="navbar-end has-text-centered">
+            <Link className="navbar-item" to="/contact">
+                Menu1
               </Link>
               <Link className="navbar-item" to="/contact">
-                Contact
+                Menu 2
               </Link>
-              <Link className="navbar-item" to="/contact/examples">
-                Form Examples
+              <Link className="navbar-item" to="/contact">
+                Menu 3
               </Link>
-            </div>
-            <div className="navbar-end has-text-centered">
+              <span className="navbar-item">
+                  <Bell />
+              </span>
               <a
                 className="navbar-item"
                 href="https://github.com/netlify-templates/gatsby-starter-netlify-cms"

@@ -5,6 +5,8 @@ import Navbar from '../components/Navbar'
 import './all.sass'
 import '../css/bootstrap.css'
 import '../css/promp.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
 import useSiteMetadata from './SiteMetadata'
 import { withPrefix } from 'gatsby'
 
@@ -41,7 +43,9 @@ const TemplateWrapper = ({ children }) => {
           color="#ff4400"
         />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
         <meta name="theme-color" content="#fff" />
 
         <meta property="og:type" content="business.business" />

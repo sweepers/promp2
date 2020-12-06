@@ -11,7 +11,7 @@ import Docs from '../assets/doc.svg'
 import IdCard from '../assets/idcard.svg'
 import Stamp from '../assets/stamp.svg'
 import Arrowright from '../assets/arrow-right.svg'
-export const IndexPageTemplate = ({
+export const IndexStartTemplate = ({
   image,
   title,
   heading,
@@ -82,7 +82,7 @@ export const IndexPageTemplate = ({
                     ผู้เริ่มก่อการ
                   </div>
               </div>
-              <div class="row justify-content-center pt-5 pb-5">
+              <div class="row justify-content-center pt-5">
                   <div class="col-3 ">
                   <div className="number_border">4</div>
                     <IdCard /><br />
@@ -97,8 +97,7 @@ export const IndexPageTemplate = ({
                   </div>
                  
               </div>
-            
-              <Link className="navbar-item" className="btn-start" to="/user">
+              <Link className="navbar-item" className="btn-star" to="/user">
                 Get Started <Arrowright  />
               </Link>
              
@@ -110,7 +109,7 @@ export const IndexPageTemplate = ({
   </div>
 )
 
-IndexPageTemplate.propTypes = {
+IndexStartTemplate.propTypes = {
   image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   title: PropTypes.string,
   heading: PropTypes.string,
@@ -122,12 +121,12 @@ IndexPageTemplate.propTypes = {
   }),
 }
 
-const IndexPage = ({ data }) => {
+const IndexStart = ({ data }) => {
   const { frontmatter } = data.markdownRemark
 
   return (
     <Layout>
-      <IndexPageTemplate
+      <IndexStartTemplate
         image={frontmatter.image}
         title={frontmatter.title}
         heading={frontmatter.heading}
@@ -140,7 +139,7 @@ const IndexPage = ({ data }) => {
   )
 }
 
-IndexPage.propTypes = {
+IndexStart.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.shape({
       frontmatter: PropTypes.object,
@@ -148,10 +147,10 @@ IndexPage.propTypes = {
   }),
 }
 
-export default IndexPage
+export default IndexStart
 
 export const pageQuery = graphql`
-  query IndexPageTemplate {
+  query IndexStartTemplate {
     markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
       frontmatter {
         title

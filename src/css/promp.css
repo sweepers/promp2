@@ -4,9 +4,17 @@
 .font-22{
     font-size: 22px;
 }
+.fcg{
+    color: #C3CBCD;
+}
 .bold{
     font-weight: bold;
     font-family: "sukumvit-bold";
+}
+b{
+    font-weight: bold;
+    font-family: "sukumvit-bold";
+
 }
 
 
@@ -22,6 +30,9 @@
 }
 .pt-25{
     padding-top: 250px;
+}
+.w-10{
+    width: 100%;
 }
 
 /** Color */
@@ -45,4 +56,64 @@
     text-align: center;
     padding: 5px 75px;
     border: 0px;
+}
+.btn-company-add{
+    margin-top: 30px;
+    background-color: #F5C145;
+    color: #fff;
+    text-align: center;
+    padding: 20px 80px;
+    width: 100%;
+    border: 0px;
+    font-weight: bold;
+    font-family: "sukumvit-bold";
+}
+.bg-grey{
+    background: #E5E5E5;
+    min-height: calc(100vh - 155px);
+}
+.bg-white{
+    background: #fff;
+}
+.slmain{
+    padding: 20px 0;
+    border-bottom:  1px solid #fff;
+    font-size: 18px;
+}
+.slmain li{
+    padding: 10px 0;
+}
+.slmain a{
+    color: #373F41;
+}
+.clearfix{
+    clear: both;
+}
+
+.sub .active{
+    background: #F5C145;
+    color: #fff;
+
+}
+.lits-menu{
+    padding: 20px;
+    
+   
+}
+.lits-menu span{
+    color:#C3CBCD;
+}
+.sub .active span{
+    columns: #fff;
+}
+.v-middle{
+    vertical-align: middle;
+}
+.h-6{
+    height: 60px;
+    
+}
+.text-middle{
+    line-height: 1.5;
+    padding-top: 25%;
 }
