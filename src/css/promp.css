@@ -16,7 +16,9 @@ b{
     font-family: "sukumvit-bold";
 
 }
-
+.cursor{
+    cursor: pointer;
+}
 
 /*padding*/
 .pt-10{
@@ -48,6 +50,9 @@ b{
     height: 30px;
     color: #F5C145;
     margin: 15px auto;
+}
+.border-orange{
+    border: 1px solid #F5C145;
 }
 .btn-start{
     margin-top: 30px;
