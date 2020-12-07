@@ -6,7 +6,9 @@ import './all.sass'
 import '../css/bootstrap.css'
 import '../css/promp.css'
 //import 'bootstrap/dist/js/bootstrap.min.js'
-
+import 'jquery/dist/jquery.min.js'
+import 'popper.js/dist/popper.min'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import useSiteMetadata from './SiteMetadata'
 import { withPrefix } from 'gatsby'
 
