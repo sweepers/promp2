@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import './all.sass'
 import '../css/bootstrap.css'
 import '../css/promp.css'
-import 'bootstrap/dist/js/bootstrap.min.js'
+//import 'bootstrap/dist/js/bootstrap.min.js'
 
 import useSiteMetadata from './SiteMetadata'
 import { withPrefix } from 'gatsby'
