@@ -5,14 +5,14 @@ import Navbar from '../components/Navbar'
 import './all.sass'
 import '../css/bootstrap.css'
 import '../css/promp.css'
+
+import useSiteMetadata from './SiteMetadata'
+import { withPrefix } from 'gatsby'
 //import 'bootstrap/dist/js/bootstrap.min.js'
 import 'jquery/dist/jquery.min'
 import 'popper.js/dist/popper.min'
-import '../js/bootstrap.min'
-//import 'bootstrap/dist/js/bootstrap.min'
-import useSiteMetadata from './SiteMetadata'
-import { withPrefix } from 'gatsby'
-
+//import '../js/bootstrap.min'
+import 'bootstrap/dist/js/bootstrap.min.js'
 const TemplateWrapper = ({ children }) => {
   const { title, description } = useSiteMetadata()
   return (
