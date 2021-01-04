@@ -5,7 +5,9 @@ import Navbar from '../../components/Navbar'
 import Sitebarleft from '../../components/sidebar-left'
 import Sitebarsubleft from '../../components/sidebarsub-left'
 import Documentsvg from '../../assets/document.svg'
+import Arrowright from '../../assets/arrow-right.svg'
 import { Link } from 'gatsby'
+
 
 function encode(data) {
   return Object.keys(data)
@@ -86,7 +88,10 @@ export default class Index extends React.Component {
     return (
       <div className="col-7 mt-5 text-grey">
           <b>แบบฟอร์มกรอกข้อมูล</b> <br />
-          โปรดรอการตรวจสอบและยืนยันการจองชื่อ
+          โปรดรอการตรวจสอบและยืนยันการจองชื่อ<br />
+          <Link className="navbar-item" className="btn-start" to="/user/form_company">
+                Get Started <Arrowright  />
+              </Link>
           <div className="border-orange mt-3 mr-3">
             <div className="row">
               <div className="col-2 pl-4 align-self-center"><Documentsvg /></div>
