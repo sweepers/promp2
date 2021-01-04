@@ -14,6 +14,7 @@ const Sidebarsubleft = class extends React.Component {
             urlElements[4] = '';
 
         }*/
+        let urlElements = [];
         urlElements[4] = '';
         console.log(urlElements);
         this.state = {
