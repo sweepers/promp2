@@ -30,7 +30,7 @@ export default class Form_company extends React.Component {
         this.setState({ step:e})
       }
       handleSubmit(e){
-        navigate("/user")
+        navigate("/user/confirm_buy")
       }
     
       render() {

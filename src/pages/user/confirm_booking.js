@@ -6,6 +6,10 @@ import Sitebarleft from '../../components/sidebar-left'
 import Sitebarsubleft from '../../components/sidebarsub-left'
 import Documentsvg from '../../assets/document.svg'
 import Arrowright from '../../assets/arrow-right.svg'
+import Appointments_pdf from '../../assets/appointments_pdf.svg'
+import Download_yellow from '../../assets/download_yellow.svg'
+import DatePicker from 'react-date-picker'
+import Appointments_calendar from '../../assets/appointments_calendar.svg'
 import { Link } from 'gatsby'
 
 
@@ -15,7 +19,7 @@ function encode(data) {
     .join('&')
 }
 
-export default class Index extends React.Component {
+export default class Confirm_booing extends React.Component {
   constructor(props) {
     super(props)
     this.state = { isValidated: false }
@@ -70,7 +74,40 @@ export default class Index extends React.Component {
                         <div className="row">
                             <Sitebarsubleft />
                             
-                            { content_right }
+                            <div className="col-7 mt-3 ">
+                              <b>แบบคำขอจดทะเบียนจัดตั้งบริษัท เพื่อลงนาม</b>
+                              <div className=" mt-3 mr-3 mb-3">
+                                <div className="row">
+                                  <div className="col-2 pl-4 align-self-center"><Appointments_pdf /></div>
+                                  <div className="col-7 p-2">
+                                    <b>แบบคำขอจดทะเบียนจัดตั้งบริษัท เพื่อ...</b><br />
+                                    10 พฤศจิกายน 2563 | 48 Mb
+                                  </div>
+                                  <div className="col-3 p-3 align-self-center">
+                                    <Download_yellow />
+                                  
+                                  </div>
+                                  
+                                
+                                </div>
+                              </div>
+                              <b>ปฏิทินนัดวันรับเอกสาร</b>
+                              <div className=" mt-3 mr-3 mb-3">
+                                <div className="row">
+                                  <div className="col-2 pl-4 align-self-center"><Appointments_calendar /></div>
+                                  <div className="col-7 p-2">
+                                    <DatePicker />
+                                  </div>
+                                  <div className="col-3 p-3 align-self-center">
+                                    <button className="btn-submit"   value="submit">ยืนยัน </button>
+                                  
+                                  </div>
+                                  
+                                
+                                </div>
+                              </div>
+                            
+                            </div>
                           
                         </div>
                     </div>
@@ -89,7 +126,9 @@ export default class Index extends React.Component {
       <div className="col-7 mt-5 text-grey">
           <b>แบบฟอร์มกรอกข้อมูล</b> <br />
           โปรดรอการตรวจสอบและยืนยันการจองชื่อ<br />
-          
+          <Link className="navbar-item" className="btn-start" to="/user/form_company">
+                Get Started <Arrowright  />
+              </Link>
           <div className="border-orange mt-3 mr-3">
             <div className="row">
               <div className="col-2 pl-4 align-self-center"><Documentsvg /></div>

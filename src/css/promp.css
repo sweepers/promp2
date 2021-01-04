@@ -99,12 +99,15 @@ b{
 .clearfix{
     clear: both;
 }
-
+.sub a{
+    color: #000;
+}
 .sub .active{
     background: #F5C145;
     color: #fff;
 
 }
+
 .lits-menu{
     padding: 20px;
     
@@ -113,8 +116,8 @@ b{
 .lits-menu span{
     color:#C3CBCD;
 }
-.sub .active span{
-    columns: #fff;
+.sub .active span, .sub .active a{
+    color: #fff;
 }
 .v-middle{
     vertical-align: middle;
@@ -264,4 +267,18 @@ input[type='radio']:checked:after {
 }
 .time-active{
     background: #F5C145;
+}
+.pament-arrow{
+    font-size: 40px;
+}
+.btn-submit {
+  
+    background-color: #F5C145;
+    color: #fff;
+    text-align: center;
+  
+    width: 100%;
+    border: 0px;
+    font-weight: bold;
+    font-family: "sukumvit-bold";
 }

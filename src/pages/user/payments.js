@@ -6,6 +6,10 @@ import Sitebarleft from '../../components/sidebar-left'
 import Sitebarsubleft from '../../components/sidebarsub-left'
 import Documentsvg from '../../assets/document.svg'
 import Arrowright from '../../assets/arrow-right.svg'
+import Payment_moreservice from '../../assets/payment_moreservice.svg'
+import Payment_payment from '../../assets/payment_payment.svg'
+import Payment_servicesummary from '../../assets/payment_servicesummary.svg'
+
 import { Link } from 'gatsby'
 
 
@@ -15,7 +19,7 @@ function encode(data) {
     .join('&')
 }
 
-export default class Index extends React.Component {
+export default class Payments extends React.Component {
   constructor(props) {
     super(props)
     this.state = { isValidated: false }
@@ -87,20 +91,58 @@ export default class Index extends React.Component {
   step1(){
     return (
       <div className="col-7 mt-5 text-grey">
-          <b>แบบฟอร์มกรอกข้อมูล</b> <br />
-          โปรดรอการตรวจสอบและยืนยันการจองชื่อ<br />
-          
-          <div className="border-orange mt-3 mr-3">
+          <b>ชำระค่าบริการ</b> <br />
+         
+          <div className=" mt-3 mr-3">
             <div className="row">
               <div className="col-2 pl-4 align-self-center"><Documentsvg /></div>
               <div className="col-7 p-2">
-                <h4 className="c-main">แบบฟอร์มการจดทะเบียน
-จัดตั้งบริษัท</h4>
+                <h5 className="c-main">สรุปบริการ</h5>
               </div>
-              <div className="col-3 p-3 align-self-center">
-                <Link className="c-main cursor"  to="/user/form_company">
-                ตรวจสอบ
-                </Link>
+              <div className="col-3 p-3 align-self-center ">
+                <Arrowright />
+               
+              </div>
+              
+            
+            </div>
+          </div>
+          <div className=" mt-3 mr-3">
+            <div className="row">
+              <div className="col-2 pl-4 align-self-center"><Payment_moreservice /></div>
+              <div className="col-7 p-2">
+                <h5 className="c-main">สรุปค่าบริการ</h5>
+              </div>
+              <div className="col-3 p-3 align-self-center ">
+                <Arrowright />
+               
+              </div>
+              
+            
+            </div>
+          </div>
+          <div className=" mt-3 mr-3">
+            <div className="row">
+              <div className="col-2 pl-4 align-self-center"><Payment_servicesummary /></div>
+              <div className="col-7 p-2">
+                <h5 className="c-main">ชำระเงิน</h5>
+              </div>
+              <div className="col-3 p-3 align-self-center ">
+                <Arrowright />
+               
+              </div>
+              
+            
+            </div>
+          </div>
+          <div className=" mt-3 mr-3">
+            <div className="row">
+              <div className="col-2 pl-4 align-self-center"><Payment_payment /></div>
+              <div className="col-7 p-2">
+                <h5 className="c-main">สรุปบริการ</h5>
+              </div>
+              <div className="col-3 p-3 align-self-center ">
+                <Arrowright />
                
               </div>
               

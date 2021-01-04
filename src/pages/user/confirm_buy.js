@@ -15,7 +15,7 @@ function encode(data) {
     .join('&')
 }
 
-export default class Index extends React.Component {
+export default class Confirm_buy extends React.Component {
   constructor(props) {
     super(props)
     this.state = { isValidated: false }
@@ -70,7 +70,11 @@ export default class Index extends React.Component {
                         <div className="row">
                             <Sitebarsubleft />
                             
-                            { content_right }
+                            <div className="col-7 text-center align-self-center">
+                                ยืนยันการจองชื่อบริษัท <br />
+                                โปรดชำระค่าบริการ
+                            
+                            </div>
                           
                         </div>
                     </div>
@@ -89,7 +93,9 @@ export default class Index extends React.Component {
       <div className="col-7 mt-5 text-grey">
           <b>แบบฟอร์มกรอกข้อมูล</b> <br />
           โปรดรอการตรวจสอบและยืนยันการจองชื่อ<br />
-          
+          <Link className="navbar-item" className="btn-start" to="/user/form_company">
+                Get Started <Arrowright  />
+              </Link>
           <div className="border-orange mt-3 mr-3">
             <div className="row">
               <div className="col-2 pl-4 align-self-center"><Documentsvg /></div>
