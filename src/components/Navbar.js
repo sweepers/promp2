@@ -76,7 +76,7 @@ const Navbar = class extends React.Component {
               </span>
               <a
                 className="navbar-item"
-              
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
