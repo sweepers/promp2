@@ -35,7 +35,7 @@ export const IndexPageTemplate = ({
                     <Logo />
                     <div class="pt-3">
                       <h1>
-                        ยินดีต้อรับสู่บริการ<br/>
+                        ยินดีต้อนรับสู่บริการ<br/>
                         จดทะเบียนจัดตั้งบริษัท
                       </h1>
                       
@@ -55,9 +55,9 @@ export const IndexPageTemplate = ({
             </div>
             <div className="col-lg-6 text-center">
                 <div class="pt-3">
-                <h2>สิ่งที่ต้องเรียน</h2>
-                <span className="c-main">เตรียมเอกสารและข้อมุลต่อไปนี้ให้พร้อม</span><br />
-                ก่อนเริ่มขั้นตอนต่อไปนี้<br />
+                <h2>โปรดเตรียมเอกสารและข้อมูลต่อไปนี้ให้พร้อม</h2>
+              
+                ก่อนเริ่มขั้นตอนต่อไป<br />
                 </div>
                 
                 
@@ -66,8 +66,8 @@ export const IndexPageTemplate = ({
                     <div className="number_border">1</div>
                     <Docs />
                     <br />
-                    สำเนาทะเบียนบ้าน<br />
-                    ที่ตั้งสำนักงาน
+                    ทะเบียนบ้าน<br />
+                    ของที่ตั้งสำนักงาน
                   </div>
                   <div class="col-3 ">
                   <div className="number_border">2</div>
@@ -79,7 +79,7 @@ export const IndexPageTemplate = ({
                   <div className="number_border">3</div>
                     <IdCard /><br />
                     บัตรประชาชน<br />
-                    ผู้เริ่มก่อการ
+                    ผู้ก่อตั้ง
                   </div>
               </div>
               <div class="row justify-content-center pt-5 pb-5">
@@ -98,8 +98,8 @@ export const IndexPageTemplate = ({
                  
               </div>
             
-              <Link className="navbar-item" className="btn-start" to="/user">
-                Get Started <Arrowright  />
+              <Link className="navbar-item" className="btn-start" to="/user/form_company">
+                เริ่มดำเนินการ <Arrowright  />
               </Link>
              
             </div>

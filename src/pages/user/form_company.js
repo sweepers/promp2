@@ -398,11 +398,11 @@ export default class Form_company extends React.Component {
                 </div>
                 <hr className="hr_organge" />
                 <div className="form-group">
-                    <label lassName="label" for="sharedirect_sign">การลงอำนาจของกรรมการ*</label>
+                    <label lassName="label" for="sharedirect_sign">อำนาจลงนามของกรรมการ*</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="sharedirect_sign" id="sharedirect_sign" value="อำนาจกรรมการแบบไม่ระบุชื่อ (กรรมการ x คน ลงลายมือชื่อ และประทับตราบริษัท)"  />
                         <label class="form-check-label" for="exampleRadios1">
-                        อำนาจกรรมการแบบไม่ระบุชื่อ (กรรมการ x คน ลงลายมือชื่อ และประทับตราบริษัท)
+                        อำนาจกรรมการแบบไม่ระบุชื่อ (กรรมการ <input type="text" /> คน ลงลายมือชื่อ )
                         </label>
                     </div>
                     <div class="form-check">
@@ -763,11 +763,11 @@ export default class Form_company extends React.Component {
                         <input type="text" name="shareholder_phone2" class="form-control" id="shareholder_phone2" placeholder="หมายเลขโทรศัพท์"></input>
                     </div>
                     <div className="form-group  col-lg-8">
-                        <label className="label" for="shareholder_firstname2">อัพโหลดบัตรประชาชน</label>
+                     
                         <label class="custom-file-upload">
                             <input type="file"/>
                             <Uploadcloud /> 
-                            Choose File
+                            อัพโหลดบัตรประชาชน
                         </label>
                     </div>
 
@@ -1054,7 +1054,7 @@ export default class Form_company extends React.Component {
                     <div className="col-5 mt-5 text-center">
                     <label class="custom-file-upload">
                         <input type="file"/>
-                         Upload Stamp
+                        อัพโหลด ตราประทับ
                     </label>
                     </div>
                     <div className="col-7 mt-5">
@@ -1080,7 +1080,7 @@ export default class Form_company extends React.Component {
                         <div className="form-group">
                             <div  class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="buy_stamp"  value="buy" />
-                                <label class="form-check-label" for="inlineRadio1">สั่งทำตรายาง</label>
+                                <label class="form-check-label" for="inlineRadio1">สั่งทำตรายาง (ราคา ตรายาง 200 บาท)</label>
                             </div>
                             <div class="block-qty clearfix">
 											  <div class="quantity-grup quantity-box clearfix"  >
@@ -1129,6 +1129,12 @@ export default class Form_company extends React.Component {
                         <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" value="สำนักงานผู้แทน"  />
                         <label class="form-check-label" for="exampleRadios5">
                         สำนักงานผู้แทน
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" value="อื่น ๆ"  />
+                        <label class="form-check-label" for="exampleRadios5">
+                        อื่น ๆ
                         </label>
                     </div>
                     
