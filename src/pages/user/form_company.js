@@ -30,7 +30,7 @@ export default class Form_company extends React.Component {
         this.setState({ step:e})
       }
       handleSubmit(e){
-        navigate("/user/confirm_buy")
+        navigate("/user")
       }
     
       render() {
@@ -250,11 +250,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
+                    <div className="col-5">
+                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(6) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
                     </div>
 
                 </div>
@@ -418,11 +419,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(7) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-5 text-right">
+                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(5) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(7) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
@@ -574,11 +576,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(6) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-5 text-right">
+                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(4) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(6) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
@@ -655,11 +658,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(5) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-5 text-right">
+                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(3) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(5) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
@@ -828,11 +832,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(4) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-5 text-right">
+                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(2) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(4) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
@@ -1021,11 +1026,12 @@ export default class Form_company extends React.Component {
                     <div className="col-6">
 
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(3) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-5 text-right">
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(1) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(3) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
@@ -1146,8 +1152,8 @@ export default class Form_company extends React.Component {
                     <div className="col-2">
 
                     </div>
-                    <div className="col-4">
-                        <button className="btn-company-add"  onClick={(e) => { this.clickStep(2) }}  value="1">NEXT <Arrowright /></button>
+                    <div className="col-4 text-right">
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(2) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
