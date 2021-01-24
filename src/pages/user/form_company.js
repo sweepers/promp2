@@ -33,10 +33,16 @@ export default class Form_company extends React.Component {
       handleChange(event) {
        
         const { name, value,id } = event.target;
+        
        // console.log(name,event.target.value);
        // let dat = data.event.target.name;
        const items = this.state.data;
        items[name] = value;
+    
+       if(event.target.classList.contains('calshare')){
+           
+           this.calshare();
+       }
        if(name == 'purposecompany'){
             var eleo = document.getElementById('purposecompany_other');
            if(value == 'อื่น ๆ'){
@@ -176,12 +182,51 @@ export default class Form_company extends React.Component {
 
 
     }
+     iterate(item, index, array) {
+        console.log(item);
+        if (index === array.length - 1) {
+          console.log('The last iteration!');
+        }
+      }
+      
+     
+      // logs "blue"
+    calshare(){
+        const items = this.state.data;
+       
+        var cal = 0*1;
+        var elems = document.querySelectorAll(".calshare");
+        /*this.state.data.capital_sharepure.forEach(function(newItem) {
+            alert(newItem);
+          }, this);    */
+          [].forEach.call(elems, function(el) {
+              if(el.value > 0){
+                cal += el.value*1
+              }
+                
+         });
+         items['capital_shareallstock'] = cal
+         console.log('cal',cal);
+        this.setState({ data:items})
+    }
     change_capital_share(e){
        // alert( );
-      var class_share =  document.getElementsByClassName("capital_sharepure");
-    
-      class_share.disabled = false;
-      alert(class_share.disabled);
+      //var class_share =  document.getElementsByClassName("capital_sharepure");
+      //var ele = document.getElementsByClassName('capital_sharepure');
+      var elems = document.querySelectorAll(".capital_sharepure");
+        
+        [].forEach.call(elems, function(el) {
+           if(e.target.checked == true){
+            el.classList.remove("hide");
+            el.setAttribute('required',true);
+
+      }else{
+        el.classList.add("hide");
+        el.removeAttribute('required');
+      }
+        });
+     //class_share.disabled = false;
+      
     }
 
       render() {
@@ -196,6 +241,7 @@ export default class Form_company extends React.Component {
         if(this.state.step == 4){
             content_right = this.capital();
         }
+        
         if(this.state.step == 5){
             content_right = this.startcompany();
         }
@@ -765,6 +811,13 @@ export default class Form_company extends React.Component {
 
           );
       }
+      dataholder(){
+          return (
+              <div>
+                  
+              </div>
+          );
+      }
       form_capital(i){
           
         return (
@@ -776,8 +829,8 @@ export default class Form_company extends React.Component {
                     </div>
                     <div className="form-group  col-lg-3">
                         <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control" id={"capital_sharenumber"+i} placeholder="จำนวนหุ้นสามัญ"></input><br />
-                        <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control capital_sharepure" disabled="0" id={"capital_sharepure"+i} placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-
+                        <input type="text" name={"capital_sharepure["+i+"]"} class="form-control capital_sharepure calshare hide"  id={"capital_sharepure"+i} placeholder="จำนวนหุ้นบุริมสิทธิ์" value={this.state.data["capital_sharepure["+i+"]"]}  onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-capital_sharepure"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
 
                  </div>
@@ -797,7 +850,7 @@ export default class Form_company extends React.Component {
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                  <h3>ทุนจดทะเบียน</h3>
-                 <form id="form_3">
+                 <form id="form_4">
                  <div className="row">
                      <div className="form-group  col-lg-3">
                      <label className="label" for="capital_invencount">จำนวนทุนจดทะเบียน</label>
@@ -821,7 +874,8 @@ export default class Form_company extends React.Component {
                     </div>
                     <div className="form-group  col-lg-3">
                         <label>จำนวนหุ้น</label>
-                        <input type="text" name="capital_shareallstock" class="form-control " id="capital_shareallstock" readOnly placeholder="จำนวน"value={this.state.data.capital_shareallstock} ></input>
+                        <input type="text" name="capital_shareallstock" class="form-control capital_sharepure hide" id="capital_shareallstock" readOnly placeholder="จำนวน"value={this.state.data.capital_shareallstock} ></input>
+                        <span id="div-capital_shareallstock" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
 
                  </div>
