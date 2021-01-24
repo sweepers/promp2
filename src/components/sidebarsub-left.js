@@ -34,7 +34,7 @@ const Sidebarsubleft = class extends React.Component {
                         </div>
                         <div className="col-9">
                         <Link   to="/user">
-                            <h5>กรอกข้อมูล</h5>
+                            <h5>รอตรวจสอบ</h5>
                         </Link>
                            
                             <span>Lorem ipsum dolorsit met</span>
@@ -45,25 +45,7 @@ const Sidebarsubleft = class extends React.Component {
                         </div>
                     </div>
                </div>
-               <div className={"lits-menu  " + (this.state.menu == 'confirm_buy' ? 'active' : '')}>
-                    
-                    <div className="row">
-                        <div className="col-1">
-                            <Feather className="h-6" />
-                        </div>
-                        <div className="col-9">
-                            <Link   to="/user/confirm_buy">
-                                <h5>ยืนยันการซื้อ</h5>
-                            </Link>
-                          
-                            <span>Lorem ipsum dolorsit met</span>
-
-                        </div>
-                        <div className="col-1">
-                            <Arrowright className="h-6" />
-                        </div>
-                    </div>
-               </div>
+               
                <div  className={"lits-menu  " + (this.state.menu == 'payments' ? 'active' : '')}>
                     
                     <div className="row">

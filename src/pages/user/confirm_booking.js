@@ -94,11 +94,19 @@ export default class Confirm_booing extends React.Component {
                               <b>ปฏิทินนัดวันรับเอกสาร</b>
                               <div className=" mt-3 mr-3 mb-3">
                                 <div className="row">
-                                  <div className="col-2 pl-4 align-self-center"><Appointments_calendar /></div>
-                                  <div className="col-7 p-2">
+                                  
+                                  <div className="col-4 p-2">
                                     <DatePicker />
                                   </div>
-                                  <div className="col-3 p-3 align-self-center">
+                                  <div className="col-5 p-2">
+                                    <select className="form-control">
+                                      <option value='9:00 - 12:00'>9:00 - 12:00</option>
+                                      <option value='13:00 - 15:00'>13:00 - 15:00</option>
+                                      <option value='15:00 - 17:00'>15:00 - 17:000</option>
+
+                                    </select>
+                                  </div>
+                                  <div className="col-2 p-3 align-self-center">
                                     <button className="btn-submit"   value="submit">ยืนยัน </button>
                                   
                                   </div>

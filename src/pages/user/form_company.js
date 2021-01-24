@@ -746,7 +746,7 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5 text-right">
-                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(4) }}  value="1">ย้อนกลับ</button>
+                    <button className="btn-company-next"  onClick={(e) => { this.clickBack(4) }}  value="1">ย้อนกลับ</button>
                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(6) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
@@ -763,12 +763,12 @@ export default class Form_company extends React.Component {
                  <h3>ทุนจดทะเบียน</h3>
                  <div className="row">
                     <div className="form-group  col-lg-3">
-                        <label className="label" for="capital_share">จำนวนหุ้น</label>
+                        <label className="label" for="capital_share">จำนวนทุนจดทะเบียน</label>
                         <input class="form-check-input-inline" type="radio" name="capital_share"  value="มีหุ้นบริสุทธิ์" />
                         <label class="form-check-label" for="inlineRadio1">มีหุ้นบริสุทธิ์</label>
                     </div>
                     <div className="form-group  col-lg-3">
-                        <label>มูลค่าหุ้น</label>
+                        <label>จำนวนหุ้น</label>
                         <input type="text" name="capital_shareprice" class="form-control" id="capital_shareprice" placeholder="จำนวน"></input>
                     </div>
 
@@ -847,20 +847,20 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name={"shareholder_type"+i} id={"shareholder_type"+i} onClick={this.change_typeholder}  checked  value="บุคคลธรรมดา" />
+                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"} id={"shareholder_type"+i} onClick={this.change_typeholder}  checked  value="บุคคลธรรมดา" />
                         <label class="form-check-label" for="inlineRadio1">บุคคลธรรมดา</label>
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name={"shareholder_type"+i}  onClick={this.change_typeholder}  value="นิติบุคคล"  />
+                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"}  onClick={this.change_typeholder}  value="นิติบุคคล"  />
                         <label class="form-check-label" for="inlineRadio1">นิติบุคคล</label>
                     </div>
-                    <span id={"div-shareholder_type"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+           
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_title1">คำนำหน้า</label>
-                        <select   onChange={this.chenge_title_name}  class="form-control"   name={"shareholder_title"+i} id={"shareholder_title"+i} >
+                        <select   onChange={this.chenge_title_name}  class="form-control"   name={"shareholder_title["+i+"]"} id={"shareholder_title"+i} >
                             <option value="" selected>--------- คำนำหน้า ---------</option>
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
@@ -869,7 +869,7 @@ export default class Form_company extends React.Component {
 
                         </select>
                        <div id={"shareholder_titleother"+i} className="hide pt-3">
-                        <input type="text" name={"shareholder_titleother"+i}  className="form-control" placeholder="คำนำหน้าชื่อ"  onChange={this.handleChange.bind(this)} />
+                        <input type="text" name={"shareholder_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["shareholder_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
                        </div>
                  
 
@@ -877,27 +877,27 @@ export default class Form_company extends React.Component {
 
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_firstname1" id={"shareholder_fname"+i}>ชื่อ</label>
-                        <input type="text"  name={"shareholder_firstname"+i } class="form-control" id={"shareholder_firstname"+i} placeholder="ชื่อ"  required onChange={this.handleChange.bind(this)}></input>
+                        <input type="text"  name={"shareholder_firstname["+i+"]" } class="form-control" id={"shareholder_firstname"+i} placeholder="ชื่อ" value={this.state.data["shareholder_firstname["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_lastname1">นามสกุล</label>
-                        <input type="text" name={"shareholder_lastname"+i}  class="form-control" id={"shareholder_lastname"+i} placeholder="นามสกุล" required onChange={this.handleChange.bind(this)}></input>
-                        <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                        <input type="text" name={"shareholder_lastname["+i+"]"}  class="form-control" id={"shareholder_lastname"+i} placeholder="นามสกุล" value={this.state.data["shareholder_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for={"shareholder_idcard"+i} id={"shareholder_idcard"+i}>เลขบัตรประชาชน</label>
-                        <input type="text" name={"shareholder_idcard"+i}  class="form-control" id={"shareholder_idcard"+i} placeholder="เลขบัตรประชาชน"  required onChange={this.handleChange.bind(this)}></input>
+                        <input type="text" name={"shareholder_idcard["+i+"]"}  class="form-control" id={"shareholder_idcard"+i} placeholder="เลขบัตรประชาชน"  value={this.state.data["shareholder_idcard["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_idcard"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for={"shareholder_occ"+i}>อาชีพ</label>
-                        <input type="text" name={"shareholder_occ"+i} class="form-control" id={"shareholder_occ"+i} placeholder="อาชีพ"  required onChange={this.handleChange.bind(this)}></input>
+                        <input type="text" name={"shareholder_occ["+i+"]"} class="form-control" id={"shareholder_occ"+i} placeholder="อาชีพ"   value={this.state.data["shareholder_occ["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_occ"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_firstname1">หมายเลขโทรศัพท์</label>
-                        <input type="text" name={"shareholder_phone"+i}  class="form-control" id={"shareholder_phone"+i} placeholder="หมายเลขโทรศัพท์"  required onChange={this.handleChange.bind(this)}></input>
+                        <input type="text" name={"shareholder_phone["+i+"]"}  class="form-control" id={"shareholder_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["shareholder_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-8">

@@ -87,16 +87,13 @@ export default class Index extends React.Component {
   step1(){
     return (
       <div className="col-7 mt-5 text-grey">
-          <b>แบบฟอร์มกรอกข้อมูล</b> <br />
+        
           โปรดรอการตรวจสอบและยืนยันการจองชื่อ<br />
           
           <div className="border-orange mt-3 mr-3">
             <div className="row">
               <div className="col-2 pl-4 align-self-center"><Documentsvg /></div>
-              <div className="col-7 p-2">
-                <h4 className="c-main">แบบฟอร์มการจดทะเบียน
-จัดตั้งบริษัท</h4>
-              </div>
+              
               <div className="col-3 p-3 align-self-center">
                 <Link className="c-main cursor"  to="/user/form_company">
                 ตรวจสอบ
