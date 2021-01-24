@@ -16,10 +16,23 @@ b{
     font-family: "sukumvit-bold";
 
 }
+.hide{
+    display: none;
+}
 .cursor{
     cursor: pointer;
 }
-
+.navbar-link{
+    color:#fff;
+}
+.sidebar-form .is-active{
+    color: #fff;
+    opacity: 1;
+    
+}
+.sidebar-form li{
+    cursor: pointer;
+}
 /*padding*/
 .pt-10{
     padding-top: 100px;
@@ -184,10 +197,16 @@ ol {
     text-align: center;
   
   }
-
+  .has-error {
+    font-size:10px;
+    color: red !important;
+ }
+ .has-errors{
+     border-color: red !important;
+ }
 .le-quantity {
     /* margin: 0 15px 0 0; */
-    float: right;
+  
     margin-top: -5px;
    
     margin-right: 22px;

@@ -13,6 +13,7 @@ import { Link } from 'gatsby'
 //import { navigate } from "gatsby"
 
 import { addLooseExports } from 'acorn'
+import { forInRight } from 'lodash'
 
 //upload-cloud
 export default class Form_company extends React.Component {
@@ -20,21 +21,164 @@ export default class Form_company extends React.Component {
         super(props)
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {step: 1};
+        this.state = {step: 1,counth:4, qty:1,data:[]};
+
         this.clickStep = this.clickStep.bind(this);
-        
+        this.clickBack = this.clickBack.bind(this);
+        this.clickHolder = this.clickHolder.bind(this);
+        this.changeQty = this.changeQty.bind(this);
+
+
+      }
+      handleChange(event) {
        
+        const { name, value,id } = event.target;
+       // console.log(name,event.target.value);
+       // let dat = data.event.target.name;
+       const items = this.state.data;
+       items[name] = value;
+       if(name == 'purposecompany'){
+            var eleo = document.getElementById('purposecompany_other');
+           if(value == 'อื่น ๆ'){
+           
+            eleo.classList.remove("hide");
+           }else{
+            eleo.classList.add("hide");
+           }
+
+       }
+       if(event.target.required){   
+            var elementc = document.getElementById('div-'+id);
+            var ele = document.getElementById(id);
+           if(!value){
+            elementc.style.display = 'block';
+            ele.classList.add("has-errors");
+           }else{
+            elementc.style.display = 'none';
+            ele.classList.remove("has-errors");
+           }
+
+       }
+     
+       //items.company_name = event.target.value;
+       this.setState({data: items});
+      }
+      changeQty(type){
+        let qty = this.state.qty;
+        if(type == 'plus'){
+            qty = qty+1;
+        }else{
+            qty = qty-1;
+        }
+        if(qty < 1){
+            qty = 1;
+        }
+
+        this.setState({ qty:qty})
+      }
+      clickHolder(value){
+
+          if(value <= 2){
+            this.state.counth = 2;
+            this.setState({ counth:2})
+          }else{
+            this.state.counth = value;
+            this.setState({ counth:value})
+          }
+
       }
       clickStep(e) {
+          let id = e-1;
         
+          let error = false;
+          var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
+            var form = [].map.call(formdata, function( input ) {
+             
+                if(input.required && !input.value){
+                    var elementc = document.getElementById('div-'+input.id);
+                    var ele = document.getElementById(input.id);
+                    elementc.style.display = 'block';
+                    ele.classList.add("has-errors");
+                    error = true;
+
+                }
+                //return {'value':input.value};
+            });
+       //   let valid1 = this.form_validate('form_1');
+            if(error){
+                return false;
+            }
+       
         this.setState({ step:e})
       }
+      clickBack(e) {
+       
+
+        this.setState({ step:e})
+    }
       handleSubmit(e){
+
         navigate("/user")
       }
-    
-      render() {
+      
+    chenge_title_name(e){
+        let id = e.target.id
+        let value = e.target.value
+        id = id.replace('shareholder_title','');
+
+        //let  element = document.getElementById("shareholder_titleother"+id);
+        if(value == 'other'){
+             document.getElementById("shareholder_titleother"+id).style.display = 'block';
+
+           // $('.'+id).show();
+        }else{
+            document.getElementById("shareholder_titleother"+id).style.display = 'none';
+        //    $('.'+id).hide();
+        }
+
+    }
+    change_typeholder(e){
+        let id = e.target.name
+        let value = e.target.value
+        id = id.replace('shareholder_type[','');
+        id = id.replace(']','');
         
+
+        if(value == 'บุคคลธรรมดา'){
+            document.getElementById("shareholder_fname"+id).innerHTML = 'ชื่อ';
+            document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขบัตรประชาขน';
+            document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดบัตรประชาชน';
+
+          // $('.'+id).show();
+       }else{
+           document.getElementById("shareholder_fname"+id).innerHTML= 'ชื่อนิติบุคคล';
+           document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขทะเบียนนิติบุคคล';
+           document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดหนังสือรับรองบริษัท';
+       //    $('.'+id).hide();
+       }
+
+    }
+    
+    change_buy(e){
+
+        let checked = e.target.checked
+        if(checked){
+            document.getElementById("block-type").style.display = 'block';
+            document.getElementById("block-qty").style.display = 'block';
+
+
+        }else{
+            document.getElementById("block-type").style.display = 'none';
+            document.getElementById("block-qty").style.display = 'none';
+
+        }
+
+
+
+    }
+
+      render() {
+
         let content_right = this.company();
         if(this.state.step == 2){
             content_right = this.addess_company();
@@ -50,41 +194,63 @@ export default class Form_company extends React.Component {
         }
         if(this.state.step == 6){
             content_right = this.directinformation();
-            
+
 
         }
         if(this.state.step == 7){
             content_right = this.meeting();
-            
+
 
         }
           return (
-            <Layout > 
+            <Layout >
                 <Navbar />
                 <div className="bg-grey">
         <div className="container pt-5">
             <div className="row ">
-                    <Sitebarsformleft />
-
+                   { this.sidebarleft() }
                 <div className="col-md-12 col-lg-8 bg-white">
                     <div className="bg-white">
                         <div className="row">
-                           
+
                             { content_right }
-                            
-                          
+
+
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
         </div>
             </Layout>
           );
       }
+      sidebarleft(){
+          return (
+              <div className="col-md-12 col-lg-4 bg-yellow sidebar-form" >
+
+                <ol>
+                    <li onClick={(e) => { this.clickBack(1) }} className={ (this.state.step==1 ? 'is-active' : '')}>
+                        ข้อมูลบริษัท
+                    </li>
+                    <li onClick={(e) => { this.clickBack(2) }} className={ (this.state.step==2 ? 'is-active' : '')}  >ที่อยู่บริษัท</li>
+                    <li onClick={(e) => { this.clickBack(3) }}  className={ (this.state.step==3 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
+                    <li onClick={(e) => { this.clickBack(4) }} className={ (this.state.step==4 ? 'is-active' : '')}>ทุนจดทะเบียน</li>
+                    <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ก่ตั้อง</li>
+                    <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6? 'is-active' : '')} >ข้อมูลกรรมการ</li>
+                    <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7 ? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
+
+                </ol>
+
+
+
+
+            </div>
+          );
+      }
       meeting(){
-       
+
           return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>การประชุมจัดตั้ง</h3>
@@ -92,7 +258,7 @@ export default class Form_company extends React.Component {
                     <div className="form-group  col-lg-6">
                         <label className="label" for="meeting_date">เลือกวัน</label>
                         <DatePicker
-                    
+
                                 isOpen="true"
                         />
                     </div>
@@ -226,7 +392,7 @@ export default class Form_company extends React.Component {
                         </select>
 
                     </div>
-                   
+
 
                 </div>
                 <div className="row">
@@ -243,7 +409,7 @@ export default class Form_company extends React.Component {
                         <input type="text" name="meeting_address_postcode" class="form-control" id="meeting_address_postcode" placeholder="รหัสไปรษณีย์"></input>
 
                     </div>
-                    
+
 
                 </div>
                 <div className="row">
@@ -269,10 +435,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >กรรมการ คนที่ 1</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -283,9 +449,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharedirect_firstname1">ชื่อ</label>
@@ -303,7 +469,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="sharedirect_firstname1">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -313,10 +479,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >กรรมการ คนที่ 2</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -327,9 +493,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharedirect_firstname2">ชื่อ</label>
@@ -347,7 +513,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="sharedirect_firstname2">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -357,10 +523,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >กรรมการ คนที่ 3</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -371,9 +537,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharedirect_firstname3">ชื่อ</label>
@@ -391,7 +557,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="sharedirect_firstname3">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -412,7 +578,7 @@ export default class Form_company extends React.Component {
                         อำนาจกรรมการแบบระบุชื่อ
                         </label>
                     </div>
-                    
+
                 </div>
                 <hr className="hr_organge" />
                 <div className="row">
@@ -428,10 +594,10 @@ export default class Form_company extends React.Component {
                     </div>
 
                 </div>
-                
+
             </div>
-            
-            
+
+
           );
 
       }
@@ -443,10 +609,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >ผู้ก่อตั้ง คนที่ 1</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -457,9 +623,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_firstname1">ชื่อ</label>
@@ -477,7 +643,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="shareholder_firstname1">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -487,10 +653,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >ผู้ก่อตั้ง คนที่ 2</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -501,9 +667,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_firstname2">ชื่อ</label>
@@ -521,7 +687,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="shareholder_firstname2">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -531,10 +697,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" >ผู้ก่อตั้ง คนที่ 3</label>
-                    
+
                     </div>
-                    
-                    
+
+
 
                 </div>
                 <div className="row">
@@ -545,9 +711,9 @@ export default class Form_company extends React.Component {
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+
                         </select>
-                       
+
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_firstname3">ชื่อ</label>
@@ -565,7 +731,7 @@ export default class Form_company extends React.Component {
                         <label className="label" for="shareholder_firstname2">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
@@ -585,10 +751,10 @@ export default class Form_company extends React.Component {
                     </div>
 
                 </div>
-                
+
             </div>
-            
-            
+
+
           );
       }
       capital(){
@@ -610,47 +776,47 @@ export default class Form_company extends React.Component {
                  <div className="row">
                     <div className="form-group  col-lg-3">
                         <label>ชำระค่าหุ้นในวันจดทะเบียน</label>
-                       
+
                     </div>
                     <div className="form-group  col-lg-3">
                         <label>25% 50% 75% 100%</label>
-                       
+
                     </div>
 
                  </div>
                  <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label">ผู้ถือหุ้นที่ 1</label>
-                       
+
                     </div>
                     <div className="form-group  col-lg-3">
                         <input type="text" name="capital_sharenumber1" class="form-control" id="capital_sharenumber1" placeholder="จำนวนหุ้นสามัญ"></input><br />
                         <input type="text" name="capital_sharenumber1" class="form-control" id="capital_sharepure1" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-                       
+
                     </div>
 
                  </div>
                  <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label">ผู้ถือหุ้นที่ 2</label>
-                       
+
                     </div>
                     <div className="form-group  col-lg-3">
                         <input type="text" name="capital_sharenumber2" class="form-control" id="capital_sharenumber2" placeholder="จำนวนหุ้นสามัญ"></input><br />
                         <input type="text" name="capital_sharenumber2" class="form-control" id="capital_sharepure2" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-                       
+
                     </div>
 
                  </div>
                  <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label">ผู้ถือหุ้นที่ 3</label>
-                       
+
                     </div>
                     <div className="form-group  col-lg-3">
                         <input type="text" name="capital_sharenumber3" class="form-control" id="capital_sharenumber3" placeholder="จำนวนหุ้นสามัญ"></input><br />
                         <input type="text" name="capital_sharenumber3" class="form-control" id="capital_sharepure3" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-                       
+
                     </div>
 
                  </div>
@@ -662,7 +828,7 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5 text-right">
-                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(3) }}  value="1">ย้อนกลับ</button>
+                    <button className="btn-company-next"  onClick={(e) => { this.clickBack(3) }}  value="1">ย้อนกลับ</button>
                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(5) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
@@ -671,163 +837,101 @@ export default class Form_company extends React.Component {
         );
 
       }
-      shareholder(){
-        return (
-            <div className="col-12 mt-5 text-grey pb-3">
-                <h3>ข้อมูลผู้ถือหุ้น</h3>
-                <div className="row">
+      form_shareholder(i){
+          
+          return (
+              <div>
+                   <div className="row">
                     <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ถือหุ้น คนที่ 1</label>
-                    
+                        <label className="label" >ผู้ถือหุ้น คนที่ {i}</label>
+
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type1"  value="บุคคลธรรมดา" />
+                        <input class="form-check-input" type="radio" name={"shareholder_type"+i} id={"shareholder_type"+i} onClick={this.change_typeholder}  checked  value="บุคคลธรรมดา" />
                         <label class="form-check-label" for="inlineRadio1">บุคคลธรรมดา</label>
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type1"  value="นิติบุคคล" />
+                        <input class="form-check-input" type="radio" name={"shareholder_type"+i}  onClick={this.change_typeholder}  value="นิติบุคคล"  />
                         <label class="form-check-label" for="inlineRadio1">นิติบุคคล</label>
                     </div>
-                    
+                    <span id={"div-shareholder_type"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_title1">คำนำหน้า</label>
-                        <select class="form-control" name="shareholder_title1" id="shareholder_title1">
+                        <select   onChange={this.chenge_title_name}  class="form-control"   name={"shareholder_title"+i} id={"shareholder_title"+i} >
                             <option value="" selected>--------- คำนำหน้า ---------</option>
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
-                            
+                            <option value="other">อื่น ๆ</option>
+
                         </select>
-                       
+                       <div id={"shareholder_titleother"+i} className="hide pt-3">
+                        <input type="text" name={"shareholder_titleother"+i}  className="form-control" placeholder="คำนำหน้าชื่อ"  onChange={this.handleChange.bind(this)} />
+                       </div>
+                 
+
                     </div>
+
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname1">ชื่อ</label>
-                        <input type="text" name="shareholder_firstname1" class="form-control" id="shareholder_firstname1" placeholder="ชื่อ"></input>
+                        <label className="label" for="shareholder_firstname1" id={"shareholder_fname"+i}>ชื่อ</label>
+                        <input type="text"  name={"shareholder_firstname"+i } class="form-control" id={"shareholder_firstname"+i} placeholder="ชื่อ"  required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_lastname1">นามสกุล</label>
-                        <input type="text" name="shareholder_lastname1" class="form-control" id="shareholder_lastname1" placeholder="นามสกุล"></input>
+                        <input type="text" name={"shareholder_lastname"+i}  class="form-control" id={"shareholder_lastname"+i} placeholder="นามสกุล" required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                    </div>
+                    <div className="form-group  col-lg-4">
+                        <label className="label" for={"shareholder_idcard"+i} id={"shareholder_idcard"+i}>เลขบัตรประชาชน</label>
+                        <input type="text" name={"shareholder_idcard"+i}  class="form-control" id={"shareholder_idcard"+i} placeholder="เลขบัตรประชาชน"  required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_idcard"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                    </div>
+                    <div className="form-group  col-lg-4">
+                        <label className="label" for={"shareholder_occ"+i}>อาชีพ</label>
+                        <input type="text" name={"shareholder_occ"+i} class="form-control" id={"shareholder_occ"+i} placeholder="อาชีพ"  required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_occ"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="shareholder_firstname1">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="shareholder_phone1" class="form-control" id="shareholder_phone1" placeholder="หมายเลขโทรศัพท์"></input>
+                        <input type="text" name={"shareholder_phone"+i}  class="form-control" id={"shareholder_phone"+i} placeholder="หมายเลขโทรศัพท์"  required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-shareholder_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-8">
-                        <label className="label" for="shareholder_firstname1">อัพโหลดบัตรประชาชน</label>
+                        <label className="label" for="shareholder_firstname1" id={"shareholder_file"+i}>อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
                             <input type="file"/>
-                            <Uploadcloud /> 
+                            <Uploadcloud />
                             Choose File
                         </label>
                     </div>
 
                 </div>
                 <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ถือหุ้น คนที่ 2</label>
-                    
-                    </div>
-                    <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type2"  value="บุคคลธรรมดา" />
-                        <label class="form-check-label" for="inlineRadio2">บุคคลธรรมดา</label>
-                    </div>
-                    <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type2"  value="นิติบุคคล" />
-                        <label class="form-check-label" for="inlineRadio2">นิติบุคคล</label>
-                    </div>
-                    
+              </div>
+          );
 
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_title2">คำนำหน้า</label>
-                        <select class="form-control" name="shareholder_title2" id="shareholder_title2">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-                            
-                        </select>
-                       
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname2">ชื่อ</label>
-                        <input type="text" name="shareholder_firstname2" class="form-control" id="shareholder_firstname2" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_lastname2">นามสกุล</label>
-                        <input type="text" name="shareholder_lastname2" class="form-control" id="shareholder_lastname2" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname2">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="shareholder_phone2" class="form-control" id="shareholder_phone2" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                     
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud /> 
-                            อัพโหลดบัตรประชาชน
-                        </label>
-                    </div>
+      }
+      shareholder(){
+          let content = [];
+          let counth = 4;
 
-                </div>
-                <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ถือหุ้น คนที่ 3</label>
-                    
-                    </div>
-                    <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type3"  value="บุคคลธรรมดา" />
-                        <label class="form-check-label" for="inlineRadio3">บุคคลธรรมดา</label>
-                    </div>
-                    <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name="shareholder_type3"  value="นิติบุคคล" />
-                        <label class="form-check-label" for="inlineRadio3">นิติบุคคล</label>
-                    </div>
-                    
+          //alert(this.state.counth);
+          for (let i = 1; i < this.state.counth; i++) {
+            content.push(this.form_shareholder(i)) ;
 
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_title3">คำนำหน้า</label>
-                        <select class="form-control" name="shareholder_title3" id="shareholder_title3">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-                            
-                        </select>
-                       
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname3">ชื่อ</label>
-                        <input type="text" name="shareholder_firstname3" class="form-control" id="shareholder_firstname3" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_lastname3">นามสกุล</label>
-                        <input type="text" name="shareholder_lastname3" class="form-control" id="shareholder_lastname3" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname3">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="shareholder_phone3" class="form-control" id="shareholder_phone3" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="shareholder_firstname1">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud /> 
-                            Choose File
-                        </label>
-                    </div>
+          }
+          //let content_d = content.join('');
 
-                </div>
-                <hr className="hr_organge" />
+        return (
+            <div className="col-12 mt-5 text-grey pb-3">
+                 <form id="form_3">
+                {  content }
+                </form>
+                <button type="button" className="btn-company-next" onClick={(e) => { this.clickHolder(this.state.counth-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHolder(this.state.counth+1) }}>+</button>
                 <div className="row">
                     <div className="col-6">
 
@@ -836,54 +940,56 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5 text-right">
-                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(2) }}  value="1">ย้อนกลับ</button>
+                         <button className="btn-company-next"  onClick={(e) => { this.clickBack(2) }}  value="1">ย้อนกลับ</button>
                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(4) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
-                
+
             </div>
-            
-            
+
+
           );
 
       }
       addess_company(){
-     
+
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ที่อยู่บริษัท</h3>
+                <form id="form_2">
                 <div className="row">
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="address_no">เลขที่*</label>
-                        <input type="text" name="address_no" class="form-control" id="address_no" placeholder="เลขที่"></input>
+                        <input type="text" name="address_no" class="form-control" id="address_no" placeholder="เลขที่" value={this.state.data.address_no} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_no" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="address_tower">อาคาร</label>
-                        <input type="text" name="address_tower" class="form-control" id="address_tower" placeholder="อาคารบ้าน"></input>
+                        <input type="text" name="address_tower" class="form-control" id="address_tower" placeholder="อาคารบ้าน" value={this.state.data.address_tower}  onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="address_level">ชั้น</label>
-                        <input type="text" name="address_level" class="form-control" id="address_level" placeholder="ชั้น"></input>
+                        <input type="text" name="address_level" class="form-control" id="address_level" placeholder="ชั้น" value={this.state.data.address_level}  onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="address_level">ห้องเลขที่</label>
-                        <input type="text" name="address_room" class="form-control" id="address_room" placeholder="ห้องเลขที่"></input>
+                        <input type="text" name="address_room" class="form-control" id="address_room" placeholder="ห้องเลขที่" value={this.state.data.address_room}  onChange={this.handleChange.bind(this)}></input>
                     </div>
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_no">ซอย</label>
-                        <input type="text" name="address_soi" class="form-control" id="address_soi" placeholder="ซอย"></input>
+                        <input type="text" name="address_soi" class="form-control" id="address_soi" placeholder="ซอย" value={this.state.data.address_soi}  onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_road">ถนน</label>
-                        <input type="text" name="address_road" class="form-control" id="address_road" placeholder="ถนน"></input>
+                        <input type="text" name="address_road" class="form-control" id="address_road" placeholder="ถนน" value={this.state.data.address_road}  onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-lg-4">
                         <label className="label" for="address_province">จังหวัด</label>
-                        <select class="form-control" name="address_province" id="address_province">
+                        <select class="form-control" name="address_province" id="address_province" value={this.state.data.address_province} required onChange={this.handleChange.bind(this)}>
                             <option value="" selected>--------- เลือกจังหวัด ---------</option>
                             <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
                             <option value="กระบี่">กระบี่ </option>
@@ -964,54 +1070,60 @@ export default class Form_company extends React.Component {
                             <option value="อ่างทอง">อ่างทอง </option>
                             <option value="อื่นๆ">อื่นๆ</option>
                         </select>
+                        <span id="div-address_province" className="hide has-error">กรุณากรอกข้อมูล!</span>
 
                     </div>
-                   
+
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_state">เขต</label>
-                        <input type="text" name="address_state" class="form-control" id="address_state" placeholder="เขต"></input>
+                        <input type="text" name="address_state" class="form-control" id="address_state" placeholder="เขต" value={this.state.data.address_state} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_state" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_dist">แขวง</label>
-                        <input type="text" name="address_dist" class="form-control" id="address_dist" placeholder="แขวง"></input>
+                        <input type="text" name="address_dist" class="form-control" id="address_dist" placeholder="แขวง" value={this.state.data.address_dist} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_dist" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group col-lg-4">
                         <label className="label" for="address_postcode">รหัสไปรษณีย์</label>
-                        <input type="text" name="address_postcode" class="form-control" id="address_postcode" placeholder="รหัสไปรษณีย์"></input>
-
+                        <input type="text" name="address_postcode" class="form-control" id="address_postcode" placeholder="รหัสไปรษณีย์" value={this.state.data.address_postcode} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_postcode" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_home_code">รหัสประจำบ้าน</label>
-                        <input type="text" name="address_home_code" class="form-control" id="address_home_code" placeholder="รหัสประจำบ้าน"></input>
+                        <input type="text" name="address_home_code" class="form-control" id="address_home_code" placeholder="รหัสประจำบ้าน" value={this.state.data.address_home_code} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_home_code" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="address_phone">โทรศัพท์</label>
-                        <input type="text" name="address_phone" class="form-control" id="address_phone" placeholder="โทรศัพท์"></input>
+                        <input type="text" name="address_phone" class="form-control" id="address_phone" placeholder="โทรศัพท์" value={this.state.data.address_phone} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_phone" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-8">
                         <label className="label" for="address_email">E-mail</label>
-                        <input type="text" name="address_email" class="form-control" id="address_email" placeholder="E-mail"></input>
+                        <input type="text" name="address_email" class="form-control" id="address_email" placeholder="E-mail" value={this.state.data.address_email} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-address_email" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-12">
                         <label className="label" for="address_map">แผนที่</label>
                         <input type="text" name="address_map" class="form-control" id="address_map" placeholder="Link Google Map"></input>
                     </div>
-                    
+
                 </div>
-                
-                
+
+
                 <div className="form-group">
                     <label className="label" >สำเนาทะเบียนบ้านของที่ตั้งสำนักงาน</label>
                     Upload สำเนาทะเบียนบ้านของที่ตั้งสำนักงาน
                 </div>
                 <div className="row">
-                   
+
                     <div className="col-5 mt-5 text-center">
                     <label class="custom-file-upload">
                         <input type="file"/>
@@ -1021,7 +1133,7 @@ export default class Form_company extends React.Component {
                     <div className="col-7 mt-5">
                     </div>
                 </div>
-                
+            </form>
                 <div className="row">
                     <div className="col-6">
 
@@ -1030,33 +1142,40 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5 text-right">
-                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(1) }}  value="1">ย้อนกลับ</button>
-                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(3) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
+                        <button className="btn-company-next" type="button"  onClick={(e) => { this.clickBack(1) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next" type="button"  onClick={(e) => { this.clickStep(3) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
-                
+
             </div>
-            
-            
+
+
           );
 
       }
       company(){
-       
+        let qty = this.state.qty;
         return (
             <div className="col-12 mt-5 text-grey pb-3">
+                <form id="form_1">
                 <h3>ข้อมูลบริษัท</h3>
-                <div className="form-group">
-                    <label className="label" for="CompanyNameInput">ชื่อบริษัท</label>
-                    <input type="text" class="form-control" id="CompanyNameInput" placeholder="ชื่อบริษัท(ภาษาอังกฤษ)"></input>
+                <div className="form-group" >
+                    <label className="label" for="CompanyNameInput">ชื่อบริษัท *</label>
+                    <input type="text" class="form-control" id="CompanyNameInputTh" name="company_name" placeholder="ชื่อบริษัท(ภาษาไทย)" value={this.state.data.company_name} required onChange={this.handleChange.bind(this)} ></input>
+                    <span id="div-CompanyNameInputTh" className="hide has-error">กรุณากรอกข้อมูล!</span>
+
+                </div>
+                <div className="form-group" >
+                    <input type="text" class="form-control" id="CompanyNameInputEn" name="company_name_en" placeholder="ชื่อบริษัท(ภาษาอังกฤษ)" value={this.state.data.company_name_en} required  onChange={this.handleChange.bind(this)} ></input>
+                    <span id="div-CompanyNameInputEn" className="hide has-error">กรุณากรอกข้อมูล!</span>
                 </div>
                 <div className="form-group">
                     <label className="label" >ตราประทับ</label>
                     ในกรณีที่ตราประทับมีชื่อบริษัท จะต้องระบุคำว่า บริษัท นำหน้าชื่อ และคำว่า จำกัด ตามหลังชื่อด้วย
                 </div>
                 <div className="row">
-                   
+
                     <div className="col-5 mt-5 text-center">
                     <label class="custom-file-upload">
                         <input type="file"/>
@@ -1064,86 +1183,96 @@ export default class Form_company extends React.Component {
                     </label>
                     </div>
                     <div className="col-7 mt-5">
+                    <div className="form-group">
+                            <div  class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" onClick={this.change_buy} onChange={this.handleChange.bind(this)}  name="buy_stamp"   value="buy" />
+                                <label class="form-check-label" for="inlineRadio1">สั่งทำตรายาง (ราคา ตรายาง 200 บาท)</label>
+                            </div>
+
+                        </div>
+                        <div class="block-qty clearfix hide" id="block-qty">
+                            <div class="quantity-grup quantity-box clearfix"  >
+
+                            <div class="le-quantity">
+
+                                    <button type="button" class="minus" name="minus" onClick={(e) => { this.changeQty('minus') }} value="minus"  >-</button>
+                                    <input name="qty[0]" type="text" value={this.state.qty} id="qty_val" />
+                                    <button type="button" class="plus" name="plus" onClick={(e) => { this.changeQty('plus') }} className={ (this.state.step==2 ? 'is-active' : '')} value="plus">+</button>
+
+                            </div>
+
+                            </div>
+                        </div>
+                        <div class="clearfix hide" id="block-type">
                         <label for="StampInput">เลือกตราประทับแบบมาตรฐาน*</label>
                         <div className="form-group">
-                            
-                         
+
+
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="select_stamp"  value="circle" />
-                                <label class="form-check-label" for="inlineRadio1">วงกลม</label>
+                                <input class="form-check-input" type="radio" onChange={this.handleChange.bind(this)}  name="select_stamp"  value="circle" />
+                                <label class="form-check-label" for="inlineRadio1" onChange={this.handleChange.bind(this)} >วงกลม</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="select_stamp"  value="ellipse" />
+                                <input class="form-check-input" type="radio" name="select_stamp" onChange={this.handleChange.bind(this)}   value="ellipse" />
                                 <label class="form-check-label" for="inlineRadio1">วงรี</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="select_stamp"  value="squre" />
+                                <input class="form-check-input" type="radio" name="select_stamp"  onChange={this.handleChange.bind(this)}  value="squre" />
                                 <label class="form-check-label" for="inlineRadio1">สี่เหลี่ยม</label>
                             </div>
 
                         </div>
-                        <label for="BuyStampInput">สั่งทำตรายาง</label>
-                        <div className="form-group">
-                            <div  class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="buy_stamp"  value="buy" />
-                                <label class="form-check-label" for="inlineRadio1">สั่งทำตรายาง (ราคา ตรายาง 200 บาท)</label>
-                            </div>
-                            <div class="block-qty clearfix">
-											  <div class="quantity-grup quantity-box clearfix"  >
-											
-												<div class="le-quantity">
 
-													 <a class="minus" href="#reduce">-</a>
-													 <input name="qty[0]" type="text" value="1" id="qty_val" />
-													 <a class="plus" href="#add">+</a>
-
-												</div>
-												
-											  </div>   
-										</div> 
                         </div>
                     </div>
-                
+
                 </div>
                 <div className="form-group">
                     <label lassName="label" for="purposecompany">วัตถุประสงค์บริษัท*</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios1" value="ธุรกิจค้าขาย"  />
+                        <input class="form-check-input" type="radio" onChange={this.handleChange.bind(this)}  name="purposecompany" id="exampleRadios1" 
+                        value="ธุรกิจค้าขาย" 
+                        
+                         />
                         <label class="form-check-label" for="exampleRadios1">
                             ธุรกิจค้าขาย
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios2" value="ธุรกิจบริการ"  />
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios2" onChange={this.handleChange.bind(this)}  value="ธุรกิจบริการ"  />
                         <label class="form-check-label" for="exampleRadios2">
                         ธุรกิจบริการ
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios3" value="ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม"  />
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios3" onChange={this.handleChange.bind(this)}  value="ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม"  />
                         <label class="form-check-label" for="exampleRadios3">
                         ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios4" value="ธุรกิจเกษตรกรรม"  />
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios4" onChange={this.handleChange.bind(this)}  value="ธุรกิจเกษตรกรรม"  />
                         <label class="form-check-label" for="exampleRadios4">
                         ธุรกิจเกษตรกรรม
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" value="สำนักงานผู้แทน"  />
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="สำนักงานผู้แทน"  />
                         <label class="form-check-label" for="exampleRadios5">
                         สำนักงานผู้แทน
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" value="อื่น ๆ"  />
+                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="อื่น ๆ"  />
                         <label class="form-check-label" for="exampleRadios5">
                         อื่น ๆ
                         </label>
+
+                        <input type="text" name="purposecompany_other"  className="ml-3 hide" id="purposecompany_other" placeholder="อื่น ๆ"  onChange={this.handleChange.bind(this)} value={this.state.data.purposecompany_other}  />
                     </div>
-                    
+                   
+
+
                 </div>
                 <div className="row">
                     <div className="col-6">
@@ -1153,14 +1282,14 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-4 text-right">
-                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(2) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
+                        <button className="btn-company-next" type="button"  onClick={(e) => { this.clickStep(2) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
                 </div>
-                
+                </form>
             </div>
-            
-            
+
+
           );
       }
 }

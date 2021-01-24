@@ -39,7 +39,11 @@ const Sidebarformleft = class extends React.Component {
       <div className="col-md-12 col-lg-4 bg-yellow" >
     
         <ol>
-            <li>ข้อมูลบริษัท</li>
+            <li class="is-active">  
+              <Link className="navbar-link" to="/user/form_company">
+                ข้อมูลบริษัท
+              </Link>
+              </li>
             <li>ที่อยู่บริษัท</li>
             <li>ข้อมูลผู้ถือหุ้น</li>
             <li>ทุนจดทะเบียน</li>
