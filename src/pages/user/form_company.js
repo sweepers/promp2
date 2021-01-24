@@ -176,6 +176,13 @@ export default class Form_company extends React.Component {
 
 
     }
+    change_capital_share(e){
+       // alert( );
+      var class_share =  document.getElementsByClassName("capital_sharepure");
+    
+      class_share.disabled = false;
+      alert(class_share.disabled);
+    }
 
       render() {
 
@@ -237,9 +244,10 @@ export default class Form_company extends React.Component {
                     <li onClick={(e) => { this.clickBack(2) }} className={ (this.state.step==2 ? 'is-active' : '')}  >ที่อยู่บริษัท</li>
                     <li onClick={(e) => { this.clickBack(3) }}  className={ (this.state.step==3 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
                     <li onClick={(e) => { this.clickBack(4) }} className={ (this.state.step==4 ? 'is-active' : '')}>ทุนจดทะเบียน</li>
-                    <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ก่ตั้อง</li>
-                    <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6? 'is-active' : '')} >ข้อมูลกรรมการ</li>
-                    <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7 ? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
+                    <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
+                    <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6 ? 'is-active' : '')}>ข้อมูลผู้ก่อตั้ง</li>
+                    <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7? 'is-active' : '')} >ข้อมูลกรรมการ</li>
+                    <li onClick={(e) => { this.clickBack(8) }} className={ (this.state.step==8 ? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
 
                 </ol>
 
@@ -757,19 +765,63 @@ export default class Form_company extends React.Component {
 
           );
       }
+      form_capital(i){
+          
+        return (
+            <div>
+                 <div className="row">
+                    <div className="form-group  col-lg-3">
+                        <label className="label">ผู้ถือหุ้นที่ { i }</label>
+
+                    </div>
+                    <div className="form-group  col-lg-3">
+                        <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control" id={"capital_sharenumber"+i} placeholder="จำนวนหุ้นสามัญ"></input><br />
+                        <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control capital_sharepure" disabled="0" id={"capital_sharepure"+i} placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
+
+                    </div>
+
+                 </div>
+            </div>
+        );
+
+    }
       capital(){
+        let content = [];
+        let counth = 4;
+
+        //alert(this.state.counth);
+        for (let i = 1; i < this.state.counth; i++) {
+          content.push(this.form_capital(i)) ;
+
+        }
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                  <h3>ทุนจดทะเบียน</h3>
+                 <form id="form_3">
+                 <div className="row">
+                     <div className="form-group  col-lg-3">
+                     <label className="label" for="capital_invencount">จำนวนทุนจดทะเบียน</label>
+                     <input class="form-control" type="text" name="capital_invencount"  value="" placeholder="จำนวนทุนจดทะเบียน" value={this.state.data.capital_invencount}  onChange={this.handleChange.bind(this)} />
+
+                     </div>
+                     <div className="form-group  col-lg-3">
+                        <label className="label" for="capital_sharecount">จำนวนหุ้น</label>
+                        <input class="form-control" type="text" name="capital_sharecount"  value="" placeholder="จำนวนหุ้น" value={this.state.data.capital_sharecount}  onChange={this.handleChange.bind(this)} />
+
+                     </div>
+                     
+                   
+
+                 </div>
                  <div className="row">
                     <div className="form-group  col-lg-3">
                         <label className="label" for="capital_share">จำนวนทุนจดทะเบียน</label>
-                        <input class="form-check-input-inline" type="radio" name="capital_share"  value="มีหุ้นบริสุทธิ์" />
+                        <input class="form-check-input-inline" type="checkbox" name="capital_share" onClick={this.change_capital_share}  value="มีหุ้นบริสุทธิ์" value={this.state.data.capital_share}  onChange={this.handleChange.bind(this)} />
                         <label class="form-check-label" for="inlineRadio1">มีหุ้นบริสุทธิ์</label>
                     </div>
                     <div className="form-group  col-lg-3">
                         <label>จำนวนหุ้น</label>
-                        <input type="text" name="capital_shareprice" class="form-control" id="capital_shareprice" placeholder="จำนวน"></input>
+                        <input type="text" name="capital_shareallstock" class="form-control " id="capital_shareallstock" readOnly placeholder="จำนวน"value={this.state.data.capital_shareallstock} ></input>
                     </div>
 
                  </div>
@@ -779,47 +831,20 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="form-group  col-lg-3">
-                        <label>25% 50% 75% 100%</label>
+                        <select name="capital_shareprice" className="form-control" value={this.state.data.capital_shareprice}  onChange={this.handleChange.bind(this)}>
+                            <option value="25">25%</option>
+                            <option value="50">50%</option>
+                            <option value="775">75%</option>
+                            <option value="100">100%</option>
+                        </select>
 
                     </div>
 
                  </div>
-                 <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label">ผู้ถือหุ้นที่ 1</label>
-
-                    </div>
-                    <div className="form-group  col-lg-3">
-                        <input type="text" name="capital_sharenumber1" class="form-control" id="capital_sharenumber1" placeholder="จำนวนหุ้นสามัญ"></input><br />
-                        <input type="text" name="capital_sharenumber1" class="form-control" id="capital_sharepure1" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-
-                    </div>
-
-                 </div>
-                 <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label">ผู้ถือหุ้นที่ 2</label>
-
-                    </div>
-                    <div className="form-group  col-lg-3">
-                        <input type="text" name="capital_sharenumber2" class="form-control" id="capital_sharenumber2" placeholder="จำนวนหุ้นสามัญ"></input><br />
-                        <input type="text" name="capital_sharenumber2" class="form-control" id="capital_sharepure2" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-
-                    </div>
-
-                 </div>
-                 <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label">ผู้ถือหุ้นที่ 3</label>
-
-                    </div>
-                    <div className="form-group  col-lg-3">
-                        <input type="text" name="capital_sharenumber3" class="form-control" id="capital_sharenumber3" placeholder="จำนวนหุ้นสามัญ"></input><br />
-                        <input type="text" name="capital_sharenumber3" class="form-control" id="capital_sharepure3" placeholder="จำนวนหุ้นบุริมสิทธิ์"></input>
-
-                    </div>
-
-                 </div>
+                
+                 
+                 { content }
+                 </form>
                  <div className="row">
                     <div className="col-6">
 
