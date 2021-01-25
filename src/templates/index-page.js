@@ -42,7 +42,7 @@ export const IndexPageTemplate = ({
                     </div>
                     <div class="pt-25  font-22">
                       <span className="white">PROMPT Corpate Registration</span><br />
-                      <span  >ก้าวแรกสู่</span><span className="white bold" >ความสำเร็จ</span><span>ของธุรกิจของคุณ</span>
+                      <span  >ก้าวแรกสู่</span><span className="white bold" >ความสำเร็จ</span><span>ของธุรกิจคุณ</span>
                     </div>
                     
                     
@@ -56,28 +56,36 @@ export const IndexPageTemplate = ({
             <div className="col-lg-6 text-center">
                 <div class="pt-3">
                 <h2>โปรดเตรียมเอกสารและข้อมูลต่อไปนี้ให้พร้อม</h2>
+                <h2>ก่อนเริ่มขั้นตอนต่อไป</h2>
               
-                ก่อนเริ่มขั้นตอนต่อไป<br />
                 </div>
                 
                 
                 <div class="row justify-content-center pt-5">
                   <div class="col-3 text-center ">
                     <div className="number_border">1</div>
-                    <Docs />
-                    <br />
+                    <div className="h-7">
+                      <Docs />
+                    </div>
+                    
+                    
                     ทะเบียนบ้าน<br />
                     ของที่ตั้งสำนักงาน
                   </div>
                   <div class="col-3 ">
                   <div className="number_border">2</div>
-                    <IdCard /><br />
+                    <div className="h-7">
+                      <IdCard />
+                    </div>
+                    
                     บัตรประชาชน/<br />
                     หนังสือผู้รับรองผู้ถือหุ้น
                   </div>
                   <div class="col-3 ">
                   <div className="number_border">3</div>
-                    <IdCard /><br />
+                  <div className="h-7">
+                      <IdCard />
+                    </div>
                     บัตรประชาชน<br />
                     ผู้ก่อตั้ง
                   </div>
@@ -85,13 +93,19 @@ export const IndexPageTemplate = ({
               <div class="row justify-content-center pt-5 pb-5">
                   <div class="col-3 ">
                   <div className="number_border">4</div>
-                    <IdCard /><br />
+                    <div className="h-7">
+                      <IdCard />
+                    </div>
+                    
                     บัตรประชาชน<br />
                     กรรมการ
                   </div>
                   <div class="col-3 ">
                     <div className="number_border">5</div>
-                     <Stamp /><br />
+                    <div className="h-7">
+                      <Stamp />
+                    </div>
+                    
                      ไฟล์ตราประทับ<br />
                     (ถ้ามี)
                   </div>

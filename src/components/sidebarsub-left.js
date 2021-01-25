@@ -73,7 +73,7 @@ const Sidebarsubleft = class extends React.Component {
                         </div>
                         <div className="col-9">
                             <Link   to="/user/confirm_booking">
-                                <h5>ยืนยันการนับหมาย</h5>
+                                <h5>ยืนยันการนัดหมาย</h5>
                             </Link>
                           
                             

@@ -290,10 +290,10 @@ export default class Form_company extends React.Component {
                     <li onClick={(e) => { this.clickBack(2) }} className={ (this.state.step==2 ? 'is-active' : '')}  >ที่อยู่บริษัท</li>
                     <li onClick={(e) => { this.clickBack(3) }}  className={ (this.state.step==3 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
                     <li onClick={(e) => { this.clickBack(4) }} className={ (this.state.step==4 ? 'is-active' : '')}>ทุนจดทะเบียน</li>
-                    <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
-                    <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6 ? 'is-active' : '')}>ข้อมูลผู้ก่อตั้ง</li>
-                    <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7? 'is-active' : '')} >ข้อมูลกรรมการ</li>
-                    <li onClick={(e) => { this.clickBack(8) }} className={ (this.state.step==8 ? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
+              
+                    <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ก่อตั้ง</li>
+                    <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6? 'is-active' : '')} >ข้อมูลกรรมการ</li>
+                    <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
 
                 </ol>
 
@@ -308,6 +308,7 @@ export default class Form_company extends React.Component {
           return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>การประชุมจัดตั้ง</h3>
+                <form id="form_7">
                 <div className="row">
                     <div className="form-group  col-lg-6">
                         <label className="label" for="meeting_date">เลือกวัน</label>
@@ -466,6 +467,7 @@ export default class Form_company extends React.Component {
 
 
                 </div>
+                </form>
                 <div className="row">
                     <div className="col-6">
 
@@ -474,7 +476,7 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5">
-                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(6) }}  value="1">ย้อนกลับ</button>
+                    <button className="btn-company-next"  onClick={(e) => { this.clickBack(6) }}  value="1">ย้อนกลับ</button>
                         <button className="btn-company-next"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
                     </div>
 
@@ -495,6 +497,7 @@ export default class Form_company extends React.Component {
 
 
                 </div>
+                <form id="form_6">
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharedirect_title1">คำนำหน้า</label>
@@ -634,6 +637,7 @@ export default class Form_company extends React.Component {
                     </div>
 
                 </div>
+                </form>
                 <hr className="hr_organge" />
                 <div className="row">
                     <div className="col-6">
@@ -643,7 +647,7 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="col-5 text-right">
-                    <button className="btn-company-next"  onClick={(e) => { this.clickStep(5) }}  value="1">ย้อนกลับ</button>
+                    <button className="btn-company-next"  onClick={(e) => { this.clickBack(5) }}  value="1">ย้อนกลับ</button>
                         <button className="btn-company-next"  onClick={(e) => { this.clickStep(7) }}  value="1">ดำเนินการต่อ <Arrowright /></button>
                     </div>
 
@@ -669,6 +673,7 @@ export default class Form_company extends React.Component {
 
 
                 </div>
+                <form id="form_5">
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_title1">คำนำหน้า</label>
@@ -791,6 +796,7 @@ export default class Form_company extends React.Component {
                     </div>
 
                 </div>
+                </form>
                 <hr className="hr_organge" />
                 <div className="row">
                     <div className="col-6">
