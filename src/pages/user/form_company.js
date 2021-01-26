@@ -21,11 +21,12 @@ export default class Form_company extends React.Component {
         super(props)
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {step: 1,counth:4, qty:1,data:[]};
+        this.state = {step: 1,counth:4,countha:4, qty:1,data:[]};
 
         this.clickStep = this.clickStep.bind(this);
         this.clickBack = this.clickBack.bind(this);
         this.clickHolder = this.clickHolder.bind(this);
+        this.clickHoldera = this.clickHolder.bind(this);
         this.changeQty = this.changeQty.bind(this);
 
 
@@ -38,10 +39,14 @@ export default class Form_company extends React.Component {
        // let dat = data.event.target.name;
        const items = this.state.data;
        items[name] = value;
-    
+       console.log('value',value);
        if(event.target.classList.contains('calshare')){
            
            this.calshare();
+       }
+       if(event.target.classList.contains('calnormal')){
+        
+            this.calnormal();
        }
        if(name == 'purposecompany'){
             var eleo = document.getElementById('purposecompany_other');
@@ -84,15 +89,33 @@ export default class Form_company extends React.Component {
       }
       clickHolder(value){
 
-          if(value <= 2){
-            this.state.counth = 2;
-            this.setState({ counth:2})
+          if(value <= 4){
+            this.state.counth = 4;
+            this.setState({ counth:4})
           }else{
             this.state.counth = value;
             this.setState({ counth:value})
           }
 
+          if(this.state.countha < this.state.counth){
+            this.setState({ countha:this.state.counth})
+
+          }
+
       }
+      clickHoldera(value){
+
+        if(value <= 4){
+          this.state.countha = 4;
+          this.setState({ countha:4})
+        }else{
+          this.state.countha = value;
+          this.setState({ countha:value})
+        }
+
+        
+
+    }
       clickStep(e) {
           let id = e-1;
         
@@ -143,6 +166,22 @@ export default class Form_company extends React.Component {
         }
 
     }
+    chengestart_title_name(e){
+        let id = e.target.id
+        let value = e.target.value
+        id = id.replace('sharestart_title','');
+
+        //let  element = document.getElementById("shareholder_titleother"+id);
+        if(value == 'other'){
+             document.getElementById("sharestart_titleother"+id).style.display = 'block';
+
+           // $('.'+id).show();
+        }else{
+            document.getElementById("sharestart_titleother"+id).style.display = 'none';
+        //    $('.'+id).hide();
+        }
+
+    }
     change_typeholder(e){
         let id = e.target.name
         let value = e.target.value
@@ -189,7 +228,25 @@ export default class Form_company extends React.Component {
         }
       }
       
-     
+     calnormal(){
+        const items = this.state.data;
+       
+        var cal = 0*1;
+        var elems = document.querySelectorAll(".calnormal");
+        /*this.state.data.capital_sharepure.forEach(function(newItem) {
+            alert(newItem);
+          }, this);    */
+          [].forEach.call(elems, function(el) {
+              if(el.value > 0){
+                cal += el.value*1
+              }
+                
+         });
+         items['capital_sharecount'] = cal
+         console.log('cal',cal);
+        this.setState({ data:items})
+         //capital_sharecount
+     }
       // logs "blue"
     calshare(){
         const items = this.state.data;
@@ -659,45 +716,53 @@ export default class Form_company extends React.Component {
           );
 
       }
-      startcompany(){
-
-        return (
-            <div className="col-12 mt-5 text-grey pb-3">
-                <h3>ข้อมูลผู้ก่อตั้งบริษัท</h3>
-                <div className="row">
+      form_startcompany(i){
+          return (
+              <div>
+                  <div className="row">
                     <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ก่อตั้ง คนที่ 1</label>
+                        <label className="label" >ผู้ก่อตั้ง คนที่ {i}</label>
 
                     </div>
 
 
 
                 </div>
-                <form id="form_5">
+               
                 <div className="row">
-                    <div className="form-group  col-lg-4">
+                <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_title1">คำนำหน้า</label>
-                        <select class="form-control" name="sharestart_title1" id="sharestart_title1">
+                        <select   onChange={this.chengestart_title_name}  class="form-control"   name={"sharestart_title["+i+"]"} id={"sharestart_title"+i} >
                             <option value="" selected>--------- คำนำหน้า ---------</option>
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
+                            <option value="other">อื่น ๆ</option>
 
                         </select>
+                       <div id={"sharestart_titleother"+i} className="hide pt-3">
+                        <input type="text" name={"sharestart_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["sharestart_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
+                       </div>
+                 
 
                     </div>
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_firstname1">ชื่อ</label>
-                        <input type="text" name="sharestart_firstname1" class="form-control" id="sharestart_firstname1" placeholder="ชื่อ"></input>
+                        <label className="label" for="sharestart_firstname1" id={"sharestart_firstname"+i}>ชื่อ</label>
+                        <input type="text"  name={"sharestart_firstname["+i+"]" } class="form-control" id={"sharestart_firstname"+i} placeholder="ชื่อ" value={this.state.data["sharestart_firstname["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-sharestart_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_lastname1">นามสกุล</label>
-                        <input type="text" name="sharestart_lastname1" class="form-control" id="sharestart_lastname1" placeholder="นามสกุล"></input>
+                        <input type="text" name={"sharestart_lastname["+i+"]"}  class="form-control" id={"sharestart_lastname"+i} placeholder="นามสกุล" value={this.state.data["sharestart_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-sharestart_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
+                    
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_phone1">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharestart_phone1" class="form-control" id="sharestart_phone1" placeholder="หมายเลขโทรศัพท์"></input>
+                        <input type="text" name={"sharestart_phone["+i+"]"}  class="form-control" id={"sharestart_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["sharestart_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
+                        <span id={"div-sharestart_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
+                 
                     <div className="form-group  col-lg-8">
                         <label className="label" for="shareholder_firstname1">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
@@ -709,95 +774,25 @@ export default class Form_company extends React.Component {
 
                 </div>
                 <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ก่อตั้ง คนที่ 2</label>
+              </div>
+          )
+      }
+      startcompany(){
+        let content = [];
+        let counth = 4;
 
-                    </div>
+        
+        for (let i = 1; i < this.state.countha; i++) {
+          content.push(this.form_startcompany(i)) ;
 
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_title2">คำนำหน้า</label>
-                        <select class="form-control" name="sharestart_title2" id="sharestart_title2">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-
-                        </select>
-
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_firstname2">ชื่อ</label>
-                        <input type="text" name="sharestart_firstname2" class="form-control" id="sharestart_firstname2" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_lastname2">นามสกุล</label>
-                        <input type="text" name="sharestart_lastname2" class="form-control" id="sharestart_lastname2" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_phone2">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharestart_phone2" class="form-control" id="sharestart_phone2" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="shareholder_firstname2">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud />
-                            Choose File
-                        </label>
-                    </div>
-
-                </div>
-                <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >ผู้ก่อตั้ง คนที่ 3</label>
-
-                    </div>
-
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_title3">คำนำหน้า</label>
-                        <select class="form-control" name="sharestart_title3" id="sharestart_title3">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-
-                        </select>
-
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_firstname3">ชื่อ</label>
-                        <input type="text" name="sharestart_firstname3" class="form-control" id="sharestart_firstname3" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_lastname3">นามสกุล</label>
-                        <input type="text" name="sharestart_lastname3" class="form-control" id="sharestart_lastname3" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharestart_phone3">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharestart_phone3" class="form-control" id="sharestart_phone3" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="shareholder_firstname2">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud />
-                            Choose File
-                        </label>
-                    </div>
-
-                </div>
+        }
+        return (
+            <div className="col-12 mt-5 text-grey pb-3">
+                 <form id="form_5">
+                <h3>ข้อมูลผู้ก่อตั้งบริษัท</h3>
+                    { content}
+                    <button type="button" className="btn-company-next" onClick={(e) => { this.clickHoldera(this.state.counth-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHoldera(this.state.counth+1) }}>+</button>
                 </form>
-                <hr className="hr_organge" />
                 <div className="row">
                     <div className="col-6">
 
@@ -817,13 +812,7 @@ export default class Form_company extends React.Component {
 
           );
       }
-      dataholder(){
-          return (
-              <div>
-                  
-              </div>
-          );
-      }
+    
       form_capital(i){
           
         return (
@@ -834,7 +823,7 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="form-group  col-lg-3">
-                        <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control" id={"capital_sharenumber"+i} placeholder="จำนวนหุ้นสามัญ"></input><br />
+                        <input type="text" name={"capital_sharenumber["+i+"]"} class="form-control calnormal" id={"capital_sharenumber"+i} placeholder="จำนวนหุ้นสามัญ" value={this.state.data["capital_sharenumber["+i+"]"]}  onChange={this.handleChange.bind(this)}></input><br />
                         <input type="text" name={"capital_sharepure["+i+"]"} class="form-control capital_sharepure calshare hide"  id={"capital_sharepure"+i} placeholder="จำนวนหุ้นบุริมสิทธิ์" value={this.state.data["capital_sharepure["+i+"]"]}  onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-capital_sharepure"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
@@ -860,12 +849,12 @@ export default class Form_company extends React.Component {
                  <div className="row">
                      <div className="form-group  col-lg-3">
                      <label className="label" for="capital_invencount">จำนวนทุนจดทะเบียน</label>
-                     <input class="form-control" type="text" name="capital_invencount"  value="" placeholder="จำนวนทุนจดทะเบียน" value={this.state.data.capital_invencount}  onChange={this.handleChange.bind(this)} />
+                     <input class="form-control" type="text" name="capital_invencount" placeholder="จำนวนทุนจดทะเบียน" value={this.state.data.capital_invencount}  onChange={this.handleChange.bind(this)} />
 
                      </div>
                      <div className="form-group  col-lg-3">
                         <label className="label" for="capital_sharecount">จำนวนหุ้น</label>
-                        <input class="form-control" type="text" name="capital_sharecount"  value="" placeholder="จำนวนหุ้น" value={this.state.data.capital_sharecount}  onChange={this.handleChange.bind(this)} />
+                        <input class="form-control" type="text" name="capital_sharecount"  placeholder="จำนวนหุ้น" readOnly value={this.state.data.capital_sharecount}  onChange={this.handleChange.bind(this)} />
 
                      </div>
                      
