@@ -118,6 +118,31 @@ export default class Form_company extends React.Component {
     }
       clickStep(e) {
           let id = e-1;
+          console.log('id',id);
+          if(e == 5){
+            let items = this.state.data;
+            if(!items['sharestart_firstname[1]']){
+              let b = 1;
+               for (let i = 1; i < this.state.counth; i++) {
+                  
+                    
+                    if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
+                        items['sharestart_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
+                        items['sharestart_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
+                        items['sharestart_phone['+b +']'] = items['shareholder_phone['+i+']'];
+                        
+                        b++;
+                    }
+                  
+                    
+      
+              }
+              console.log('items',items);
+              this.setState({data: items});
+               
+            }
+            console.log(id);
+          }
         
           let error = false;
           var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
@@ -183,12 +208,14 @@ export default class Form_company extends React.Component {
 
     }
     change_typeholder(e){
+      let name = e.target.name;
         let id = e.target.name
         let value = e.target.value
         id = id.replace('shareholder_type[','');
         id = id.replace(']','');
-        
-
+        let items = this.state.data;
+       items[name] = value;
+     
         if(value == 'บุคคลธรรมดา'){
             document.getElementById("shareholder_fname"+id).innerHTML = 'ชื่อ';
             document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขบัตรประชาขน';
@@ -201,6 +228,7 @@ export default class Form_company extends React.Component {
            document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดหนังสือรับรองบริษัท';
        //    $('.'+id).hide();
        }
+       this.setState({data: items});
 
     }
     
@@ -779,8 +807,8 @@ export default class Form_company extends React.Component {
       }
       startcompany(){
         let content = [];
-        let counth = 4;
-
+      
+       
         
         for (let i = 1; i < this.state.countha; i++) {
           content.push(this.form_startcompany(i)) ;
@@ -921,11 +949,11 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"} id={"shareholder_type"+i} onClick={this.change_typeholder}  checked  value="บุคคลธรรมดา" />
+                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"} id={"shareholder_type"+i} onClick={this.change_typeholder.bind(this)}    value="บุคคลธรรมดา" />
                         <label class="form-check-label" for="inlineRadio1">บุคคลธรรมดา</label>
                     </div>
                     <div className="form-group col-lg-2">
-                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"}  onClick={this.change_typeholder}  value="นิติบุคคล"  />
+                        <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"}  onClick={this.change_typeholder.bind(this)}   value="นิติบุคคล"  />
                         <label class="form-check-label" for="inlineRadio1">นิติบุคคล</label>
                     </div>
            
