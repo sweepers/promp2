@@ -21,12 +21,13 @@ export default class Form_company extends React.Component {
         super(props)
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {step: 1,counth:4,countha:4, qty:1,data:[]};
+        this.state = {step: 1,counth:4,countha:4,counthb:4, qty:1,data:[]};
 
         this.clickStep = this.clickStep.bind(this);
         this.clickBack = this.clickBack.bind(this);
         this.clickHolder = this.clickHolder.bind(this);
-        this.clickHoldera = this.clickHolder.bind(this);
+        this.clickHoldera = this.clickHoldera.bind(this);
+        this.clickHolderb = this.clickHolderb.bind(this);
         this.changeQty = this.changeQty.bind(this);
 
 
@@ -104,13 +105,26 @@ export default class Form_company extends React.Component {
 
       }
       clickHoldera(value){
-
+      
         if(value <= 4){
           this.state.countha = 4;
           this.setState({ countha:4})
         }else{
           this.state.countha = value;
           this.setState({ countha:value})
+        }
+
+        
+
+    }
+    clickHolderb(value){
+      
+        if(value <= 2){
+          this.state.counthb = 2;
+          this.setState({ counthb:2})
+        }else{
+          this.state.counthb = value;
+          this.setState({ counthb:value})
         }
 
         
@@ -130,12 +144,40 @@ export default class Form_company extends React.Component {
                         items['sharestart_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
                         items['sharestart_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
                         items['sharestart_phone['+b +']'] = items['shareholder_phone['+i+']'];
+
+                        
                         
                         b++;
                     }
                   
                     
       
+              }
+              console.log('items',items);
+              this.setState({data: items});
+               
+            }
+            console.log(id);
+          }
+          if(e == 6){
+            let items = this.state.data;
+            if(!items['sharedirect_firstname[1]']){
+              let b = 1;
+               for (let i = 1; i < this.state.counth; i++) {
+                  
+                    
+                    if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
+                        items['sharedirect_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
+                        items['sharedirect_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
+                        items['sharedirect_phone['+b +']'] = items['shareholder_phone['+i+']'];
+
+                        
+                        
+                        b++;
+                    }
+                  
+                    
+                    this.setState({counthb: b});
               }
               console.log('items',items);
               this.setState({data: items});
@@ -203,6 +245,22 @@ export default class Form_company extends React.Component {
            // $('.'+id).show();
         }else{
             document.getElementById("sharestart_titleother"+id).style.display = 'none';
+        //    $('.'+id).hide();
+        }
+
+    }
+    chengedirect_title_name(e){
+        let id = e.target.id
+        let value = e.target.value
+        id = id.replace('sharesdirect_title','');
+
+        //let  element = document.getElementById("shareholder_titleother"+id);
+        if(value == 'other'){
+             document.getElementById("sharedirect_titleother"+id).style.display = 'block';
+
+           // $('.'+id).show();
+        }else{
+            document.getElementById("sharedirect_titleother"+id).style.display = 'none';
         //    $('.'+id).hide();
         }
 
@@ -404,17 +462,101 @@ export default class Form_company extends React.Component {
                     </div>
                     <div className="form-group  col-lg-6">
                         <label className="label" for="meeting_date">เลือกเวลา</label>
-                        <ul className="row">
-                            <li className="col-4  "><div className="time-bg">09:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">10:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">11:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">12:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">13:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg time-active">14:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">15:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">16:00 น.</div></li>
-                            <li className="col-4  "><div className="time-bg">17:00 น.</div></li>
-                        </ul>
+                        <select name="meetingtime_hours" onChange={this.handleChange.bind(this)}>
+                            <option selected={this.state.data.meetingtime_hours == '00'}>00</option>
+                            <option selected={this.state.data.meetingtime_hours == '01'}>01</option>
+                            <option selected={this.state.data.meetingtime_hours == '02'}>02</option>
+                            <option selected={this.state.data.meetingtime_hours == '03'}>03</option>
+                            <option selected={this.state.data.meetingtime_hours == '04'}>04</option>
+                            <option selected={this.state.data.meetingtime_hours == '05'}>05</option>
+                            <option selected={this.state.data.meetingtime_hours == '06'}>06</option>
+                            <option selected={this.state.data.meetingtime_hours == '07'}>07</option>
+                            <option selected={this.state.data.meetingtime_hours == '08'}>08</option>
+                            <option selected={this.state.data.meetingtime_hours == '09'}>09</option>
+                            <option selected={this.state.data.meetingtime_hours == '10'}>10</option>
+                            <option selected={this.state.data.meetingtime_hours == '11'}>11</option>
+                            <option selected={this.state.data.meetingtime_hours == '12'}>12</option>
+                            <option selected={this.state.data.meetingtime_hours == '13'}>13</option>
+                            <option selected={this.state.data.meetingtime_hours == '14'}>14</option>
+                            <option selected={this.state.data.meetingtime_hours == '15'}>15</option>
+                            <option selected={this.state.data.meetingtime_hours == '16'}>16</option>
+                            <option selected={this.state.data.meetingtime_hours == '17'}>17</option>
+                            <option selected={this.state.data.meetingtime_hours == '18'}>18</option>
+                            <option selected={this.state.data.meetingtime_hours == '19'}>19</option>
+                            <option selected={this.state.data.meetingtime_hours == '20'}>20</option>
+                            <option selected={this.state.data.meetingtime_hours == '21'}>21</option>
+                            <option selected={this.state.data.meetingtime_hours == '22'}>22</option>
+                            <option selected={this.state.data.meetingtime_hours == '23'}>23</option>
+                       
+                            
+                        </select>
+                        :
+                        <select name="meetingtime_minute" onChange={this.handleChange.bind(this)}>
+                            <option selected={this.state.data.meetingtime_minute == '00'}>00</option>
+                            <option selected={this.state.data.meetingtime_minute == '01'}>01</option>
+                            <option selected={this.state.data.meetingtime_minute == '02'}>02</option>
+                            <option selected={this.state.data.meetingtime_minute == '03'}>03</option>
+                            <option selected={this.state.data.meetingtime_minute == '04'}>04</option>
+                            <option selected={this.state.data.meetingtime_minute == '05'}>05</option>
+                            <option selected={this.state.data.meetingtime_minute == '06'}>06</option>
+                            <option selected={this.state.data.meetingtime_minute == '07'}>07</option>
+                            <option selected={this.state.data.meetingtime_minute == '08'}>08</option>
+                            <option selected={this.state.data.meetingtime_minute == '09'}>09</option>
+                            <option selected={this.state.data.meetingtime_minute == '10'}>10</option>
+                            <option selected={this.state.data.meetingtime_minute == '11'}>11</option>
+                            <option selected={this.state.data.meetingtime_minute == '12'}>12</option>
+                            <option selected={this.state.data.meetingtime_minute == '13'}>13</option>
+                            <option selected={this.state.data.meetingtime_minute == '14'}>14</option>
+                            <option selected={this.state.data.meetingtime_minute == '15'}>15</option>
+                            <option selected={this.state.data.meetingtime_minute == '16'}>16</option>
+                            <option selected={this.state.data.meetingtime_minute == '17'}>17</option>
+                            <option selected={this.state.data.meetingtime_minute == '18'}>18</option>
+                            <option selected={this.state.data.meetingtime_minute == '19'}>19</option>
+                            <option selected={this.state.data.meetingtime_minute == '20'}>20</option>
+                            <option selected={this.state.data.meetingtime_minute == '21'}>21</option>
+                            <option selected={this.state.data.meetingtime_minute == '22'}>22</option>
+                            <option selected={this.state.data.meetingtime_minute == '23'}>23</option>
+                            <option selected={this.state.data.meetingtime_minute == '23'}>23</option>
+                            <option selected={this.state.data.meetingtime_minute == '24'}>24</option>
+                            <option selected={this.state.data.meetingtime_minute == '25'}>25</option>
+                            <option selected={this.state.data.meetingtime_minute == '26'}>26</option>
+                            <option selected={this.state.data.meetingtime_minute == '27'}>27</option>
+                            <option selected={this.state.data.meetingtime_minute == '28'}>28</option>
+                            <option selected={this.state.data.meetingtime_minute == '29'}>28</option>
+                            <option selected={this.state.data.meetingtime_minute == '30'}>30</option>
+                            <option selected={this.state.data.meetingtime_minute == '31'}>31</option>
+                            <option selected={this.state.data.meetingtime_minute == '32'}>32</option>
+                            <option selected={this.state.data.meetingtime_minute == '33'}>33</option>
+                            <option selected={this.state.data.meetingtime_minute == '34'}>34</option>
+                            <option selected={this.state.data.meetingtime_minute == '35'}>35</option>
+                            <option selected={this.state.data.meetingtime_minute == '36'}>36</option>
+                            <option selected={this.state.data.meetingtime_minute == '37'}>37</option>
+                            <option selected={this.state.data.meetingtime_minute == '38'}>38</option>
+                            <option selected={this.state.data.meetingtime_minute == '39'}>39</option>
+                            <option selected={this.state.data.meetingtime_minute == '40'}>40</option>
+                            <option selected={this.state.data.meetingtime_minute == '41'}>41</option>
+                            <option selected={this.state.data.meetingtime_minute == '42'}>42</option>
+                            <option selected={this.state.data.meetingtime_minute == '43'}>43</option>
+                            <option selected={this.state.data.meetingtime_minute == '44'}>44</option>
+                            <option selected={this.state.data.meetingtime_minute == '45'}>45</option>
+                            <option selected={this.state.data.meetingtime_minute == '46'}>46</option>
+                            <option selected={this.state.data.meetingtime_minute == '47'}>47</option>
+                            <option selected={this.state.data.meetingtime_minute == '48'}>48</option>
+                            <option selected={this.state.data.meetingtime_minute == '49'}>49</option>
+                            <option selected={this.state.data.meetingtime_minute == '50'}>50</option>
+                            <option selected={this.state.data.meetingtime_minute == '51'}>51</option>
+                            <option selected={this.state.data.meetingtime_minute == '52'}>52</option>
+                            <option selected={this.state.data.meetingtime_minute == '53'}>53</option>
+                            <option selected={this.state.data.meetingtime_minute == '54'}>54</option>
+                            <option selected={this.state.data.meetingtime_minute == '55'}>55</option>
+                            <option selected={this.state.data.meetingtime_minute == '56'}>56</option>
+                            <option selected={this.state.data.meetingtime_minute == '57'}>57</option>
+                            <option selected={this.state.data.meetingtime_minute == '58'}>58</option>
+                            <option selected={this.state.data.meetingtime_minute == '59'}>59</option>
+
+                       
+                            
+                        </select>
                     </div>
 
                 </div>
@@ -569,161 +711,91 @@ export default class Form_company extends React.Component {
             </div>
           );
       }
+      form_directcompany(i){
+        return (
+            <div>
+                <div className="row">
+                  <div className="form-group  col-lg-3">
+                      <label className="label" >กรรมการs คนที่ {i}</label>
+
+                  </div>
+
+
+
+              </div>
+             
+              <div className="row">
+              <div className="form-group  col-lg-4">
+                      <label className="label" for="sharesdirect_title1">คำนำหน้า</label>
+                      <select   onChange={this.chengedirect_title_name}  class="form-control"   name={"sharesdirect_title["+i+"]"} id={"sharesdirect_title"+i} >
+                          <option value="" >--------- คำนำหน้า ---------</option>
+                          <option value="นางสาว">นางสาว</option>
+                          <option value="นาง">นาง</option>
+                          <option value="นาง">นาย</option>
+                          <option value="other">อื่น ๆ</option>
+
+                      </select>
+                     <div id={"sharedirect_titleother"+i} className="hide pt-3">
+                      <input type="text" name={"sharedirect_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["sharedirect_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
+                     </div>
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4">
+                      <label className="label" for="sharedirect_firstname1" id={"sharedirect_firstname"+i}>ชื่อ</label>
+                      <input type="text"  name={"sharedirect_firstname["+i+"]" } class="form-control" id={"sharedirect_firstname"+i} placeholder="ชื่อ" value={this.state.data["sharedirect_firstname["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
+                      <span id={"div-sharedirect_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                  </div>
+                  <div className="form-group  col-lg-4">
+                      <label className="label" for="sharedirect_lastname1">นามสกุล</label>
+                      <input type="text" name={"sharedirect_lastname["+i+"]"}  class="form-control" id={"sharedirect_lastname"+i} placeholder="นามสกุล" value={this.state.data["sharedirect_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
+                      <span id={"div-sharedirect_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                  </div>
+                  
+                  <div className="form-group  col-lg-4">
+                      <label className="label" for="sharedirect_phone1">หมายเลขโทรศัพท์</label>
+                      <input type="text" name={"sharedirect_phone["+i+"]"}  class="form-control" id={"sharedirect_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["sharedirect_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
+                      <span id={"div-sharedirect_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
+                  </div>
+                  
+                  <div className="form-group  col-lg-4">
+                  <div  class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox"  onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} />
+                                <label class="form-check-label" for="inlineRadio1">มีอำนาจลงนาม</label>
+                            </div>
+                        
+                    </div>
+
+              </div>
+              <hr className="hr_organge" />
+            </div>
+        )
+    }
       directinformation(){
+        let content = [];
+      
+       
+        
+        for (let i = 1; i < this.state.counthb; i++) {
+          content.push(this.form_directcompany(i)) ;
+
+        }
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ข้อมูลกรรมการ</h3>
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >กรรมการ คนที่ 1</label>
-
-                    </div>
-
-
-
-                </div>
+                
                 <form id="form_6">
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_title1">คำนำหน้า</label>
-                        <select class="form-control" name="sharedirect_title1" id="sharedirect_title1">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-
-                        </select>
-
+                    { content }
+                    <button type="button" className="btn-company-next" onClick={(e) => { this.clickHolderb(this.state.counthb-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHolderb(this.state.counthb+1) }}>+</button>
+                    <div className="row">
+                        <div className="form-group  col-lg-4">
+                            <label className="label" for="power_type" >อำนาจกรรมการแบบไม่ระบุชื่อ </label>
+                            <input type="text" name="power_type"  class="form-control" id="power_type" placeholder="กรรมการ x คน"  value={this.state.data.power_type}    onChange={this.handleChange.bind(this)}></input>
+                        </div>
+                    
                     </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_firstname1">ชื่อ</label>
-                        <input type="text" name="sharestart_firssharedirect_firstname1tname1" class="form-control" id="sharedirect_firstname1" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_lastname1">นามสกุล</label>
-                        <input type="text" name="sharedirect_lastname1" class="form-control" id="sharedirect_lastname1" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharesdirect_phone1">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharestart_psharesdirect_phone1hone1" class="form-control" id="sharesdirect_phone1" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="sharedirect_firstname1">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud />
-                            Choose File
-                        </label>
-                    </div>
-
-                </div>
-                <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >กรรมการ คนที่ 2</label>
-
-                    </div>
-
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharesdirect_title2">คำนำหน้า</label>
-                        <select class="form-control" name="sharesdirect_title2" id="sharesdirect_title2">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-
-                        </select>
-
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_firstname2">ชื่อ</label>
-                        <input type="text" name="sharedirect_firstname2" class="form-control" id="sharedirect_firstname2" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_lastname2">นามสกุล</label>
-                        <input type="text" name="sharestart_lasharedirect_lastname2stname2" class="form-control" id="sharedirect_lastname2" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_phone2">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharedirect_phone2" class="form-control" id="sharedirect_phone2" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="sharedirect_firstname2">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud />
-                            Choose File
-                        </label>
-                    </div>
-
-                </div>
-                <hr className="hr_organge" />
-                <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label className="label" >กรรมการ คนที่ 3</label>
-
-                    </div>
-
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_title3">คำนำหน้า</label>
-                        <select class="form-control" name="sharedirect_title3" id="sharedirect_title3">
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-
-                        </select>
-
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_firstname3">ชื่อ</label>
-                        <input type="text" name="sharedirect_firstname3" class="form-control" id="sharedirect_firstname3" placeholder="ชื่อ"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_lastname3">นามสกุล</label>
-                        <input type="text" name="sharestart_lastnsharedirect_lastname3ame3" class="form-control" id="sharedirect_lastname3" placeholder="นามสกุล"></input>
-                    </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="sharedirect_phone3">หมายเลขโทรศัพท์</label>
-                        <input type="text" name="sharedirect_phone3" class="form-control" id="sharedirect_phone3" placeholder="หมายเลขโทรศัพท์"></input>
-                    </div>
-                    <div className="form-group  col-lg-8">
-                        <label className="label" for="sharedirect_firstname3">อัพโหลดบัตรประชาชน</label>
-                        <label class="custom-file-upload">
-                            <input type="file"/>
-                            <Uploadcloud />
-                            Choose File
-                        </label>
-                    </div>
-
-                </div>
-                <hr className="hr_organge" />
-                <div className="form-group">
-                    <label lassName="label" for="sharedirect_sign">อำนาจลงนามของกรรมการ*</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sharedirect_sign" id="sharedirect_sign" value="อำนาจกรรมการแบบไม่ระบุชื่อ (กรรมการ x คน ลงลายมือชื่อ และประทับตราบริษัท)"  />
-                        <label class="form-check-label" for="exampleRadios1">
-                        อำนาจกรรมการแบบไม่ระบุชื่อ (กรรมการ <input type="text" /> คน ลงลายมือชื่อ )
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sharedirect_sign" id="sharedirect_sign2" value="อำนาจกรรมการแบบระบุชื่อ"  />
-                        <label class="form-check-label" for="exampleRadios2">
-                        อำนาจกรรมการแบบระบุชื่อ
-                        </label>
-                    </div>
-
-                </div>
                 </form>
-                <hr className="hr_organge" />
+               
                 <div className="row">
                     <div className="col-6">
 
@@ -745,6 +817,7 @@ export default class Form_company extends React.Component {
 
       }
       form_startcompany(i){
+       
           return (
               <div>
                   <div className="row">
@@ -760,8 +833,10 @@ export default class Form_company extends React.Component {
                 <div className="row">
                 <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_title1">คำนำหน้า</label>
+                       
                         <select   onChange={this.chengestart_title_name}  class="form-control"   name={"sharestart_title["+i+"]"} id={"sharestart_title"+i} >
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
+                          
+                            <option value="" >--------- คำนำหน้า ---------</option>
                             <option value="นางสาว">นางสาว</option>
                             <option value="นาง">นาง</option>
                             <option value="นาง">นาย</option>
@@ -819,7 +894,7 @@ export default class Form_company extends React.Component {
                  <form id="form_5">
                 <h3>ข้อมูลผู้ก่อตั้งบริษัท</h3>
                     { content}
-                    <button type="button" className="btn-company-next" onClick={(e) => { this.clickHoldera(this.state.counth-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHoldera(this.state.counth+1) }}>+</button>
+                    <button type="button" className="btn-company-next" onClick={(e) => { this.clickHoldera(this.state.countha-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHoldera(this.state.countha+1) }}>+</button>
                 </form>
                 <div className="row">
                     <div className="col-6">
@@ -1002,6 +1077,7 @@ export default class Form_company extends React.Component {
                         <input type="text" name={"shareholder_phone["+i+"]"}  class="form-control" id={"shareholder_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["shareholder_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
+                    
                     <div className="form-group  col-lg-8">
                         <label className="label" for="shareholder_firstname1" id={"shareholder_file"+i}>อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
@@ -1092,85 +1168,85 @@ export default class Form_company extends React.Component {
                     <div className="form-group col-lg-4">
                         <label className="label" for="address_province">จังหวัด</label>
                         <select class="form-control" name="address_province" id="address_province" value={this.state.data.address_province} required onChange={this.handleChange.bind(this)}>
-                            <option value="" selected>--------- เลือกจังหวัด ---------</option>
-                            <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-                            <option value="กระบี่">กระบี่ </option>
-                            <option value="กาญจนบุรี">กาญจนบุรี </option>
-                            <option value="กาฬสินธุ์">กาฬสินธุ์ </option>
-                            <option value="กำแพงเพชร">กำแพงเพชร </option>
-                            <option value="ขอนแก่น">ขอนแก่น</option>
-                            <option value="จันทบุรี">จันทบุรี</option>
-                            <option value="ฉะเชิงเทรา">ฉะเชิงเทรา </option>
-                            <option value="ชัยนาท">ชัยนาท </option>
-                            <option value="ชัยภูมิ">ชัยภูมิ </option>
-                            <option value="ชุมพร">ชุมพร </option>
-                            <option value="ชลบุรี">ชลบุรี </option>
-                            <option value="เชียงใหม่">เชียงใหม่ </option>
-                            <option value="เชียงราย">เชียงราย </option>
-                            <option value="ตรัง">ตรัง </option>
-                            <option value="ตราด">ตราด </option>
-                            <option value="ตาก">ตาก </option>
-                            <option value="นครนายก">นครนายก </option>
-                            <option value="นครปฐม">นครปฐม </option>
-                            <option value="นครพนม">นครพนม </option>
-                            <option value="นครราชสีมา">นครราชสีมา </option>
-                            <option value="นครศรีธรรมราช">นครศรีธรรมราช </option>
-                            <option value="นครสวรรค์">นครสวรรค์ </option>
-                            <option value="นราธิวาส">นราธิวาส </option>
-                            <option value="น่าน">น่าน </option>
-                            <option value="นนทบุรี">นนทบุรี </option>
-                            <option value="บึงกาฬ">บึงกาฬ</option>
-                            <option value="บุรีรัมย์">บุรีรัมย์</option>
-                            <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์ </option>
-                            <option value="ปทุมธานี">ปทุมธานี </option>
-                            <option value="ปราจีนบุรี">ปราจีนบุรี </option>
-                            <option value="ปัตตานี">ปัตตานี </option>
-                            <option value="พะเยา">พะเยา </option>
-                            <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา </option>
-                            <option value="พังงา">พังงา </option>
-                            <option value="พิจิตร">พิจิตร </option>
-                            <option value="พิษณุโลก">พิษณุโลก </option>
-                            <option value="เพชรบุรี">เพชรบุรี </option>
-                            <option value="เพชรบูรณ์">เพชรบูรณ์ </option>
-                            <option value="แพร่">แพร่ </option>
-                            <option value="พัทลุง">พัทลุง </option>
-                            <option value="ภูเก็ต">ภูเก็ต </option>
-                            <option value="มหาสารคาม">มหาสารคาม </option>
-                            <option value="มุกดาหาร">มุกดาหาร </option>
-                            <option value="แม่ฮ่องสอน">แม่ฮ่องสอน </option>
-                            <option value="ยโสธร">ยโสธร </option>
-                            <option value="ยะลา">ยะลา </option>
-                            <option value="ร้อยเอ็ด">ร้อยเอ็ด </option>
-                            <option value="ระนอง">ระนอง </option>
-                            <option value="ระยอง">ระยอง </option>
-                            <option value="ราชบุรี">ราชบุรี</option>
-                            <option value="ลพบุรี">ลพบุรี </option>
-                            <option value="ลำปาง">ลำปาง </option>
-                            <option value="ลำพูน">ลำพูน </option>
-                            <option value="เลย">เลย </option>
-                            <option value="ศรีสะเกษ">ศรีสะเกษ</option>
-                            <option value="สกลนคร">สกลนคร</option>
-                            <option value="สงขลา">สงขลา </option>
-                            <option value="สมุทรสาคร">สมุทรสาคร </option>
-                            <option value="สมุทรปราการ">สมุทรปราการ </option>
-                            <option value="สมุทรสงคราม">สมุทรสงคราม </option>
-                            <option value="สระแก้ว">สระแก้ว </option>
-                            <option value="สระบุรี">สระบุรี </option>
-                            <option value="สิงห์บุรี">สิงห์บุรี </option>
-                            <option value="สุโขทัย">สุโขทัย </option>
-                            <option value="สุพรรณบุรี">สุพรรณบุรี </option>
-                            <option value="สุราษฎร์ธานี">สุราษฎร์ธานี </option>
-                            <option value="สุรินทร์">สุรินทร์ </option>
-                            <option value="สตูล">สตูล </option>
-                            <option value="หนองคาย">หนองคาย </option>
-                            <option value="หนองบัวลำภู">หนองบัวลำภู </option>
-                            <option value="อำนาจเจริญ">อำนาจเจริญ </option>
-                            <option value="อุดรธานี">อุดรธานี </option>
-                            <option value="อุตรดิตถ์">อุตรดิตถ์ </option>
-                            <option value="อุทัยธานี">อุทัยธานี </option>
-                            <option value="อุบลราชธานี">อุบลราชธานี</option>
-                            <option value="อ่างทอง">อ่างทอง </option>
-                            <option value="อื่นๆ">อื่นๆ</option>
+                            <option value="" selected={this.state.data.address_province == ''}>--------- เลือกจังหวัด ---------</option>
+                            <option value="กรุงเทพมหานคร" selected={this.state.data.address_province == 'กรุงเทพมหานคร'}>กรุงเทพมหานคร</option>
+                            <option value="กระบี่" selected={this.state.data.address_province == 'กระบี่'}>กระบี่ </option>
+                            <option value="กาญจนบุรี" selected={this.state.data.address_province == 'กาญจนบุรี'}>กาญจนบุรี </option>
+                            <option value="กาฬสินธุ์" selected={this.state.data.address_province == 'กาฬสินธุ์'}>กาฬสินธุ์ </option>
+                            <option value="กำแพงเพชร" selected={this.state.data.address_province == 'กำแพงเพชร'}>กำแพงเพชร </option>
+                            <option value="ขอนแก่น" selected={this.state.data.address_province == 'ขอนแก่น'}>ขอนแก่น</option>
+                            <option value="จันทบุรี" selected={this.state.data.address_province == 'จันทบุรี'}>จันทบุรี</option>
+                            <option value="ฉะเชิงเทรา" selected={this.state.data.address_province == 'ฉะเชิงเทรา'}>ฉะเชิงเทรา </option>
+                            <option value="ชัยนาท" selected={this.state.data.address_province == 'ชัยนาท'}>ชัยนาท </option>
+                            <option value="ชัยภูมิ" selected={this.state.data.address_province == 'ชัยภูมิ'}>ชัยภูมิ </option>
+                            <option value="ชุมพร" selected={this.state.data.address_province == 'ชุมพร'}>ชุมพร </option>
+                            <option value="ชลบุรี" selected={this.state.data.address_province == 'ชลบุรี'}>ชลบุรี </option>
+                            <option value="เชียงใหม่" selected={this.state.data.address_province == 'เชียงใหม่'}>เชียงใหม่ </option>
+                            <option value="เชียงราย" selected={this.state.data.address_province == 'เชียงราย'}>เชียงราย </option>
+                            <option value="ตรัง" selected={this.state.data.address_province == 'ตรัง'}>ตรัง </option>
+                            <option value="ตราด" selected={this.state.data.address_province == 'ตราด'}>ตราด </option>
+                            <option value="ตาก" selected={this.state.data.address_province == 'ตาก'}>ตาก </option>
+                            <option value="นครนายก" selected={this.state.data.address_province == 'นครนายก'}>นครนายก </option>
+                            <option value="นครปฐม" selected={this.state.data.address_province == 'นครปฐม'}>นครปฐม </option>
+                            <option value="นครพนม" selected={this.state.data.address_province == 'นครพนม'}>นครพนม </option>
+                            <option value="นครราชสีมา" selected={this.state.data.address_province == 'นครราชสีมา'}>นครราชสีมา </option>
+                            <option value="นครศรีธรรมราช" selected={this.state.data.address_province == 'นครศรีธรรมราช'}>นครศรีธรรมราช </option>
+                            <option value="นครสวรรค์" selected={this.state.data.address_province == 'นครสวรรค์'}>นครสวรรค์ </option>
+                            <option value="นราธิวาส" selected={this.state.data.address_province == 'นราธิวาส'}>นราธิวาส </option>
+                            <option value="น่าน" selected={this.state.data.address_province == 'น่าน'}>น่าน </option>
+                            <option value="นนทบุรี" selected={this.state.data.address_province == 'นนทบุรี'}>นนทบุรี </option>
+                            <option value="บึงกาฬ" selected={this.state.data.address_province == 'บึงกาฬ'}>บึงกาฬ</option>
+                            <option value="บุรีรัมย์" selected={this.state.data.address_province == 'บุรีรัมย์'}>บุรีรัมย์</option>
+                            <option value="ประจวบคีรีขันธ์" selected={this.state.data.address_province == 'ประจวบคีรีขันธ์'}>ประจวบคีรีขันธ์ </option>
+                            <option value="ปทุมธานี" selected={this.state.data.address_province == 'ปทุมธานี'}>ปทุมธานี </option>
+                            <option value="ปราจีนบุรี" selected={this.state.data.address_province == 'ปราจีนบุรี'}>ปราจีนบุรี </option>
+                            <option value="ปัตตานี" selected={this.state.data.address_province == 'ปัตตานี'}>ปัตตานี </option>
+                            <option value="พะเยา" selected={this.state.data.address_province == 'พะเยา'}>พะเยา </option>
+                            <option value="พระนครศรีอยุธยา" selected={this.state.data.address_province == 'พระนครศรีอยุธยา'}>พระนครศรีอยุธยา </option>
+                            <option value="พังงา" selected={this.state.data.address_province == 'พังงา'}>พังงา </option>
+                            <option value="พิจิตร" selected={this.state.data.address_province == 'พิจิตร'}>พิจิตร </option>
+                            <option value="พิษณุโลก" selected={this.state.data.address_province == 'พิษณุโลก'}>พิษณุโลก </option>
+                            <option value="เพชรบุรี" selected={this.state.data.address_province == 'เพชรบุรี'}>เพชรบุรี </option>
+                            <option value="เพชรบูรณ์" selected={this.state.data.address_province == 'เพชรบูรณ์'}>เพชรบูรณ์ </option>
+                            <option value="แพร่" selected={this.state.data.address_province == 'แพร่'}>แพร่ </option>
+                            <option value="พัทลุง" selected={this.state.data.address_province == 'พัทลุง'}>พัทลุง </option>
+                            <option value="ภูเก็ต" selected={this.state.data.address_province == 'ภูเก็ต'}>ภูเก็ต </option>
+                            <option value="มหาสารคาม" selected={this.state.data.address_province == 'มหาสารคาม'}>มหาสารคาม </option>
+                            <option value="มุกดาหาร" selected={this.state.data.address_province == 'มุกดาหาร'}>มุกดาหาร </option>
+                            <option value="แม่ฮ่องสอน" selected={this.state.data.address_province == 'แม่ฮ่องสอน'}>แม่ฮ่องสอน </option>
+                            <option value="ยโสธร" selected={this.state.data.address_province == 'ยโสธร'}>ยโสธร </option>
+                            <option value="ยะลา" selected={this.state.data.address_province == 'ยะลา'}>ยะลา </option>
+                            <option value="ร้อยเอ็ด" selected={this.state.data.address_province == 'ร้อยเอ็ด'}>ร้อยเอ็ด </option>
+                            <option value="ระนอง" selected={this.state.data.address_province == 'ระนอง'}>ระนอง </option>
+                            <option value="ระยอง" selected={this.state.data.address_province == 'ระยอง'}>ระยอง </option>
+                            <option value="ราชบุรี" selected={this.state.data.address_province == 'ราชบุรี'}>ราชบุรี</option>
+                            <option value="ลพบุรี" selected={this.state.data.address_province == 'ลพบุรี'}>ลพบุรี </option>
+                            <option value="ลำปาง" selected={this.state.data.address_province == 'ลำปาง'}>ลำปาง </option>
+                            <option value="ลำพูน" selected={this.state.data.address_province == 'ลำพูน'}>ลำพูน </option>
+                            <option value="เลย" selected={this.state.data.address_province == 'เลย'}>เลย </option>
+                            <option value="ศรีสะเกษ" selected={this.state.data.address_province == 'ศรีสะเกษ'}>ศรีสะเกษ</option>
+                            <option value="สกลนคร" selected={this.state.data.address_province == 'สกลนคร'}>สกลนคร</option>
+                            <option value="สงขลา" selected={this.state.data.address_province == 'สงขลา'}>สงขลา </option>
+                            <option value="สมุทรสาคร" selected={this.state.data.address_province == 'สมุทรสาคร'}>สมุทรสาคร </option>
+                            <option value="สมุทรปราการ" selected={this.state.data.address_province == 'สมุทรปราการ'}> สมุทรปราการ </option>
+                            <option value="สมุทรสงคราม" selected={this.state.data.address_province == 'สมุทรสงคราม'}>สมุทรสงคราม </option>
+                            <option value="สระแก้ว" selected={this.state.data.address_province == 'สระแก้ว'}>สระแก้ว </option>
+                            <option value="สระบุรี" selected={this.state.data.address_province == 'สระบุรี'}>สระบุรี </option>
+                            <option value="สิงห์บุรี" selected={this.state.data.address_province == 'สิงห์บุรี'}>สิงห์บุรี </option>
+                            <option value="สุโขทัย" selected={this.state.data.address_province == 'สุโขทัย'}>สุโขทัย </option>
+                            <option value="สุพรรณบุรี" selected={this.state.data.address_province == 'สุพรรณบุรี'}>สุพรรณบุรี </option>
+                            <option value="สุราษฎร์ธานี" selected={this.state.data.address_province == 'สุราษฎร์ธานี'}>สุราษฎร์ธานี </option>
+                            <option value="สุรินทร์" selected={this.state.data.address_province == 'สุรินทร์'}>สุรินทร์ </option>
+                            <option value="สตูล" selected={this.state.data.address_province == 'สตูล'}>สตูล </option>
+                            <option value="หนองคาย" selected={this.state.data.address_province == 'หนองคาย'}>หนองคาย </option>
+                            <option value="หนองบัวลำภู" selected={this.state.data.address_province == 'หนองบัวลำภู'}>หนองบัวลำภู </option>
+                            <option value="อำนาจเจริญ" selected={this.state.data.address_province == 'อำนาจเจริญ'}>อำนาจเจริญ </option>
+                            <option value="อุดรธานี" selected={this.state.data.address_province == 'อุดรธานี'}>อุดรธานี </option>
+                            <option value="อุตรดิตถ์" selected={this.state.data.address_province == 'อุตรดิตถ์'}>อุตรดิตถ์ </option>
+                            <option value="อุทัยธานี" selected={this.state.data.address_province == 'อุทัยธานี'}>อุทัยธานี </option>
+                            <option value="อุบลราชธานี" selected={this.state.data.address_province == 'อุบลราชธานี'}>อุบลราชธานี</option>
+                            <option value="อ่างทอง" selected={this.state.data.address_province == 'อ่างทอง'}>อ่างทอง </option>
+                            <option value="อื่นๆ" selected={this.state.data.address_province == 'อื่นๆ'}>อื่นๆ</option>
                         </select>
                         <span id="div-address_province" className="hide has-error">กรุณากรอกข้อมูล!</span>
 
@@ -1258,6 +1334,7 @@ export default class Form_company extends React.Component {
       }
       company(){
         let qty = this.state.qty;
+        
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <form id="form_1">
@@ -1332,40 +1409,40 @@ export default class Form_company extends React.Component {
                 <div className="form-group">
                     <label lassName="label" for="purposecompany">วัตถุประสงค์บริษัท*</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" onChange={this.handleChange.bind(this)}  name="purposecompany" id="exampleRadios1" 
+                        <input class="form-check-input" checked={this.state.data.purposecompany == 'ธุรกิจค้าขาย'}   type="radio" onChange={this.handleChange.bind(this)}  name="purposecompany" id="exampleRadios1" 
                         value="ธุรกิจค้าขาย" 
                         
                          />
-                        <label class="form-check-label" for="exampleRadios1">
+                        <label class="form-check-label"   for="exampleRadios1">
                             ธุรกิจค้าขาย
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios2" onChange={this.handleChange.bind(this)}  value="ธุรกิจบริการ"  />
+                        <input class="form-check-input" checked={this.state.data.purposecompany == 'ธุรกิจบริการ'}  type="radio" name="purposecompany" id="exampleRadios2" onChange={this.handleChange.bind(this)}  value="ธุรกิจบริการ"  />
                         <label class="form-check-label" for="exampleRadios2">
                         ธุรกิจบริการ
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios3" onChange={this.handleChange.bind(this)}  value="ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม"  />
+                        <input class="form-check-input" type="radio" checked={this.state.data.purposecompany == 'ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม'} name="purposecompany" id="exampleRadios3" onChange={this.handleChange.bind(this)}  value="ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม"  />
                         <label class="form-check-label" for="exampleRadios3">
                         ธุรกิจการผลิตสินค้าอุตสาหกรรมหรือหัตถกรรม
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios4" onChange={this.handleChange.bind(this)}  value="ธุรกิจเกษตรกรรม"  />
+                        <input class="form-check-input" type="radio" checked={this.state.data.purposecompany == 'ธุรกิจเกษตรกรรม'} name="purposecompany" id="exampleRadios4" onChange={this.handleChange.bind(this)}  value="ธุรกิจเกษตรกรรม"  />
                         <label class="form-check-label" for="exampleRadios4">
                         ธุรกิจเกษตรกรรม
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="สำนักงานผู้แทน"  />
+                        <input class="form-check-input" type="radio" checked={this.state.data.purposecompany == 'สำนักงานผู้แทน'} name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="สำนักงานผู้แทน"  />
                         <label class="form-check-label" for="exampleRadios5">
                         สำนักงานผู้แทน
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="อื่น ๆ"  />
+                        <input class="form-check-input" type="radio" checked={this.state.data.purposecompany == 'อื่น ๆ'} name="purposecompany" id="exampleRadios5" onChange={this.handleChange.bind(this)}  value="อื่น ๆ"  />
                         <label class="form-check-label" for="exampleRadios5">
                         อื่น ๆ
                         </label>
