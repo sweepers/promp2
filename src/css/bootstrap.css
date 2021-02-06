@@ -600,12 +600,14 @@ pre code {
     .container {
         max-width: 720px
     }
+    
 }
 
 @media (min-width:992px) {
     .container {
         max-width: 960px
     }
+   
 }
 
 @media (min-width:1200px) {
@@ -1853,6 +1855,13 @@ pre code {
     }
     .table-responsive-sm>.table-bordered {
         border: 0
+    }
+    .home .mt-5{
+        margin-top: 0px  !important;
+    }
+    .home .pt-25{
+        padding-top: 200px  !important;
+
     }
 }
 

@@ -9,6 +9,9 @@ import Sitebarsformleft from '../../components/sidebarform-left'
 import Arrowright from '../../assets/arrow-right.svg'
 import Uploadcloud from '../../assets/upload-cloud.svg'
 import DatePicker from 'react-date-picker'
+import linces_1 from '../../images/linces_1.png'
+import arrowleft from '../../images/arrow-left.png'
+import arrowright from '../../images/arrow-right.png'
 import { Link } from 'gatsby'
 //import { navigate } from "gatsby"
 
@@ -439,8 +442,64 @@ export default class Form_company extends React.Component {
                     <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
 
                 </ol>
+                <div id="linces_notice" class="carousel slide" data-ride="carousel">
+                   
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                        <h5>คำแนะนำการกรอกข้อมูล</h5>
+                        <b>ทุนจดทะเบียน</b><br />
+                        ระบบจะทำการตรวจสอบและยืนยันผลการจองชื่อบริษัท ในกรณีที่ชื่อบริษัทที่ท่านต้องการ ซ้ำ หรือออกเสียงตรงกัน หรือคล้ายคลึงกับนิติบุคคลอื่น ท่านจะได้รับการติดต่อจาก
+พนักงานของเราเพื่อแก้ไขชื่อบริษัท
+                        <div className="row">
+                            <div className="col-6 mt-4">
+                                <span>1</span>/3
+                            </div>
+                            <div className="col-6 text-right">
+                            <img src={linces_1} />
+                            </div>
+                        </div>
+                       
+                        </div>
+                        <div class="carousel-item">
+                            <h5>คำแนะนำการกรอกข้อมูล</h5>
+                            <b>ทุนจดทะเบียน</b><br />
+                            ระบบจะทำการตรวจสอบและยืนยันผลการจองชื่อบริษัท ในกรณีที่ชื่อบริษัทที่ท่านต้องการ ซ้ำ หรือออกเสียงตรงกัน หรือคล้ายคลึงกับนิติบุคคลอื่น ท่านจะได้รับการติดต่อจาก
+    พนักงานของเราเพื่อแก้ไขชื่อบริษัท
+                            <div className="row">
+                                <div className="col-6 mt-4">
+                                    <span>2</span>/3
+                                </div>
+                                <div className="col-6 text-right">
+                                <img src={linces_1} />
+                                </div>
+                            </div>
+                       
+                        </div>
+                        <div class="carousel-item">
+                            <h5>คำแนะนำการกรอกข้อมูล</h5>
+                            <b>ทุนจดทะเบียน</b><br />
+                            ระบบจะทำการตรวจสอบและยืนยันผลการจองชื่อบริษัท ในกรณีที่ชื่อบริษัทที่ท่านต้องการ ซ้ำ หรือออกเสียงตรงกัน หรือคล้ายคลึงกับนิติบุคคลอื่น ท่านจะได้รับการติดต่อจาก
+    พนักงานของเราเพื่อแก้ไขชื่อบริษัท
+                            <div className="row">
+                                <div className="col-6 mt-4">
+                                    <span>3</span>/3
+                                </div>
+                                <div className="col-6 text-right">
+                                <img src={linces_1} />
+                                </div>
+                            </div>
+                       
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#linces_notice" role="button" data-slide="prev">
+                        <img src={arrowleft} />
+                    </a>
+                    <a class="carousel-control-next" href="#linces_notice" role="button" data-slide="next">
+                    <img src={arrowright} />
+                    </a>
+                </div>
 
-
+            
 
 
             </div>

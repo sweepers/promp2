@@ -25,6 +25,9 @@ b{
 .navbar-link{
     color:#fff;
 }
+.sidebar-form{
+    position: relative;
+}
 .sidebar-form .is-active{
     color: #fff;
     opacity: 1;
@@ -314,4 +317,27 @@ input[type='radio']:checked:after {
     border: 0px;
     font-weight: bold;
     font-family: "sukumvit-bold";
+}
+
+#linces_notice{
+    background-color: #FFFFFF;
+    text-align: left;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 250px;
+}
+#linces_notice h5,#linces_notice span{
+    color: #F5C145;
+}
+.carousel-control-next, .carousel-control-prev{
+   bottom: auto;
+   top: 25px;
+   opacity:1;
+}
+.carousel-control-prev{
+    left: auto;
+    right: 25px;
+}
+#linces_notice span{
+    font-weight: bold;
 }

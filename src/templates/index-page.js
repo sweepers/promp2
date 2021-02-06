@@ -22,7 +22,7 @@ export const IndexPageTemplate = ({
 }) => (
   <div>
    
-      <div className="container">
+      <div className="container home">
         <div className="row mt-5 mb-5">
             <div className="col-lg-6 bg-home-left" style={{
       backgroundImage: `url(${
@@ -62,7 +62,7 @@ export const IndexPageTemplate = ({
                 
                 
                 <div class="row justify-content-center pt-5">
-                  <div class="col-3 text-center ">
+                  <div class="col-lg-3 col-xs-12 text-center ">
                     <div className="number_border">1</div>
                     <div className="h-7">
                       <Docs />
@@ -72,7 +72,7 @@ export const IndexPageTemplate = ({
                     ทะเบียนบ้าน<br />
                     ของที่ตั้งสำนักงาน
                   </div>
-                  <div class="col-3 ">
+                  <div class="col-lg-3 col-xs-12 ">
                   <div className="number_border">2</div>
                     <div className="h-7">
                       <IdCard />
@@ -81,7 +81,7 @@ export const IndexPageTemplate = ({
                     บัตรประชาชน/<br />
                     หนังสือผู้รับรองผู้ถือหุ้น
                   </div>
-                  <div class="col-3 ">
+                  <div class="col-lg-3 col-xs-12 ">
                   <div className="number_border">3</div>
                   <div className="h-7">
                       <IdCard />
@@ -91,7 +91,7 @@ export const IndexPageTemplate = ({
                   </div>
               </div>
               <div class="row justify-content-center pt-5 pb-5">
-                  <div class="col-3 ">
+                  <div class="col-lg-3  col-xs-12 ">
                   <div className="number_border">4</div>
                     <div className="h-7">
                       <IdCard />
@@ -100,7 +100,7 @@ export const IndexPageTemplate = ({
                     บัตรประชาชน<br />
                     กรรมการ
                   </div>
-                  <div class="col-3 ">
+                  <div class="col-lg-3  col-xs-12 ">
                     <div className="number_border">5</div>
                     <div className="h-7">
                       <Stamp />
