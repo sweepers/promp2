@@ -216,7 +216,26 @@ export default class Form_company extends React.Component {
         this.setState({ step:e})
     }
       handleSubmit(e){
+        let id = 7;
+        let error = false;
+        var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
+          var form = [].map.call(formdata, function( input ) {
+           
+              if(input.required && !input.value){
+                  var elementc = document.getElementById('div-'+input.id);
+                  var ele = document.getElementById(input.id);
+                  elementc.style.display = 'block';
+                  ele.classList.add("has-errors");
+                  error = true;
 
+              }
+              //return {'value':input.value};
+          });
+     //   let valid1 = this.form_validate('form_1');
+          if(error){
+              return false;
+          }
+     
         navigate("/user")
       }
       
@@ -737,19 +756,23 @@ export default class Form_company extends React.Component {
 
                 </div>
                 <div className="row">
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="meeting_address_state">เขต</label>
-                        <input type="text" name="meeting_address_state" class="form-control" id="meeting_address_state" placeholder="เขต"></input>
+                    <div className="form-group col-md-6 col-lg-3">
+                        <label className="label" for="meeting_address_state">เขต*</label>
+                        <input type="text" name="meeting_address_state" class="form-control" id="meeting_address_state" placeholder="เขต" value={this.state.data.meeting_address_state} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-meeting_address_state" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    <div className="form-group  col-lg-4">
-                        <label className="label" for="meeting_address_dist">แขวง</label>
-                        <input type="text" name="meeting_address_dist" class="form-control" id="meeting_address_dist" placeholder="แขวง"></input>
+                    <div className="form-group col-md-6 col-lg-3">
+                        <label className="label" for="meeting_address_dist">แขวง*</label>
+                        <input type="text" name="meeting_address_dist" class="form-control" id="meeting_address_dist" placeholder="เขต" value={this.state.data.meeting_address_dist} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-meeting_address_dist" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    <div className="form-group col-lg-4">
-                        <label className="label" for="meeting_address_postcode">รหัสไปรษณีย์</label>
-                        <input type="text" name="meeting_address_postcode" class="form-control" id="meeting_address_postcode" placeholder="รหัสไปรษณีย์"></input>
-
+                    <div className="form-group col-md-6 col-lg-3">
+                        <label className="label" for="meeting_address_postcode">รหัสไปรษณีย์*</label>
+                        <input type="text" name="meeting_address_postcode" class="form-control" id="meeting_address_postcode" placeholder="เขต" value={this.state.data.meeting_address_postcode} required onChange={this.handleChange.bind(this)}></input>
+                        <span id="div-meeting_address_postcode" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
+                    
+                   
 
 
                 </div>
