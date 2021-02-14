@@ -24,7 +24,7 @@ export default class Form_company extends React.Component {
         super(props)
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {step: 1,counth:4,countha:4,counthb:4, qty:1,data:[]};
+        this.state = {step: 1,counth:4,countha:4,counthb:4, qty:1,data:[],clicksign:[]};
 
         this.clickStep = this.clickStep.bind(this);
         this.clickBack = this.clickBack.bind(this);
@@ -32,7 +32,7 @@ export default class Form_company extends React.Component {
         this.clickHoldera = this.clickHoldera.bind(this);
         this.clickHolderb = this.clickHolderb.bind(this);
         this.changeQty = this.changeQty.bind(this);
-
+        this.chengedirect_title_name = this.chengedirect_title_name.bind(this);
 
       }
       handleChange(event) {
@@ -52,6 +52,45 @@ export default class Form_company extends React.Component {
         
             this.calnormal();
        }
+       if(event.target.classList.contains('sendsign')){
+        
+          // let aid = id.replace('sendsign');
+          let checked = event.target.checked;
+          const items = this.state.data;
+          var y = [];
+          if(items['clicksign']){
+            y = items['clicksign']
+          }
+          if(checked){
+            
+            y.push(value);
+            console.log('y',y);
+            //y.push(val);
+           
+            //this.clicksign.push(value);
+          }else{
+            const index = y.indexOf(value, 0);
+            if (index > -1) {
+               y.splice(index, 1);
+            }
+            
+          /*  y = [].map.call(y, function( input ) {
+                console.log('input',input);
+                if(input != value){
+                    v .push(value);
+                }
+                //return {'value':input.value};
+            });*/
+            
+            console.log('y',y);
+         
+          }
+        items['clicksign'] = y;
+          this.setState({data: items});
+
+           console.log('aid',items);
+          
+       }
        if(name == 'purposecompany'){
             var eleo = document.getElementById('purposecompany_other');
            if(value == 'อื่น ๆ'){
@@ -62,6 +101,7 @@ export default class Form_company extends React.Component {
            }
 
        }
+       
        if(event.target.required){   
             var elementc = document.getElementById('div-'+id);
             var ele = document.getElementById(id);
@@ -78,6 +118,7 @@ export default class Form_company extends React.Component {
        //items.company_name = event.target.value;
        this.setState({data: items});
       }
+      
       changeQty(type){
         let qty = this.state.qty;
         if(type == 'plus'){
@@ -272,10 +313,12 @@ export default class Form_company extends React.Component {
 
     }
     chengedirect_title_name(e){
+        let name = e.target.name;
         let id = e.target.id
         let value = e.target.value
         id = id.replace('sharesdirect_title','');
-
+        let items = this.state.data;
+        items[name] = value;
         //let  element = document.getElementById("shareholder_titleother"+id);
         if(value == 'other'){
              document.getElementById("sharedirect_titleother"+id).style.display = 'block';
@@ -285,6 +328,7 @@ export default class Form_company extends React.Component {
             document.getElementById("sharedirect_titleother"+id).style.display = 'none';
         //    $('.'+id).hide();
         }
+        this.setState({data: items});
 
     }
     change_typeholder(e){
@@ -793,6 +837,53 @@ export default class Form_company extends React.Component {
             </div>
           );
       }
+      form_related(m,r){
+          let name = this.state.data["sharedirect_firstname["+r+"]"]+' '+this.state.data["sharedirect_lastname["+r+"]"];
+          return (
+            <div  class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  onChange={this.handleChange.bind(this)} name={'related['+m+'][]'} value={name} />
+                <label class="form-check-label" for="inlineRadio1">{this.state.data["sharesdirect_title["+r+"]"]}{this.state.data["sharedirect_firstname["+r+"]"]} {this.state.data["sharedirect_lastname["+r+"]"]}</label>
+            </div>
+          );
+      }
+      form_directsign(i,v, c,sign){
+        let cb = [];
+        for (let a = 0; a < c;a++) {
+           // const index = y.indexOf(value, 0);
+            if(a != i){
+                cb.push(this.form_related(v,sign[a]));
+            }
+           
+  
+        }
+          
+          return (
+            <div className="row">
+            <div className="form-group  pt-3 col-lg-12">
+                <div className="row">
+                    <label className=" col-3" for="power_type" >{ i+1 }.{this.state.data["sharesdirect_title["+v+"]"]} {this.state.data["sharedirect_firstname["+v+"]"]}  {this.state.data["sharedirect_lastname["+v+"]"]}</label>
+                   
+                    <div className="col-2">
+                        <select className="form-control"  name={"types_sign["+v+"]"} id={"types_sign"+i} onChange={this.handleChange.bind(this)}>
+                                <option  selected={this.state.data["types_sign["+v+"]"] == '' || this.state.data["types_sign["+v+"]"] == 'คนเดียว'} value="คนเดียว">คนเดียว</option>
+                                <option selected={this.state.data["types_sign["+v+"]"] == 'ร่วมกับ'} value="ร่วมกับ" >ร่วมกับ</option>
+                        </select>
+
+                    </div>
+                    <div  className={ (this.state.data["types_sign["+v+"]"]== 'คนเดียว' || !this.state.data["types_sign["+v+"]"] ? 'col-7 hide' : 'col-7')}>
+                      
+                        { cb }
+                    </div>
+                </div>
+                
+               
+                
+            </div>
+        
+        </div>
+    
+          );
+      }
       form_directcompany(i){
         return (
             <div>
@@ -813,7 +904,7 @@ export default class Form_company extends React.Component {
                           <option value="" >--------- คำนำหน้า ---------</option>
                           <option value="นางสาว">นางสาว</option>
                           <option value="นาง">นาง</option>
-                          <option value="นาง">นาย</option>
+                          <option value="นาย">นาย</option>
                           <option value="other">อื่น ๆ</option>
 
                       </select>
@@ -842,7 +933,7 @@ export default class Form_company extends React.Component {
                   
                   <div className="form-group  col-lg-4">
                   <div  class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox"  onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} />
+                                <input class="form-check-input" type="checkbox"  class="sendsign" id={"sendsign"+i}  onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} value={i} />
                                 <label class="form-check-label" for="inlineRadio1">มีอำนาจลงนาม</label>
                             </div>
                         
@@ -855,13 +946,24 @@ export default class Form_company extends React.Component {
     }
       directinformation(){
         let content = [];
-      
-       
+        let signs = [];
+       let clicksign = [];
+       if(this.state.data.clicksign){
+        clicksign = this.state.data.clicksign;
+       }
         
         for (let i = 1; i < this.state.counthb; i++) {
           content.push(this.form_directcompany(i)) ;
 
         }
+        console.log('l',this.state.clicksign);
+        if(clicksign.length > 0){
+            for (let i = 0; i < clicksign.length; i++) {
+                signs.push(this.form_directsign(i,clicksign[i], clicksign.length,clicksign)) ;
+      
+            }
+        }
+        
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ข้อมูลกรรมการ</h3>
@@ -876,6 +978,8 @@ export default class Form_company extends React.Component {
                         </div>
                     
                     </div>
+                    <h4>กรรมการที่มีอำนาจลงนาม</h4>
+                        { signs }
                 </form>
                
                 <div className="row">
