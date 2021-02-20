@@ -341,12 +341,29 @@ export default class Form_company extends React.Component {
        items[name] = value;
      
         if(value == 'บุคคลธรรมดา'){
+            document.getElementById("block-shareholder_title"+id).style.display = 'block';
+            document.getElementById("block-shareholder_lastname"+id).style.display = 'block';
+            document.getElementById("block-shareholder_occ"+id).style.display = 'block';
+            document.getElementById("shareholder_lastname"+id).setAttribute('required',true);
+            document.getElementById("shareholder_occ"+id).setAttribute('required',true);
+            
+            //setAttribute
             document.getElementById("shareholder_fname"+id).innerHTML = 'ชื่อ';
             document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขบัตรประชาขน';
             document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดบัตรประชาชน';
 
           // $('.'+id).show();
        }else{
+           //removeAttribute
+           
+            document.getElementById("block-shareholder_title"+id).style.display = 'none';
+            document.getElementById("block-shareholder_lastname"+id).style.display = 'none';
+            document.getElementById("block-shareholder_occ"+id).style.display = 'none';
+            document.getElementById("shareholder_lastname"+id).removeAttribute('required');
+            document.getElementById("shareholder_occ"+id).removeAttribute('required');
+
+            document.getElementById("shareholder_lastname"+id).classList.remove("has-errors");
+            document.getElementById("shareholder_occ"+id).classList.remove("has-errors");
            document.getElementById("shareholder_fname"+id).innerHTML= 'ชื่อนิติบุคคล';
            document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขทะเบียนนิติบุคคล';
            document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดหนังสือรับรองบริษัท';
@@ -1221,7 +1238,7 @@ export default class Form_company extends React.Component {
 
                 </div>
                 <div className="row">
-                    <div className="form-group  col-lg-4">
+                    <div className="form-group  col-lg-4" id={"block-shareholder_title"+i}>
                         <label className="label" for="shareholder_title1">คำนำหน้า</label>
                         <select   onChange={this.chenge_title_name}  class="form-control"   name={"shareholder_title["+i+"]"} id={"shareholder_title"+i} >
                             <option value="" selected>--------- คำนำหน้า ---------</option>
@@ -1243,7 +1260,7 @@ export default class Form_company extends React.Component {
                         <input type="text"  name={"shareholder_firstname["+i+"]" } class="form-control" id={"shareholder_firstname"+i} placeholder="ชื่อ" value={this.state.data["shareholder_firstname["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    <div className="form-group  col-lg-4">
+                    <div className="form-group  col-lg-4" id={"block-shareholder_lastname"+i}>
                         <label className="label" for="shareholder_lastname1">นามสกุล</label>
                         <input type="text" name={"shareholder_lastname["+i+"]"}  class="form-control" id={"shareholder_lastname"+i} placeholder="นามสกุล" value={this.state.data["shareholder_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
@@ -1253,7 +1270,7 @@ export default class Form_company extends React.Component {
                         <input type="text" name={"shareholder_idcard["+i+"]"}  class="form-control" id={"shareholder_idcard"+i} placeholder="เลขบัตรประชาชน"  value={this.state.data["shareholder_idcard["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_idcard"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    <div className="form-group  col-lg-4">
+                    <div className="form-group  col-lg-4" id={"block-shareholder_occ"+i}>
                         <label className="label" for={"shareholder_occ"+i}>อาชีพ</label>
                         <input type="text" name={"shareholder_occ["+i+"]"} class="form-control" id={"shareholder_occ"+i} placeholder="อาชีพ"   value={this.state.data["shareholder_occ["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_occ"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
