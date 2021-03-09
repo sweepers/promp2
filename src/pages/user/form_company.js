@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react';
+
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
 import Navbar from '../../components/Navbar'
@@ -185,6 +186,8 @@ export default class Form_company extends React.Component {
                   
                     
                     if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
+                        
+                        items['sharestart_title['+b +']'] = items['shareholder_title['+i+']'];
                         items['sharestart_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
                         items['sharestart_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
                         items['sharestart_phone['+b +']'] = items['shareholder_phone['+i+']'];
@@ -211,6 +214,7 @@ export default class Form_company extends React.Component {
                   
                     
                     if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
+                        items['sharesdirect_title['+b +']'] = items['shareholder_title['+i+']'];
                         items['sharedirect_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
                         items['sharedirect_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
                         items['sharedirect_phone['+b +']'] = items['shareholder_phone['+i+']'];
@@ -257,7 +261,7 @@ export default class Form_company extends React.Component {
         this.setState({ step:e})
     }
       handleSubmit(e){
-        let id = 7;
+        /*let id = 7;
         let error = false;
         var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
           var form = [].map.call(formdata, function( input ) {
@@ -275,7 +279,7 @@ export default class Form_company extends React.Component {
      //   let valid1 = this.form_validate('form_1');
           if(error){
               return false;
-          }
+          }*/
      
         navigate("/user")
       }
@@ -294,9 +298,14 @@ export default class Form_company extends React.Component {
             document.getElementById("shareholder_titleother"+id).style.display = 'none';
         //    $('.'+id).hide();
         }
+        let name = e.target.name;
+        let items = this.state.data;
+        items[name] = value;
+        this.setState({data: items});
 
     }
     chengestart_title_name(e){
+        let name = e.target.name;
         let id = e.target.id
         let value = e.target.value
         id = id.replace('sharestart_title','');
@@ -310,6 +319,9 @@ export default class Form_company extends React.Component {
             document.getElementById("sharestart_titleother"+id).style.display = 'none';
         //    $('.'+id).hide();
         }
+        let items = this.state.data;
+        items[name] = value;
+        this.setState({data: items});
 
     }
     chengedirect_title_name(e){
@@ -481,6 +493,11 @@ export default class Form_company extends React.Component {
 
 
         }
+        if(this.state.step == 8){
+            content_right = this.presave();
+
+
+        }
           return (
             <Layout >
                 <Navbar />
@@ -585,8 +602,514 @@ export default class Form_company extends React.Component {
             </div>
           );
       }
-      meeting(){
+      pre_shareholder(i){
+          
+        return (
+            <div>
+                 <div className="row">
+                  <div className="form-group  col-lg-3">
+                      <label className="label" >ผู้ถือหุ้น คนที่ {i}</label>
 
+                  </div>
+                  <div className="form-group col-lg-2">
+                    {this.state.data["shareholder_type["+i+"]"]}
+                  </div>
+                  
+         
+
+              </div>
+              <div className="row">
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
+                      <span className="col-6">{this.state.data['shareholder_title['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">ชื่อ</label>
+                      <span className="col-9">{this.state.data['shareholder_firstname['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">นามสกุล</label>
+                      <span className="col-9">{this.state.data['shareholder_lastname['+i+']']}</span>
+                     
+               
+
+                  </div>
+
+                 
+                  
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-12" for={"shareholder_idcard"+i}>เลขบัตรประชาชน</label>
+                      <span className="col-12">{this.state.data["shareholder_idcard["+i+"]"]}</span>
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">อาชีพ</label>
+                      <span className="col-9">{this.state.data['shareholder_occ['+i+']']}</span>
+                     
+               
+
+                  </div>
+
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
+                      <span className="col-12">{this.state.data["shareholder_phone["+i+"]"]}</span>
+                  </div>
+                  
+                
+              </div>
+             
+             
+            </div>
+        );
+
+    }
+    pre_capital(i){
+          
+        return (
+            <div>
+                 <div className="row">
+                    <div className="form-group  col-lg-3">
+                        <label className="label">ผู้ถือหุ้นที่ { i }</label>
+
+                    </div>
+                    <div className="form-group  col-lg-3">
+                        {this.state.data["capital_sharenumber["+i+"]"]}
+                    </div>
+
+                 </div>
+            </div>
+        );
+
+    }
+    pre_startcompany(i){
+          
+        return (
+            <div>
+                 <div className="row">
+                  <div className="form-group  col-lg-3">
+                      <label className="label" >ผู้ก่อตั้ง คนที่ {i}</label>
+
+                  </div>
+                 
+                  
+         
+
+              </div>
+              <div className="row">
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
+                      <span className="col-6">{this.state.data['sharestart_title['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">ชื่อ</label>
+                      <span className="col-9">{this.state.data['sharestart_firstname['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">นามสกุล</label>
+                      <span className="col-9">{this.state.data['sharestart_lastname['+i+']']}</span>
+                     
+               
+
+                  </div>
+
+                 
+                  
+                  
+
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
+                      <span className="col-12">{this.state.data["sharestart_phone["+i+"]"]}</span>
+                  </div>
+                  
+                
+              </div>
+             
+             
+            </div>
+        );
+
+    }
+    pre_directcompany(i){
+        return (
+            <div>
+                <div className="row">
+                  <div className="form-group  col-lg-3">
+                      <label className="label" >กรรมการs คนที่ {i}</label>
+
+                  </div>
+
+
+
+              </div>
+             
+              <div className="row">
+                <div className="form-group  col-lg-4 row">
+                      <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
+                      <span className="col-6">{this.state.data['sharesdirect_title['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">ชื่อ</label>
+                      <span className="col-9">{this.state.data['sharesdirect_firstname['+i+']']}</span>
+                     
+               
+
+                  </div>
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-3" for="shareholder_title1">นามสกุล</label>
+                      <span className="col-9">{this.state.data['sharesdirect_lastname['+i+']']}</span>
+                     
+               
+
+                  </div>
+
+                 
+                  
+                  
+
+                  <div className="form-group  col-lg-4 row">
+                      <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
+                      <span className="col-12">{this.state.data["sharestart_phone["+i+"]"]}</span>
+                  </div>
+                  
+                
+                  
+                  <div className="form-group  col-lg-4">
+                  <div  class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox"  class="sendsign" id={"sendsign"+i}  checked={this.state.data["sharedirect_sign["+i+"]"] == i} onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} value={i} />
+                                <label class="form-check-label" for="inlineRadio1">มีอำนาจลงนาม</label>
+                            </div>
+                        
+                    </div>
+
+              </div>
+              
+            </div>
+        )
+    }
+    pre_related(m,r){
+        let name = this.state.data["sharedirect_firstname["+r+"]"]+' '+this.state.data["sharedirect_lastname["+r+"]"];
+        return (
+          <div  class="form-check form-check-inline">
+              
+              <label class="form-check-label" for="inlineRadio1">{this.state.data["sharesdirect_title["+r+"]"]}{this.state.data["sharedirect_firstname["+r+"]"]} {this.state.data["sharedirect_lastname["+r+"]"]}</label>
+          </div>
+        );
+    }
+    pre_directsign(i,v, c,sign){
+        let cb = [];
+        for (let a = 0; a < c;a++) {
+           // const index = y.indexOf(value, 0);
+            if(a != i){
+                cb.push(this.pre_related(v,sign[a]));
+            }
+           
+  
+        }
+          
+          return (
+            <div className="row">
+            <div className="form-group  pt-3 col-lg-12">
+                <div className="row">
+                    <label className=" col-3" for="power_type" >{ i+1 }.{this.state.data["sharesdirect_title["+v+"]"]} {this.state.data["sharedirect_firstname["+v+"]"]}  {this.state.data["sharedirect_lastname["+v+"]"]}</label>
+                   
+                    <div className="col-2">
+                        {this.state.data["types_sign["+v+"]"]}
+
+                    </div>
+                    <div  className={ (this.state.data["types_sign["+v+"]"]== 'คนเดียว' || !this.state.data["types_sign["+v+"]"] ? 'col-7 hide' : 'col-7')}>
+                      
+                        { cb }
+                    </div>
+                </div>
+                
+               
+                
+            </div>
+        
+        </div>
+    
+          );
+      }
+      presave(){
+        let content = [];
+        let counth = 4;
+
+        //alert(this.state.counth);
+        for (let i = 1; i < this.state.counth; i++) {
+          content.push(this.pre_shareholder(i)) ;
+
+        }
+        let contentcap = [];
+       
+
+        //alert(this.state.counth);
+        for (let i = 1; i < this.state.counth; i++) {
+            contentcap.push(this.pre_capital(i)) ;
+
+        }
+        let contentstart = [];
+      
+       
+        
+        for (let i = 1; i < this.state.countha; i++) {
+            contentstart.push(this.pre_startcompany(i)) ;
+
+        }
+
+        let contentsa = [];
+        let signs = [];
+       let clicksign = [];
+       if(this.state.data.clicksign){
+        clicksign = this.state.data.clicksign;
+       }
+        
+        for (let i = 1; i < this.state.counthb; i++) {
+            contentsa.push(this.pre_directcompany(i)) ;
+
+        }
+        console.log('l',this.state.clicksign);
+        if(clicksign.length > 0){
+            for (let i = 0; i < clicksign.length; i++) {
+                signs.push(this.pre_directsign(i,clicksign[i], clicksign.length,clicksign)) ;
+      
+            }
+        }
+        
+          return (
+            <div className="col-12 mt-5 text-grey pb-3">
+                <h3>ข้อมูลบริษัท</h3>
+                <div className="form-group row" >
+                    <label className="label col-sm-3" for="CompanyNameInput">ชื่อบริษัท </label>
+                    <span className="col-sm-9">{this.state.data.company_name}/{this.state.data.company_name_en}</span>
+
+                </div>
+                <div className="form-group row" >
+                    <label className="label col-sm-3" for="CompanyNameInput">วัตถุประสงค์บริษัท </label>
+                    <span className="col-sm-9">{this.state.data.purposecompany}</span>
+
+                </div>
+                <hr />
+                <h3>ที่อยู่บริษัท</h3>
+                <div className="row">
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="address_no">เลขที่ </label> <span className="col-7">{this.state.data.address_no }</span>
+                        
+                       
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="address_no">อาคาร </label> <span className="col-7">{this.state.data.address_tower }</span>
+                        
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="address_no">ชั้น </label> <span className="col-7">{this.state.data.address_level }</span>
+                       
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-6" for="address_no">ห้องเลขที่ </label> <span className="col-6">{this.state.data.address_room }</span>
+                       
+                    </div>
+                    
+
+                </div>
+                <div className="row">
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-4" for="address_no">ซอย </label> <span className="col-7">{this.state.data.address_soi }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-4" for="address_no">ถนน </label> <span className="col-7">{this.state.data.address_road }</span>
+                        
+                    </div>
+
+                  
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-4" for="address_no">จังหวัด </label> <span className="col-7">{this.state.data.address_province }</span>
+                        
+                    </div>
+
+
+                </div>
+                <div className="row">
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-4" for="address_no">เขต </label> <span className="col-7">{this.state.data.address_state }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-4" for="address_no">แขวง </label> <span className="col-7">{this.state.data.address_dist }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-6" for="address_no">รหัสไปรษณีย์ </label> <span className="col-6">{this.state.data.address_postcode }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-6" for="address_no">รหัสประจำบ้าน </label> <span className="col-6">{this.state.data.address_home_code }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-6" for="address_no">โทรศัพท์ </label> <span className="col-6">{this.state.data.address_phone }</span>
+                        
+                    </div>
+                    <div className="form-group col-lg-4 row">
+                        <label className="label col-6" for="address_no">E-mail </label> <span className="col-6">{this.state.data.address_email }</span>
+                        
+                    </div>
+                    
+                   
+
+                </div>
+                <hr />
+                <h3>ผู้ถือหุ้น</h3>
+                {  content }
+                <hr />
+                <h3>ทุนจดทะเบียน</h3>
+                <div className="row">
+                     <div className="form-group  col-lg-6 row">
+                        <label className="label col-6" for="capital_invencount">จำนวนทุนจดทะเบียน</label>
+                        <span className="col-6">{this.state.data.capital_invencount} </span>
+
+                     </div>
+                     <div className="form-group  col-lg-6 row">
+                        <label className="label col-6" for="capital_invencount">จำนวนหุ้น</label>
+                        <span className="col-6">{this.state.data.capital_sharecount} </span>
+
+                     </div>
+                     
+                     
+                   
+
+                 </div>
+                 <div className="row">
+                    <div className="form-group  col-lg-3">
+                        <label>ชำระค่าหุ้นในวันจดทะเบียน</label>
+
+                    </div>
+                    <div className="form-group  col-lg-3">
+                        {this.state.data.capital_shareprice}25%
+
+                    </div>
+
+                 </div>
+                 { contentcap }
+                 <hr />
+                 <h3>ข้อมูลผู้ก่อตั้งบริษัท</h3>
+                 { contentstart }
+                 <hr />
+                 <h3>ข้อมูลกรรมการ</h3>
+                 { contentsa }
+                 <div className="row">
+                    <div className="form-group  col-lg-12 row">
+                        <label className="label col-4" for="power_type" >อำนาจกรรมการแบบไม่ระบุชื่อ </label>
+                        <span className="col-6">{this.state.data.power_type}</span>
+                    </div>
+                
+                </div>
+                <h4>กรรมการที่มีอำนาจลงนาม</h4>
+                { signs }
+                <hr />
+                <h3>การประชุมจัดตั้ง</h3>
+                <div className="row">
+                    <div className="form-group  col-lg-6 row">
+                        <label className="label col-4" for="meeting_date">เลือกวัน</label>
+                        <span className="col-8">2021-07-30</span>
+                    </div>
+                    <div className="form-group  col-lg-6 row">
+                        <label className="label col-4" for="meeting_date">เลือกเวลา</label>
+                        <span className="col-8">{ this.state.data.meetingtime_hours }:{ this.state.data.meetingtime_minute }</span>
+                    </div>
+                    
+                </div>
+                <h3>สถานที่</h3>
+                <div className="row">
+                    
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">เลขที่</label>
+                        <span className="col-7">{this.state.data.meeting_address_no }</span>
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">อาคาร</label>
+                        <span className="col-7">{this.state.data.meeting_address_tower }</span>
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">ชั้น</label>
+                        <span className="col-7">{this.state.data.meeting_address_level }</span>
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">ห้องเลขที่</label>
+                        <span className="col-7">{this.state.data.meeting_address_room }</span>
+                    </div>
+                    
+
+                </div>
+                <div className="row">
+                    <div className="form-group  col-lg-4 row">
+                        <label className="label col-3" for="meeting_address_no">ซอย</label>
+                        <span className="col-9">{ this.state.data.meeting_address_soi }</span>
+                    </div>
+                    <div className="form-group  col-lg-4 row">
+                        <label className="label col-3" for="meeting_address_no">ถนน</label>
+                        <span className="col-9">{ this.state.data.meeting_address_road }</span>
+                    </div>
+                    <div className="form-group  col-lg-4 row">
+                        <label className="label col-3" for="meeting_address_no">จังหวัด</label>
+                        <span className="col-9">{ this.state.data.meeting_address_province }</span>
+                    </div>
+                    
+                    
+
+
+                </div>
+                <div className="row">
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">เขต</label>
+                        <span className="col-7">{this.state.data.meeting_address_state }</span>
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-5" for="meeting_address_no">แขวง</label>
+                        <span className="col-7">{this.state.data.meeting_address_dist }</span>
+                    </div>
+                    <div className="form-group col-md-6 col-lg-3 row">
+                        <label className="label col-9" for="meeting_address_no">รหัสไปรษณีย์</label>
+                        <span className="col-3">{this.state.data.meeting_address_postcode }</span>
+                    </div>
+                    
+                   
+
+
+                </div>
+                <hr />
+                <div className="row">
+                    <div className="col-6">
+
+                    </div>
+                    <div className="col-1">
+
+                    </div>
+                    <div className="col-5">
+                    <button className="btn-company-next"  onClick={(e) => { this.clickBack(6) }}  value="1">ย้อนกลับ</button>
+                        <button className="btn-company-next"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
+                    </div>
+
+                </div>
+            </div>
+          );
+      }
+      meeting(){
+        //const [value, onChange] = useState(new Date());
           return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>การประชุมจัดตั้ง</h3>
@@ -595,8 +1118,9 @@ export default class Form_company extends React.Component {
                     <div className="form-group  col-lg-6">
                         <label className="label" for="meeting_date">เลือกวัน</label>
                         <DatePicker
-
+                                
                                 isOpen="true"
+                              
                         />
                     </div>
                     <div className="form-group  col-lg-6">
@@ -703,30 +1227,30 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="meeting_address_no">เลขที่*</label>
-                        <input type="text" name="meeting_address_no" class="form-control" id="meeting_address_no" placeholder="เลขที่"></input>
+                        <input type="text" name="meeting_address_no" class="form-control" id="meeting_address_no" placeholder="เลขที่" onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="meeting_address_tower">อาคาร</label>
-                        <input type="text" name="meeting_address_tower" class="form-control" id="meeting_address_tower" placeholder="อาคารบ้าน"></input>
+                        <input type="text" name="meeting_address_tower" class="form-control" id="meeting_address_tower" placeholder="อาคารบ้าน" onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="meeting_address_level">ชั้น</label>
-                        <input type="text" name="meeting_address_level" class="form-control" id="meeting_address_level" placeholder="ชั้น"></input>
+                        <input type="text" name="meeting_address_level" class="form-control" id="meeting_address_level" placeholder="ชั้น" onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-md-6 col-lg-3">
                         <label className="label" for="meeting_address_level">ห้องเลขที่</label>
-                        <input type="text" name="meeting_address_room" class="form-control" id="meeting_address_room" placeholder="ห้องเลขที่"></input>
+                        <input type="text" name="meeting_address_room" class="form-control" id="meeting_address_room" placeholder="ห้องเลขที่" onChange={this.handleChange.bind(this)}></input>
                     </div>
 
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
                         <label className="label" for="meeting_address_no">ซอย</label>
-                        <input type="text" name="meeting_address_soi" class="form-control" id="meeting_address_soi" placeholder="ซอย"></input>
+                        <input type="text" name="meeting_address_soi" class="form-control" id="meeting_address_soi" placeholder="ซอย" onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group  col-lg-4">
                         <label className="label" for="meeting_address_road">ถนน</label>
-                        <input type="text" name="meeting_address_road" class="form-control" id="meeting_address_road" placeholder="ถนน"></input>
+                        <input type="text" name="meeting_address_road" class="form-control" id="meeting_address_road" placeholder="ถนน" onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-lg-4">
                         <label className="label" for="meeting_address_province">จังหวัด</label>
@@ -847,7 +1371,7 @@ export default class Form_company extends React.Component {
                     </div>
                     <div className="col-5">
                     <button className="btn-company-next"  onClick={(e) => { this.clickBack(6) }}  value="1">ย้อนกลับ</button>
-                        <button className="btn-company-next"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
+                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(8) }}  value="1">SAVE </button>
                     </div>
 
                 </div>
@@ -917,12 +1441,12 @@ export default class Form_company extends React.Component {
               <div className="row">
               <div className="form-group  col-lg-4">
                       <label className="label" for="sharesdirect_title1">คำนำหน้า</label>
-                      <select   onChange={this.chengedirect_title_name}  class="form-control"   name={"sharesdirect_title["+i+"]"} id={"sharesdirect_title"+i} >
-                          <option value="" >--------- คำนำหน้า ---------</option>
-                          <option value="นางสาว">นางสาว</option>
-                          <option value="นาง">นาง</option>
-                          <option value="นาย">นาย</option>
-                          <option value="other">อื่น ๆ</option>
+                      <select   onChange={this.chengedirect_title_name.bind(this)}  class="form-control"   name={"sharesdirect_title["+i+"]"} id={"sharesdirect_title"+i} >
+                          <option value="" selected={this.state.data['sharesdirect_title['+i+']'] == ''} >--------- คำนำหน้า ---------</option>
+                          <option value="นางสาว" selected={this.state.data['sharesdirect_title['+i+']'] == 'นางสาว'}>นางสาว</option>
+                          <option value="นาง" selected={this.state.data['sharesdirect_title['+i+']'] == 'นาง'}>นาง</option>
+                          <option value="นาย" selected={this.state.data['sharesdirect_title['+i+']'] == 'นาย'}>นาย</option>
+                          <option value="other" selected={this.state.data['sharesdirect_title['+i+']'] == 'other'}>อื่น ๆ</option>
 
                       </select>
                      <div id={"sharedirect_titleother"+i} className="hide pt-3">
@@ -1037,13 +1561,13 @@ export default class Form_company extends React.Component {
                 <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_title1">คำนำหน้า</label>
                        
-                        <select   onChange={this.chengestart_title_name}  class="form-control"   name={"sharestart_title["+i+"]"} id={"sharestart_title"+i} >
+                        <select   onChange={this.chengestart_title_name.bind(this)}  class="form-control"   name={"sharestart_title["+i+"]"} id={"sharestart_title"+i} >
                           
-                            <option value="" >--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-                            <option value="other">อื่น ๆ</option>
+                            <option value="" selected={this.state.data['sharestart_title['+i+']'] == ''} >--------- คำนำหน้า ---------</option>
+                            <option value="นางสาว" selected={this.state.data['sharestart_title['+i+']'] == 'นางสาว'}>นางสาว</option>
+                            <option value="นาง" selected={this.state.data['sharestart_title['+i+']'] == 'นาง'}>นาง</option>
+                            <option value="นาย" selected={this.state.data['sharestart_title['+i+']'] == 'นาย'}>นาย</option>
+                            <option value="other" selected={this.state.data['sharestart_title['+i+']'] == 'other'}>อื่น ๆ</option>
 
                         </select>
                        <div id={"sharestart_titleother"+i} className="hide pt-3">
@@ -1240,12 +1764,12 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-4" id={"block-shareholder_title"+i}>
                         <label className="label" for="shareholder_title1">คำนำหน้า</label>
-                        <select   onChange={this.chenge_title_name}  class="form-control"   name={"shareholder_title["+i+"]"} id={"shareholder_title"+i} >
-                            <option value="" selected>--------- คำนำหน้า ---------</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="นาง">นาง</option>
-                            <option value="นาง">นาย</option>
-                            <option value="other">อื่น ๆ</option>
+                        <select   onChange={this.chenge_title_name.bind(this)}  class="form-control"   name={"shareholder_title["+i+"]"} id={"shareholder_title"+i} >
+                            <option value="" selected={this.state.data['shareholder_title['+i+']'] == ''}>--------- คำนำหน้า ---------</option>
+                            <option value="นางสาว"  selected={this.state.data['shareholder_title['+i+']'] == 'นางสาว'}>นางสาว</option>
+                            <option value="นาง"  selected={this.state.data['shareholder_title['+i+']'] == 'นาง'}>นาง</option>
+                            <option value="นาย"  selected={this.state.data['shareholder_title['+i+']'] == 'นาย'}>นาย</option>
+                            <option value="other"  selected={this.state.data['shareholder_title['+i+']'] == 'other'}>อื่น ๆ</option>
 
                         </select>
                        <div id={"shareholder_titleother"+i} className="hide pt-3">
