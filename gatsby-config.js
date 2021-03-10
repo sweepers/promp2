@@ -45,6 +45,20 @@ module.exports = {
         name: 'images',
       },
     },
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        credentials: {
+          apiKey: "AIzaSyAcuRid40eaVEx5TKKn5yibuDTFNDyQxAU",
+          authDomain: "promp-d2fc3.firebaseapp.com",
+          databaseURL: "https://promp-d2fc3.firebaseio.com",
+          projectId: "promp-d2fc3",
+          storageBucket: "promp-d2fc3.appspot.com",
+          messagingSenderId: "660976897097",
+          uid:'MzmCVg9pCnYPslxJrfN8cQs4uJ42',
+        }
+      }
+    },
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {

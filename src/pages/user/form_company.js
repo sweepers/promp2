@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import firebase from 'gatsby-plugin-firebase';
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
 import Navbar from '../../components/Navbar'
@@ -19,12 +19,14 @@ import { Link } from 'gatsby'
 import { addLooseExports } from 'acorn'
 import { forInRight } from 'lodash'
 
+
 //upload-cloud
 export default class Form_company extends React.Component {
     constructor(props) {
         super(props)
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
         this.state = {step: 1,counth:4,countha:4,counthb:4, qty:1,data:[],clicksign:[]};
 
         this.clickStep = this.clickStep.bind(this);
@@ -36,25 +38,33 @@ export default class Form_company extends React.Component {
         this.chengedirect_title_name = this.chengedirect_title_name.bind(this);
 
       }
+      handleDateChange(event){
+          
+        const items = this.state.data;
+       items['meeting_date'] = event;
+       this.setState({data: items});
+        //const { name, value,id } = event.target;
+        console.log('datepicker',event);
+      }
       handleChange(event) {
-       
+
         const { name, value,id } = event.target;
-        
+
        // console.log(name,event.target.value);
        // let dat = data.event.target.name;
        const items = this.state.data;
        items[name] = value;
        console.log('value',value);
        if(event.target.classList.contains('calshare')){
-           
+
            this.calshare();
        }
        if(event.target.classList.contains('calnormal')){
-        
+
             this.calnormal();
        }
        if(event.target.classList.contains('sendsign')){
-        
+
           // let aid = id.replace('sendsign');
           let checked = event.target.checked;
           const items = this.state.data;
@@ -63,18 +73,18 @@ export default class Form_company extends React.Component {
             y = items['clicksign']
           }
           if(checked){
-            
+
             y.push(value);
             console.log('y',y);
             //y.push(val);
-           
+
             //this.clicksign.push(value);
           }else{
             const index = y.indexOf(value, 0);
             if (index > -1) {
                y.splice(index, 1);
             }
-            
+
           /*  y = [].map.call(y, function( input ) {
                 console.log('input',input);
                 if(input != value){
@@ -82,28 +92,28 @@ export default class Form_company extends React.Component {
                 }
                 //return {'value':input.value};
             });*/
-            
+
             console.log('y',y);
-         
+
           }
         items['clicksign'] = y;
           this.setState({data: items});
 
            console.log('aid',items);
-          
+
        }
        if(name == 'purposecompany'){
             var eleo = document.getElementById('purposecompany_other');
            if(value == 'อื่น ๆ'){
-           
+
             eleo.classList.remove("hide");
            }else{
             eleo.classList.add("hide");
            }
 
        }
-       
-       if(event.target.required){   
+
+       if(event.target.required){
             var elementc = document.getElementById('div-'+id);
             var ele = document.getElementById(id);
            if(!value){
@@ -115,11 +125,11 @@ export default class Form_company extends React.Component {
            }
 
        }
-     
+
        //items.company_name = event.target.value;
        this.setState({data: items});
       }
-      
+
       changeQty(type){
         let qty = this.state.qty;
         if(type == 'plus'){
@@ -150,7 +160,7 @@ export default class Form_company extends React.Component {
 
       }
       clickHoldera(value){
-      
+
         if(value <= 4){
           this.state.countha = 4;
           this.setState({ countha:4})
@@ -159,11 +169,11 @@ export default class Form_company extends React.Component {
           this.setState({ countha:value})
         }
 
-        
+
 
     }
     clickHolderb(value){
-      
+
         if(value <= 2){
           this.state.counthb = 2;
           this.setState({ counthb:2})
@@ -172,7 +182,7 @@ export default class Form_company extends React.Component {
           this.setState({ counthb:value})
         }
 
-        
+
 
     }
       clickStep(e) {
@@ -183,26 +193,26 @@ export default class Form_company extends React.Component {
             if(!items['sharestart_firstname[1]']){
               let b = 1;
                for (let i = 1; i < this.state.counth; i++) {
-                  
-                    
+
+
                     if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
-                        
+
                         items['sharestart_title['+b +']'] = items['shareholder_title['+i+']'];
                         items['sharestart_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
                         items['sharestart_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
                         items['sharestart_phone['+b +']'] = items['shareholder_phone['+i+']'];
 
-                        
-                        
+
+
                         b++;
                     }
-                  
-                    
-      
+
+
+
               }
               console.log('items',items);
               this.setState({data: items});
-               
+
             }
             console.log(id);
           }
@@ -211,33 +221,33 @@ export default class Form_company extends React.Component {
             if(!items['sharedirect_firstname[1]']){
               let b = 1;
                for (let i = 1; i < this.state.counth; i++) {
-                  
-                    
+
+
                     if(items['shareholder_type['+i+']'] == 'บุคคลธรรมดา'){
                         items['sharesdirect_title['+b +']'] = items['shareholder_title['+i+']'];
                         items['sharedirect_firstname['+b +']'] = items['shareholder_firstname['+i+']'];
                         items['sharedirect_lastname['+b +']'] = items['shareholder_lastname['+i+']'];
                         items['sharedirect_phone['+b +']'] = items['shareholder_phone['+i+']'];
 
-                        
-                        
+
+
                         b++;
                     }
-                  
-                    
+
+
                     this.setState({counthb: b});
               }
               console.log('items',items);
               this.setState({data: items});
-               
+
             }
             console.log(id);
           }
-        
+
           let error = false;
           var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
             var form = [].map.call(formdata, function( input ) {
-             
+
                 if(input.required && !input.value){
                     var elementc = document.getElementById('div-'+input.id);
                     var ele = document.getElementById(input.id);
@@ -252,11 +262,11 @@ export default class Form_company extends React.Component {
             if(error){
                 return false;
             }
-       
+
         this.setState({ step:e})
       }
       clickBack(e) {
-       
+
 
         this.setState({ step:e})
     }
@@ -265,7 +275,7 @@ export default class Form_company extends React.Component {
         let error = false;
         var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
           var form = [].map.call(formdata, function( input ) {
-           
+
               if(input.required && !input.value){
                   var elementc = document.getElementById('div-'+input.id);
                   var ele = document.getElementById(input.id);
@@ -280,10 +290,11 @@ export default class Form_company extends React.Component {
           if(error){
               return false;
           }*/
-     
+
+          //firebase.database().ref('company').push(this.state.data);
         navigate("/user")
       }
-      
+
     chenge_title_name(e){
         let id = e.target.id
         let value = e.target.value
@@ -351,23 +362,23 @@ export default class Form_company extends React.Component {
         id = id.replace(']','');
         let items = this.state.data;
        items[name] = value;
-     
+
         if(value == 'บุคคลธรรมดา'){
             document.getElementById("block-shareholder_title"+id).style.display = 'block';
             document.getElementById("block-shareholder_lastname"+id).style.display = 'block';
             document.getElementById("block-shareholder_occ"+id).style.display = 'block';
             document.getElementById("shareholder_lastname"+id).setAttribute('required',true);
             document.getElementById("shareholder_occ"+id).setAttribute('required',true);
-            
+
             //setAttribute
-            document.getElementById("shareholder_fname"+id).innerHTML = 'ชื่อ';
-            document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขบัตรประชาขน';
+            document.getElementById("shareholder_fname"+id).innerHTML = 'ชื่อ *';
+            document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขบัตรประชาขน *';
             document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดบัตรประชาชน';
 
           // $('.'+id).show();
        }else{
            //removeAttribute
-           
+
             document.getElementById("block-shareholder_title"+id).style.display = 'none';
             document.getElementById("block-shareholder_lastname"+id).style.display = 'none';
             document.getElementById("block-shareholder_occ"+id).style.display = 'none';
@@ -376,15 +387,15 @@ export default class Form_company extends React.Component {
 
             document.getElementById("shareholder_lastname"+id).classList.remove("has-errors");
             document.getElementById("shareholder_occ"+id).classList.remove("has-errors");
-           document.getElementById("shareholder_fname"+id).innerHTML= 'ชื่อนิติบุคคล';
-           document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขทะเบียนนิติบุคคล';
+           document.getElementById("shareholder_fname"+id).innerHTML= 'ชื่อนิติบุคคล *';
+           document.getElementById("shareholder_idcard"+id).innerHTML = 'เลขทะเบียนนิติบุคคล *';
            document.getElementById("shareholder_file"+id).innerHTML = 'อัพโหลดหนังสือรับรองบริษัท';
        //    $('.'+id).hide();
        }
        this.setState({data: items});
 
     }
-    
+
     change_buy(e){
 
         let checked = e.target.checked
@@ -408,10 +419,10 @@ export default class Form_company extends React.Component {
           console.log('The last iteration!');
         }
       }
-      
+
      calnormal(){
         const items = this.state.data;
-       
+
         var cal = 0*1;
         var elems = document.querySelectorAll(".calnormal");
         /*this.state.data.capital_sharepure.forEach(function(newItem) {
@@ -421,7 +432,7 @@ export default class Form_company extends React.Component {
               if(el.value > 0){
                 cal += el.value*1
               }
-                
+
          });
          items['capital_sharecount'] = cal
          console.log('cal',cal);
@@ -431,7 +442,7 @@ export default class Form_company extends React.Component {
       // logs "blue"
     calshare(){
         const items = this.state.data;
-       
+
         var cal = 0*1;
         var elems = document.querySelectorAll(".calshare");
         /*this.state.data.capital_sharepure.forEach(function(newItem) {
@@ -441,7 +452,7 @@ export default class Form_company extends React.Component {
               if(el.value > 0){
                 cal += el.value*1
               }
-                
+
          });
          items['capital_shareallstock'] = cal
          console.log('cal',cal);
@@ -452,7 +463,7 @@ export default class Form_company extends React.Component {
       //var class_share =  document.getElementsByClassName("capital_sharepure");
       //var ele = document.getElementsByClassName('capital_sharepure');
       var elems = document.querySelectorAll(".capital_sharepure");
-        
+
         [].forEach.call(elems, function(el) {
            if(e.target.checked == true){
             el.classList.remove("hide");
@@ -464,7 +475,7 @@ export default class Form_company extends React.Component {
       }
         });
      //class_share.disabled = false;
-      
+
     }
 
       render() {
@@ -479,7 +490,7 @@ export default class Form_company extends React.Component {
         if(this.state.step == 4){
             content_right = this.capital();
         }
-        
+
         if(this.state.step == 5){
             content_right = this.startcompany();
         }
@@ -533,14 +544,14 @@ export default class Form_company extends React.Component {
                     <li onClick={(e) => { this.clickBack(2) }} className={ (this.state.step==2 ? 'is-active' : '')}  >ที่อยู่บริษัท</li>
                     <li onClick={(e) => { this.clickBack(3) }}  className={ (this.state.step==3 ? 'is-active' : '')}>ข้อมูลผู้ถือหุ้น</li>
                     <li onClick={(e) => { this.clickBack(4) }} className={ (this.state.step==4 ? 'is-active' : '')}>ทุนจดทะเบียน</li>
-              
+
                     <li onClick={(e) => { this.clickBack(5) }} className={ (this.state.step==5 ? 'is-active' : '')}>ข้อมูลผู้ก่อตั้ง</li>
                     <li onClick={(e) => { this.clickBack(6) }} className={ (this.state.step==6? 'is-active' : '')} >ข้อมูลกรรมการ</li>
                     <li onClick={(e) => { this.clickBack(7) }} className={ (this.state.step==7? 'is-active' : '')}>การประชุมผู้จัดตั้ง</li>
 
                 </ol>
                 <div id="linces_notice" class="carousel slide" data-ride="carousel">
-                   
+
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                         <h5>คำแนะนำการกรอกข้อมูล</h5>
@@ -555,7 +566,7 @@ export default class Form_company extends React.Component {
                             <img src={linces_1} />
                             </div>
                         </div>
-                       
+
                         </div>
                         <div class="carousel-item">
                             <h5>คำแนะนำการกรอกข้อมูล</h5>
@@ -570,7 +581,7 @@ export default class Form_company extends React.Component {
                                 <img src={linces_1} />
                                 </div>
                             </div>
-                       
+
                         </div>
                         <div class="carousel-item">
                             <h5>คำแนะนำการกรอกข้อมูล</h5>
@@ -585,7 +596,7 @@ export default class Form_company extends React.Component {
                                 <img src={linces_1} />
                                 </div>
                             </div>
-                       
+
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#linces_notice" role="button" data-slide="prev">
@@ -596,14 +607,14 @@ export default class Form_company extends React.Component {
                     </a>
                 </div>
 
-            
+
 
 
             </div>
           );
       }
       pre_shareholder(i){
-          
+
         return (
             <div>
                  <div className="row">
@@ -614,35 +625,35 @@ export default class Form_company extends React.Component {
                   <div className="form-group col-lg-2">
                     {this.state.data["shareholder_type["+i+"]"]}
                   </div>
-                  
-         
+
+
 
               </div>
               <div className="row">
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
                       <span className="col-6">{this.state.data['shareholder_title['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">ชื่อ</label>
                       <span className="col-9">{this.state.data['shareholder_firstname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">นามสกุล</label>
                       <span className="col-9">{this.state.data['shareholder_lastname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
 
-                 
-                  
+
+
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-12" for={"shareholder_idcard"+i}>เลขบัตรประชาชน</label>
                       <span className="col-12">{this.state.data["shareholder_idcard["+i+"]"]}</span>
@@ -650,8 +661,8 @@ export default class Form_company extends React.Component {
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">อาชีพ</label>
                       <span className="col-9">{this.state.data['shareholder_occ['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
 
@@ -659,17 +670,17 @@ export default class Form_company extends React.Component {
                       <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
                       <span className="col-12">{this.state.data["shareholder_phone["+i+"]"]}</span>
                   </div>
-                  
-                
+
+
               </div>
-             
-             
+
+
             </div>
         );
 
     }
     pre_capital(i){
-          
+
         return (
             <div>
                  <div className="row">
@@ -687,7 +698,7 @@ export default class Form_company extends React.Component {
 
     }
     pre_startcompany(i){
-          
+
         return (
             <div>
                  <div className="row">
@@ -695,47 +706,47 @@ export default class Form_company extends React.Component {
                       <label className="label" >ผู้ก่อตั้ง คนที่ {i}</label>
 
                   </div>
-                 
-                  
-         
+
+
+
 
               </div>
               <div className="row">
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
                       <span className="col-6">{this.state.data['sharestart_title['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">ชื่อ</label>
                       <span className="col-9">{this.state.data['sharestart_firstname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">นามสกุล</label>
                       <span className="col-9">{this.state.data['sharestart_lastname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
 
-                 
-                  
-                  
+
+
+
 
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
                       <span className="col-12">{this.state.data["sharestart_phone["+i+"]"]}</span>
                   </div>
-                  
-                
+
+
               </div>
-             
-             
+
+
             </div>
         );
 
@@ -752,51 +763,51 @@ export default class Form_company extends React.Component {
 
 
               </div>
-             
+
               <div className="row">
                 <div className="form-group  col-lg-4 row">
                       <label className="label col-6" for="shareholder_title1">คำนำหน้า</label>
                       <span className="col-6">{this.state.data['sharesdirect_title['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">ชื่อ</label>
                       <span className="col-9">{this.state.data['sharesdirect_firstname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-3" for="shareholder_title1">นามสกุล</label>
                       <span className="col-9">{this.state.data['sharesdirect_lastname['+i+']']}</span>
-                     
-               
+
+
 
                   </div>
 
-                 
-                  
-                  
+
+
+
 
                   <div className="form-group  col-lg-4 row">
                       <label className="label col-12" for={"shareholder_idcard"+i}>หมายเลขโทรศัพท์</label>
                       <span className="col-12">{this.state.data["sharestart_phone["+i+"]"]}</span>
                   </div>
-                  
-                
-                  
+
+
+
                   <div className="form-group  col-lg-4">
                   <div  class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox"  class="sendsign" id={"sendsign"+i}  checked={this.state.data["sharedirect_sign["+i+"]"] == i} onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} value={i} />
                                 <label class="form-check-label" for="inlineRadio1">มีอำนาจลงนาม</label>
                             </div>
-                        
+
                     </div>
 
               </div>
-              
+
             </div>
         )
     }
@@ -804,7 +815,7 @@ export default class Form_company extends React.Component {
         let name = this.state.data["sharedirect_firstname["+r+"]"]+' '+this.state.data["sharedirect_lastname["+r+"]"];
         return (
           <div  class="form-check form-check-inline">
-              
+
               <label class="form-check-label" for="inlineRadio1">{this.state.data["sharesdirect_title["+r+"]"]}{this.state.data["sharedirect_firstname["+r+"]"]} {this.state.data["sharedirect_lastname["+r+"]"]}</label>
           </div>
         );
@@ -816,32 +827,32 @@ export default class Form_company extends React.Component {
             if(a != i){
                 cb.push(this.pre_related(v,sign[a]));
             }
-           
-  
+
+
         }
-          
+
           return (
             <div className="row">
             <div className="form-group  pt-3 col-lg-12">
                 <div className="row">
                     <label className=" col-3" for="power_type" >{ i+1 }.{this.state.data["sharesdirect_title["+v+"]"]} {this.state.data["sharedirect_firstname["+v+"]"]}  {this.state.data["sharedirect_lastname["+v+"]"]}</label>
-                   
+
                     <div className="col-2">
                         {this.state.data["types_sign["+v+"]"]}
 
                     </div>
                     <div  className={ (this.state.data["types_sign["+v+"]"]== 'คนเดียว' || !this.state.data["types_sign["+v+"]"] ? 'col-7 hide' : 'col-7')}>
-                      
+
                         { cb }
                     </div>
                 </div>
-                
-               
-                
+
+
+
             </div>
-        
+
         </div>
-    
+
           );
       }
       presave(){
@@ -854,7 +865,7 @@ export default class Form_company extends React.Component {
 
         }
         let contentcap = [];
-       
+
 
         //alert(this.state.counth);
         for (let i = 1; i < this.state.counth; i++) {
@@ -862,9 +873,9 @@ export default class Form_company extends React.Component {
 
         }
         let contentstart = [];
-      
-       
-        
+
+
+
         for (let i = 1; i < this.state.countha; i++) {
             contentstart.push(this.pre_startcompany(i)) ;
 
@@ -876,7 +887,7 @@ export default class Form_company extends React.Component {
        if(this.state.data.clicksign){
         clicksign = this.state.data.clicksign;
        }
-        
+
         for (let i = 1; i < this.state.counthb; i++) {
             contentsa.push(this.pre_directcompany(i)) ;
 
@@ -885,10 +896,10 @@ export default class Form_company extends React.Component {
         if(clicksign.length > 0){
             for (let i = 0; i < clicksign.length; i++) {
                 signs.push(this.pre_directsign(i,clicksign[i], clicksign.length,clicksign)) ;
-      
+
             }
         }
-        
+
           return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ข้อมูลบริษัท</h3>
@@ -907,38 +918,38 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group col-md-6 col-lg-3 row">
                         <label className="label col-5" for="address_no">เลขที่ </label> <span className="col-7">{this.state.data.address_no }</span>
-                        
-                       
+
+
                     </div>
                     <div className="form-group col-md-6 col-lg-3 row">
                         <label className="label col-5" for="address_no">อาคาร </label> <span className="col-7">{this.state.data.address_tower }</span>
-                        
+
                     </div>
                     <div className="form-group col-md-6 col-lg-3 row">
                         <label className="label col-5" for="address_no">ชั้น </label> <span className="col-7">{this.state.data.address_level }</span>
-                       
+
                     </div>
                     <div className="form-group col-md-6 col-lg-3 row">
                         <label className="label col-6" for="address_no">ห้องเลขที่ </label> <span className="col-6">{this.state.data.address_room }</span>
-                       
+
                     </div>
-                    
+
 
                 </div>
                 <div className="row">
                     <div className="form-group col-lg-4 row">
                         <label className="label col-4" for="address_no">ซอย </label> <span className="col-7">{this.state.data.address_soi }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-4" for="address_no">ถนน </label> <span className="col-7">{this.state.data.address_road }</span>
-                        
+
                     </div>
 
-                  
+
                     <div className="form-group col-lg-4 row">
                         <label className="label col-4" for="address_no">จังหวัด </label> <span className="col-7">{this.state.data.address_province }</span>
-                        
+
                     </div>
 
 
@@ -946,30 +957,30 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group col-lg-4 row">
                         <label className="label col-4" for="address_no">เขต </label> <span className="col-7">{this.state.data.address_state }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-4" for="address_no">แขวง </label> <span className="col-7">{this.state.data.address_dist }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-6" for="address_no">รหัสไปรษณีย์ </label> <span className="col-6">{this.state.data.address_postcode }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-6" for="address_no">รหัสประจำบ้าน </label> <span className="col-6">{this.state.data.address_home_code }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-6" for="address_no">โทรศัพท์ </label> <span className="col-6">{this.state.data.address_phone }</span>
-                        
+
                     </div>
                     <div className="form-group col-lg-4 row">
                         <label className="label col-6" for="address_no">E-mail </label> <span className="col-6">{this.state.data.address_email }</span>
-                        
+
                     </div>
-                    
-                   
+
+
 
                 </div>
                 <hr />
@@ -988,9 +999,9 @@ export default class Form_company extends React.Component {
                         <span className="col-6">{this.state.data.capital_sharecount} </span>
 
                      </div>
-                     
-                     
-                   
+
+
+
 
                  </div>
                  <div className="row">
@@ -1016,7 +1027,7 @@ export default class Form_company extends React.Component {
                         <label className="label col-4" for="power_type" >อำนาจกรรมการแบบไม่ระบุชื่อ </label>
                         <span className="col-6">{this.state.data.power_type}</span>
                     </div>
-                
+
                 </div>
                 <h4>กรรมการที่มีอำนาจลงนาม</h4>
                 { signs }
@@ -1025,17 +1036,17 @@ export default class Form_company extends React.Component {
                 <div className="row">
                     <div className="form-group  col-lg-6 row">
                         <label className="label col-4" for="meeting_date">เลือกวัน</label>
-                        <span className="col-8">2021-07-30</span>
+                        <span className="col-8">{ this.state.data.meeting_date}</span>
                     </div>
                     <div className="form-group  col-lg-6 row">
                         <label className="label col-4" for="meeting_date">เลือกเวลา</label>
                         <span className="col-8">{ this.state.data.meetingtime_hours }:{ this.state.data.meetingtime_minute }</span>
                     </div>
-                    
+
                 </div>
                 <h3>สถานที่</h3>
                 <div className="row">
-                    
+
                     <div className="form-group col-md-6 col-lg-3 row">
                         <label className="label col-5" for="meeting_address_no">เลขที่</label>
                         <span className="col-7">{this.state.data.meeting_address_no }</span>
@@ -1052,7 +1063,7 @@ export default class Form_company extends React.Component {
                         <label className="label col-5" for="meeting_address_no">ห้องเลขที่</label>
                         <span className="col-7">{this.state.data.meeting_address_room }</span>
                     </div>
-                    
+
 
                 </div>
                 <div className="row">
@@ -1068,8 +1079,8 @@ export default class Form_company extends React.Component {
                         <label className="label col-3" for="meeting_address_no">จังหวัด</label>
                         <span className="col-9">{ this.state.data.meeting_address_province }</span>
                     </div>
-                    
-                    
+
+
 
 
                 </div>
@@ -1086,8 +1097,8 @@ export default class Form_company extends React.Component {
                         <label className="label col-9" for="meeting_address_no">รหัสไปรษณีย์</label>
                         <span className="col-3">{this.state.data.meeting_address_postcode }</span>
                     </div>
-                    
-                   
+
+
 
 
                 </div>
@@ -1109,6 +1120,7 @@ export default class Form_company extends React.Component {
           );
       }
       meeting(){
+        //const [startDate, setStartDate] = useState(new Date());
         //const [value, onChange] = useState(new Date());
           return (
             <div className="col-12 mt-5 text-grey pb-3">
@@ -1118,9 +1130,10 @@ export default class Form_company extends React.Component {
                     <div className="form-group  col-lg-6">
                         <label className="label" for="meeting_date">เลือกวัน</label>
                         <DatePicker
-                                
+                               onChange={this.handleDateChange}
                                 isOpen="true"
-                              
+                                value={this.state.data.meeting_date}
+
                         />
                     </div>
                     <div className="form-group  col-lg-6">
@@ -1150,8 +1163,8 @@ export default class Form_company extends React.Component {
                             <option selected={this.state.data.meetingtime_hours == '21'}>21</option>
                             <option selected={this.state.data.meetingtime_hours == '22'}>22</option>
                             <option selected={this.state.data.meetingtime_hours == '23'}>23</option>
-                       
-                            
+
+
                         </select>
                         :
                         <select name="meetingtime_minute" onChange={this.handleChange.bind(this)}>
@@ -1217,8 +1230,8 @@ export default class Form_company extends React.Component {
                             <option selected={this.state.data.meetingtime_minute == '58'}>58</option>
                             <option selected={this.state.data.meetingtime_minute == '59'}>59</option>
 
-                       
-                            
+
+
                         </select>
                     </div>
 
@@ -1356,8 +1369,8 @@ export default class Form_company extends React.Component {
                         <input type="text" name="meeting_address_postcode" class="form-control" id="meeting_address_postcode" placeholder="เขต" value={this.state.data.meeting_address_postcode} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-meeting_address_postcode" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    
-                   
+
+
 
 
                 </div>
@@ -1394,16 +1407,16 @@ export default class Form_company extends React.Component {
             if(a != i){
                 cb.push(this.form_related(v,sign[a]));
             }
-           
-  
+
+
         }
-          
+
           return (
             <div className="row">
             <div className="form-group  pt-3 col-lg-12">
                 <div className="row">
                     <label className=" col-3" for="power_type" >{ i+1 }.{this.state.data["sharesdirect_title["+v+"]"]} {this.state.data["sharedirect_firstname["+v+"]"]}  {this.state.data["sharedirect_lastname["+v+"]"]}</label>
-                   
+
                     <div className="col-2">
                         <select className="form-control"  name={"types_sign["+v+"]"} id={"types_sign"+i} onChange={this.handleChange.bind(this)}>
                                 <option  selected={this.state.data["types_sign["+v+"]"] == '' || this.state.data["types_sign["+v+"]"] == 'คนเดียว'} value="คนเดียว">คนเดียว</option>
@@ -1412,17 +1425,17 @@ export default class Form_company extends React.Component {
 
                     </div>
                     <div  className={ (this.state.data["types_sign["+v+"]"]== 'คนเดียว' || !this.state.data["types_sign["+v+"]"] ? 'col-7 hide' : 'col-7')}>
-                      
+
                         { cb }
                     </div>
                 </div>
-                
-               
-                
+
+
+
             </div>
-        
+
         </div>
-    
+
           );
       }
       form_directcompany(i){
@@ -1437,7 +1450,7 @@ export default class Form_company extends React.Component {
 
 
               </div>
-             
+
               <div className="row">
               <div className="form-group  col-lg-4">
                       <label className="label" for="sharesdirect_title1">คำนำหน้า</label>
@@ -1452,7 +1465,7 @@ export default class Form_company extends React.Component {
                      <div id={"sharedirect_titleother"+i} className="hide pt-3">
                       <input type="text" name={"sharedirect_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["sharedirect_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
                      </div>
-               
+
 
                   </div>
                   <div className="form-group  col-lg-4">
@@ -1465,19 +1478,19 @@ export default class Form_company extends React.Component {
                       <input type="text" name={"sharedirect_lastname["+i+"]"}  class="form-control" id={"sharedirect_lastname"+i} placeholder="นามสกุล" value={this.state.data["sharedirect_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                       <span id={"div-sharedirect_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                   </div>
-                  
+
                   <div className="form-group  col-lg-4">
                       <label className="label" for="sharedirect_phone1">หมายเลขโทรศัพท์</label>
                       <input type="text" name={"sharedirect_phone["+i+"]"}  class="form-control" id={"sharedirect_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["sharedirect_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
                       <span id={"div-sharedirect_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                   </div>
-                  
+
                   <div className="form-group  col-lg-4">
                   <div  class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox"  class="sendsign" id={"sendsign"+i}  onChange={this.handleChange.bind(this)} name={"sharedirect_sign["+i+"]"} value={i} />
                                 <label class="form-check-label" for="inlineRadio1">มีอำนาจลงนาม</label>
                             </div>
-                        
+
                     </div>
 
               </div>
@@ -1492,7 +1505,7 @@ export default class Form_company extends React.Component {
        if(this.state.data.clicksign){
         clicksign = this.state.data.clicksign;
        }
-        
+
         for (let i = 1; i < this.state.counthb; i++) {
           content.push(this.form_directcompany(i)) ;
 
@@ -1501,14 +1514,14 @@ export default class Form_company extends React.Component {
         if(clicksign.length > 0){
             for (let i = 0; i < clicksign.length; i++) {
                 signs.push(this.form_directsign(i,clicksign[i], clicksign.length,clicksign)) ;
-      
+
             }
         }
-        
+
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ข้อมูลกรรมการ</h3>
-                
+
                 <form id="form_6">
                     { content }
                     <button type="button" className="btn-company-next" onClick={(e) => { this.clickHolderb(this.state.counthb-1) }}>-</button> <button className="btn-company-next" type="button" onClick={(e) => { this.clickHolderb(this.state.counthb+1) }}>+</button>
@@ -1517,12 +1530,12 @@ export default class Form_company extends React.Component {
                             <label className="label" for="power_type" >อำนาจกรรมการแบบไม่ระบุชื่อ </label>
                             <input type="text" name="power_type"  class="form-control" id="power_type" placeholder="กรรมการ x คน"  value={this.state.data.power_type}    onChange={this.handleChange.bind(this)}></input>
                         </div>
-                    
+
                     </div>
                     <h4>กรรมการที่มีอำนาจลงนาม</h4>
                         { signs }
                 </form>
-               
+
                 <div className="row">
                     <div className="col-6">
 
@@ -1544,7 +1557,7 @@ export default class Form_company extends React.Component {
 
       }
       form_startcompany(i){
-       
+
           return (
               <div>
                   <div className="row">
@@ -1556,13 +1569,13 @@ export default class Form_company extends React.Component {
 
 
                 </div>
-               
+
                 <div className="row">
                 <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_title1">คำนำหน้า</label>
-                       
+
                         <select   onChange={this.chengestart_title_name.bind(this)}  class="form-control"   name={"sharestart_title["+i+"]"} id={"sharestart_title"+i} >
-                          
+
                             <option value="" selected={this.state.data['sharestart_title['+i+']'] == ''} >--------- คำนำหน้า ---------</option>
                             <option value="นางสาว" selected={this.state.data['sharestart_title['+i+']'] == 'นางสาว'}>นางสาว</option>
                             <option value="นาง" selected={this.state.data['sharestart_title['+i+']'] == 'นาง'}>นาง</option>
@@ -1573,7 +1586,7 @@ export default class Form_company extends React.Component {
                        <div id={"sharestart_titleother"+i} className="hide pt-3">
                         <input type="text" name={"sharestart_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["sharestart_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
                        </div>
-                 
+
 
                     </div>
                     <div className="form-group  col-lg-4">
@@ -1586,13 +1599,13 @@ export default class Form_company extends React.Component {
                         <input type="text" name={"sharestart_lastname["+i+"]"}  class="form-control" id={"sharestart_lastname"+i} placeholder="นามสกุล" value={this.state.data["sharestart_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-sharestart_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    
+
                     <div className="form-group  col-lg-4">
                         <label className="label" for="sharestart_phone1">หมายเลขโทรศัพท์</label>
                         <input type="text" name={"sharestart_phone["+i+"]"}  class="form-control" id={"sharestart_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["sharestart_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-sharestart_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                 
+
                     <div className="form-group  col-lg-8">
                         <label className="label" for="shareholder_firstname1">อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
@@ -1609,9 +1622,9 @@ export default class Form_company extends React.Component {
       }
       startcompany(){
         let content = [];
-      
-       
-        
+
+
+
         for (let i = 1; i < this.state.countha; i++) {
           content.push(this.form_startcompany(i)) ;
 
@@ -1642,9 +1655,9 @@ export default class Form_company extends React.Component {
 
           );
       }
-    
+
       form_capital(i){
-          
+
         return (
             <div>
                  <div className="row">
@@ -1687,8 +1700,8 @@ export default class Form_company extends React.Component {
                         <input class="form-control" type="text" name="capital_sharecount"  placeholder="จำนวนหุ้น" readOnly value={this.state.data.capital_sharecount}  onChange={this.handleChange.bind(this)} />
 
                      </div>
-                     
-                   
+
+
 
                  </div>
                  <div className="row">
@@ -1720,8 +1733,8 @@ export default class Form_company extends React.Component {
                     </div>
 
                  </div>
-                
-                 
+
+
                  { content }
                  </form>
                  <div className="row">
@@ -1742,7 +1755,7 @@ export default class Form_company extends React.Component {
 
       }
       form_shareholder(i){
-          
+
           return (
               <div>
                    <div className="row">
@@ -1758,7 +1771,7 @@ export default class Form_company extends React.Component {
                         <input class="form-check-input" type="radio" name={"shareholder_type["+i+"]"}  onClick={this.change_typeholder.bind(this)}   value="นิติบุคคล"  />
                         <label class="form-check-label" for="inlineRadio1">นิติบุคคล</label>
                     </div>
-           
+
 
                 </div>
                 <div className="row">
@@ -1775,36 +1788,36 @@ export default class Form_company extends React.Component {
                        <div id={"shareholder_titleother"+i} className="hide pt-3">
                         <input type="text" name={"shareholder_titleother["+i+"]"}  className="form-control" placeholder="คำนำหน้าชื่อ" value={this.state.data["shareholder_titleother["+i+"]"]}  onChange={this.handleChange.bind(this)} />
                        </div>
-                 
+
 
                     </div>
 
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname1" id={"shareholder_fname"+i}>ชื่อ</label>
+                        <label className="label" for="shareholder_firstname1" id={"shareholder_fname"+i}>ชื่อ *</label>
                         <input type="text"  name={"shareholder_firstname["+i+"]" } class="form-control" id={"shareholder_firstname"+i} placeholder="ชื่อ" value={this.state.data["shareholder_firstname["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_firstname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4" id={"block-shareholder_lastname"+i}>
-                        <label className="label" for="shareholder_lastname1">นามสกุล</label>
+                        <label className="label" for="shareholder_lastname1">นามสกุล *</label>
                         <input type="text" name={"shareholder_lastname["+i+"]"}  class="form-control" id={"shareholder_lastname"+i} placeholder="นามสกุล" value={this.state.data["shareholder_lastname["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_lastname"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
-                        <label className="label" for={"shareholder_idcard"+i} id={"shareholder_idcard"+i}>เลขบัตรประชาชน</label>
+                        <label className="label" for={"shareholder_idcard"+i} id={"shareholder_idcard"+i}>เลขบัตรประชาชน *</label>
                         <input type="text" name={"shareholder_idcard["+i+"]"}  class="form-control" id={"shareholder_idcard"+i} placeholder="เลขบัตรประชาชน"  value={this.state.data["shareholder_idcard["+i+"]"]} required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_idcard"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4" id={"block-shareholder_occ"+i}>
-                        <label className="label" for={"shareholder_occ"+i}>อาชีพ</label>
+                        <label className="label" for={"shareholder_occ"+i}>อาชีพ *</label>
                         <input type="text" name={"shareholder_occ["+i+"]"} class="form-control" id={"shareholder_occ"+i} placeholder="อาชีพ"   value={this.state.data["shareholder_occ["+i+"]"]}  required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_occ"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="shareholder_firstname1">หมายเลขโทรศัพท์</label>
+                        <label className="label" for="shareholder_firstname1">หมายเลขโทรศัพท์ *</label>
                         <input type="text" name={"shareholder_phone["+i+"]"}  class="form-control" id={"shareholder_phone"+i} placeholder="หมายเลขโทรศัพท์"  value={this.state.data["shareholder_phone["+i+"]"]}   required onChange={this.handleChange.bind(this)}></input>
                         <span id={"div-shareholder_phone"+i} className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
-                    
+
                     <div className="form-group  col-lg-8">
                         <label className="label" for="shareholder_firstname1" id={"shareholder_file"+i}>อัพโหลดบัตรประชาชน</label>
                         <label class="custom-file-upload">
@@ -1893,7 +1906,7 @@ export default class Form_company extends React.Component {
                         <input type="text" name="address_road" class="form-control" id="address_road" placeholder="ถนน" value={this.state.data.address_road}  onChange={this.handleChange.bind(this)}></input>
                     </div>
                     <div className="form-group col-lg-4">
-                        <label className="label" for="address_province">จังหวัด</label>
+                        <label className="label" for="address_province">จังหวัด *</label>
                         <select class="form-control" name="address_province" id="address_province" value={this.state.data.address_province} required onChange={this.handleChange.bind(this)}>
                             <option value="" selected={this.state.data.address_province == ''}>--------- เลือกจังหวัด ---------</option>
                             <option value="กรุงเทพมหานคร" selected={this.state.data.address_province == 'กรุงเทพมหานคร'}>กรุงเทพมหานคร</option>
@@ -1983,22 +1996,22 @@ export default class Form_company extends React.Component {
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="address_state">เขต</label>
+                        <label className="label" for="address_state">เขต *</label>
                         <input type="text" name="address_state" class="form-control" id="address_state" placeholder="เขต" value={this.state.data.address_state} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_state" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="address_dist">แขวง</label>
+                        <label className="label" for="address_dist">แขวง *</label>
                         <input type="text" name="address_dist" class="form-control" id="address_dist" placeholder="แขวง" value={this.state.data.address_dist} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_dist" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group col-lg-4">
-                        <label className="label" for="address_postcode">รหัสไปรษณีย์</label>
+                        <label className="label" for="address_postcode">รหัสไปรษณีย์ *</label>
                         <input type="text" name="address_postcode" class="form-control" id="address_postcode" placeholder="รหัสไปรษณีย์" value={this.state.data.address_postcode} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_postcode" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="address_home_code">รหัสประจำบ้าน</label>
+                        <label className="label" for="address_home_code">รหัสประจำบ้าน *</label>
                         <input type="text" name="address_home_code" class="form-control" id="address_home_code" placeholder="รหัสประจำบ้าน" value={this.state.data.address_home_code} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_home_code" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
@@ -2006,12 +2019,12 @@ export default class Form_company extends React.Component {
                 </div>
                 <div className="row">
                     <div className="form-group  col-lg-4">
-                        <label className="label" for="address_phone">โทรศัพท์</label>
+                        <label className="label" for="address_phone">โทรศัพท์ *</label>
                         <input type="text" name="address_phone" class="form-control" id="address_phone" placeholder="โทรศัพท์" value={this.state.data.address_phone} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_phone" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
                     <div className="form-group  col-lg-8">
-                        <label className="label" for="address_email">E-mail</label>
+                        <label className="label" for="address_email">E-mail *</label>
                         <input type="text" name="address_email" class="form-control" id="address_email" placeholder="E-mail" value={this.state.data.address_email} required onChange={this.handleChange.bind(this)}></input>
                         <span id="div-address_email" className="hide has-error">กรุณากรอกข้อมูล!</span>
                     </div>
@@ -2061,7 +2074,7 @@ export default class Form_company extends React.Component {
       }
       company(){
         let qty = this.state.qty;
-        
+
         return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <form id="form_1">
@@ -2136,9 +2149,9 @@ export default class Form_company extends React.Component {
                 <div className="form-group">
                     <label lassName="label" for="purposecompany">วัตถุประสงค์บริษัท*</label>
                     <div class="form-check">
-                        <input class="form-check-input" checked={this.state.data.purposecompany == 'ธุรกิจค้าขาย'}   type="radio" onChange={this.handleChange.bind(this)}  name="purposecompany" id="exampleRadios1" 
-                        value="ธุรกิจค้าขาย" 
-                        
+                        <input class="form-check-input" checked={this.state.data.purposecompany == 'ธุรกิจค้าขาย'}   type="radio" onChange={this.handleChange.bind(this)}  name="purposecompany" id="exampleRadios1"
+                        value="ธุรกิจค้าขาย"
+
                          />
                         <label class="form-check-label"   for="exampleRadios1">
                             ธุรกิจค้าขาย
@@ -2176,7 +2189,7 @@ export default class Form_company extends React.Component {
 
                         <input type="text" name="purposecompany_other"  className="ml-3 hide" id="purposecompany_other" placeholder="อื่น ๆ"  onChange={this.handleChange.bind(this)} value={this.state.data.purposecompany_other}  />
                     </div>
-                   
+
 
 
                 </div>
