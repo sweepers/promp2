@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GoogleMapReact from 'google-map-react';
 import firebase from 'gatsby-plugin-firebase';
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
@@ -22,6 +23,14 @@ import { forInRight } from 'lodash'
 
 //upload-cloud
 export default class Form_company extends React.Component {
+    static defaultProps = {
+        center: {
+          lat: 59.95,
+          lng: 30.33
+        },
+        zoom: 11
+      };
+     
     constructor(props) {
         super(props)
         //this.state = { isValidated: false }
@@ -38,6 +47,7 @@ export default class Form_company extends React.Component {
         this.chengedirect_title_name = this.chengedirect_title_name.bind(this);
 
       }
+      
       handleDateChange(event){
           
         const items = this.state.data;
@@ -2031,8 +2041,20 @@ export default class Form_company extends React.Component {
                     <div className="form-group  col-lg-12">
                         <label className="label" for="address_map">แผนที่</label>
                         <input type="text" name="address_map" class="form-control" id="address_map" placeholder="Link Google Map"></input>
-                    </div>
-                    <div id="map"></div>
+                        </div>
+                        <div style={{ height: '100vh', width: '100%' }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+        >
+          <AnyReactComponent
+            lat={59.955413}
+            lng={30.337844}
+            text="My Marker"
+          />
+        </GoogleMapReact>
+      </div>
 
                 
                 </div>

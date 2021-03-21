@@ -54,7 +54,7 @@ const TemplateWrapper = ({ children }) => {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
    
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvEqcuixjondvTzMNQeShgXZN3gdnjCOA&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvEqcuixjondvTzMNQeShgXZN3gdnjCOA">
 </script>
         <meta name="theme-color" content="#fff" />
 
