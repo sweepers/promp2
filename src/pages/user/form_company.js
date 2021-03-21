@@ -2033,6 +2033,20 @@ export default class Form_company extends React.Component {
                         <label className="label" for="address_map">แผนที่</label>
                         <input type="text" name="address_map" class="form-control" id="address_map" placeholder="Link Google Map"></input>
                     </div>
+                    <div style={{ height: '300px', width: '100%' }}>
+                            <GoogleMapReact
+                            bootstrapURLKeys={{ key: AIzaSyCvEqcuixjondvTzMNQeShgXZN3gdnjCOA }}
+                            defaultCenter={{ lat: 59.95,lng: 30.33 }}
+                            defaultZoom={11}
+                            >
+                            <AnyReactComponent
+                                lat={59.955413}
+                                lng={30.337844}
+                                text="My Marker"
+                            />
+                            </GoogleMapReact>
+                        </div>
+
                     
                 </div>
 
