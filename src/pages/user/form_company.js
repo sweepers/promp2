@@ -2034,11 +2034,7 @@ export default class Form_company extends React.Component {
                     </div>
                     <div id="map"></div>
 
-    
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
+                
                 </div>
 
 
