@@ -2032,7 +2032,13 @@ export default class Form_company extends React.Component {
                         <label className="label" for="address_map">แผนที่</label>
                         <input type="text" name="address_map" class="form-control" id="address_map" placeholder="Link Google Map"></input>
                     </div>
+                    <div id="map"></div>
 
+    
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
                 </div>
 
 
