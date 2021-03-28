@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet'
 import firebase from 'gatsby-plugin-firebase';
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
@@ -2033,7 +2034,22 @@ export default class Form_company extends React.Component {
                         <input type="text" name="address_map" class="form-control" id="address_map" placeholder="Link Google Map"></input>
                     </div>
                     <div className="form-group  col-lg-12">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.8286885262137!2d100.56079501527863!3d13.728819401523383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29f1cb62263b5%3A0x2b7050b946a75a78!2sMillennium%20Residence%20Tower%20A!5e0!3m2!1sth!2sth!4v1616368626008!5m2!1sth!2sth" width="100%" height="450px" ></iframe>
+                    <input
+                    id="pac-input"
+                    class="controls"
+                    type="text"
+                    placeholder="Search Box"
+                    />
+                <div id="map"></div>
+
+                <Helmet>
+                <script
+                    src="https://maps.googleapis.com/maps/api/js?key=Ph_rR1L5H9X-wIs1eVxUiLBd7qQaZDpa0gz5UotYwPQ"
+                    async
+                    ></script>
+                    
+                </Helmet>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.8286885262137!2d100.56079501527863!3d13.728819401523383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29f1cb62263b5%3A0x2b7050b946a75a78!2sMillennium%20Residence%20Tower%20A!5e0!3m2!1sth!2sth!4v1616368626008!5m2!1sth!2sth" width="100%" height="450px" ></iframe>
                     </div>
             
                 </div>
