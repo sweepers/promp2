@@ -52,7 +52,7 @@ const TemplateWrapper = ({ children }) => {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-    <script   src="https://firebasestorage.googleapis.com/v0/b/promp-c6f68.appspot.com/o/googlemap.js?alt=media&token=bfb01b04-6611-4b0b-be02-00d2e08a45c6"></script>
+    <script   src="https://firebasestorage.googleapis.com/v0/b/promp-c6f68.appspot.com/o/googlemap.js?alt=media&token=4445c27e-558e-4aa7-a68e-927edd49ae7e"></script>
         
         <meta name="theme-color" content="#fff" />
 
