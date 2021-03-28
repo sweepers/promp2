@@ -1,5 +1,5 @@
 function initAutocomplete() {
-    console.log('abc');
+   
     const map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: -33.8688, lng: 151.2195 },
       zoom: 13,
@@ -18,10 +18,12 @@ function initAutocomplete() {
     // more details for that place.
     searchBox.addListener("places_changed", () => {
       const places = searchBox.getPlaces();
-
+    
+      console.log('places', places);
       if (places.length == 0) {
         return;
       }
+      
       // Clear out the old markers.
       markers.forEach((marker) => {
         marker.setMap(null);
@@ -29,7 +31,15 @@ function initAutocomplete() {
       markers = [];
       // For each place, get the icon, name and location.
       const bounds = new google.maps.LatLngBounds();
+      
+      
+      //const lat = new google.maps.Latng
+      
+     
+    
+    
       places.forEach((place) => {
+          $('#address_map').val(place.url);
         if (!place.geometry || !place.geometry.location) {
           console.log("Returned place contains no geometry");
           return;
@@ -56,6 +66,7 @@ function initAutocomplete() {
           bounds.union(place.geometry.viewport);
         } else {
           bounds.extend(place.geometry.location);
+         
         }
       });
       map.fitBounds(bounds);
