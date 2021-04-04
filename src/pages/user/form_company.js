@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import firebase from 'firebase';
+import 'firebase/database'
 import { Helmet } from 'react-helmet'
-import firebase from 'gatsby-plugin-firebase';
+
+//import firebase from 'gatsby-plugin-firebase';
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
 import Navbar from '../../components/Navbar'
@@ -14,6 +17,8 @@ import DatePicker from 'react-date-picker'
 import linces_1 from '../../images/linces_1.png'
 import arrowleft from '../../images/arrow-left.png'
 import arrowright from '../../images/arrow-right.png'
+//import firebase from "gatsby-plugin-firebase"
+//import { useFirebase } from "gatsby-plugin-firebase"
 import { Link } from 'gatsby'
 //import { navigate } from "gatsby"
 
@@ -23,8 +28,25 @@ import { forInRight } from 'lodash'
 
 //upload-cloud
 export default class Form_company extends React.Component {
+    
     constructor(props) {
         super(props)
+        if (!firebase.apps.length) {
+            var firebaseConfig = {
+                apiKey: "AIzaSyAh-79toPF9pZO3kBUlUBA4Dy8X-7EWQ4U",
+                authDomain: "promp-c6f68.firebaseapp.com",
+                databaseURL: "https://promp-c6f68-default-rtdb.firebaseio.com",
+                projectId: "promp-c6f68",
+                storageBucket: "promp-c6f68.appspot.com",
+                messagingSenderId: "234208904228",
+                appId: "1:234208904228:web:56988528a850f030de04b1",
+                measurementId: "G-2BM5S48DB0"
+            };
+            firebase.initializeApp(firebaseConfig);
+        }
+       let id =  new URLSearchParams(this.props.location.search).get("id");
+      
+     
         //this.state = { isValidated: false }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -37,8 +59,63 @@ export default class Form_company extends React.Component {
         this.clickHolderb = this.clickHolderb.bind(this);
         this.changeQty = this.changeQty.bind(this);
         this.chengedirect_title_name = this.chengedirect_title_name.bind(this);
+        
+        
+        if(id){
+            let app = firebase.database().ref('company/'+id+'/');
+            app.on('value', snapshot => {
+                let data = snapshot.val();
+                Object.keys(data).map(function(key,val) {
+                    let itm = data[key];
+                    if(key.includes('-')){
+                        
+                        key = key.replace('-','[');
+                        key = key+']';
+                       
+                       
+                    }
+                    console.log('key',key);
+                    data[key] = itm
+                    
+                   
+                   
+                });
+                this.setState({
+                    data :data,
+                    id:id
+                    //user_id:current_user.id
+                
+               });
+            });
+        }
+       /* app.on('value', snapshot => {
+            let data = snapshot.val();
+            console.log('data',data);
+            // let date = data.company_date.split('/');
+            // let company_date = new Date(date[2],date[1]-1,date[0]);
+            delete data.company_date;
+            delete data.updated;
+            
+            //this.setState(data);
+            //this.setState({
+                //user_id:current_user.id
+            
+           // });
+            //console.log('state',this.state);
+            
+            
+
+            
+                
+                
+        }).bind(this);*/
+      
+      
 
       }
+      
+      
+      
       handleDateChange(event){
           
         const items = this.state.data;
@@ -272,27 +349,35 @@ export default class Form_company extends React.Component {
         this.setState({ step:e})
     }
       handleSubmit(e){
-        /*let id = 7;
-        let error = false;
-        var formdata = document.getElementById('form_'+id).getElementsByTagName('input')
-          var form = [].map.call(formdata, function( input ) {
-
-              if(input.required && !input.value){
-                  var elementc = document.getElementById('div-'+input.id);
-                  var ele = document.getElementById(input.id);
-                  elementc.style.display = 'block';
-                  ele.classList.add("has-errors");
-                  error = true;
-
-              }
-              //return {'value':input.value};
-          });
-     //   let valid1 = this.form_validate('form_1');
-          if(error){
-              return false;
-          }*/
-
-          //firebase.database().ref('company').push(this.state.data);
+          //console.log('data',this.state.data);
+         
+          let items = this.state.data;
+          let itms = {};
+          Object.keys(items).map(function(key,val) {
+            let itm = items[key];
+            if(key.includes('[')){
+                
+                key = key.replace('[','-');
+                key = key.replace(']','');
+                key = key.replace('[','');
+                key = key.replace(']','');
+                console.log(key,val);
+               
+            }
+            itms[key] = itm
+            
+           
+           
+        });
+        console.log('itms',itms);
+        //return false;
+        if(this.state.id){
+            firebase.database().ref('company/'+this.state.id).set(itms);
+        }else{
+            firebase.database().ref('company').push(itms);
+        }
+        
+        
         navigate("/user")
       }
 
@@ -904,205 +989,7 @@ export default class Form_company extends React.Component {
           return (
             <div className="col-12 mt-5 text-grey pb-3">
                 <h3>ข้อมูลบริษัท</h3>
-                <div className="form-group row" >
-                    <label className="label col-sm-3" for="CompanyNameInput">ชื่อบริษัท </label>
-                    <span className="col-sm-9">{this.state.data.company_name}/{this.state.data.company_name_en}</span>
-
-                </div>
-                <div className="form-group row" >
-                    <label className="label col-sm-3" for="CompanyNameInput">วัตถุประสงค์บริษัท </label>
-                    <span className="col-sm-9">{this.state.data.purposecompany}</span>
-
-                </div>
-                <hr />
-                <h3>ที่อยู่บริษัท</h3>
-                <div className="row">
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="address_no">เลขที่ </label> <span className="col-7">{this.state.data.address_no }</span>
-
-
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="address_no">อาคาร </label> <span className="col-7">{this.state.data.address_tower }</span>
-
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="address_no">ชั้น </label> <span className="col-7">{this.state.data.address_level }</span>
-
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-6" for="address_no">ห้องเลขที่ </label> <span className="col-6">{this.state.data.address_room }</span>
-
-                    </div>
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-4" for="address_no">ซอย </label> <span className="col-7">{this.state.data.address_soi }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-4" for="address_no">ถนน </label> <span className="col-7">{this.state.data.address_road }</span>
-
-                    </div>
-
-
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-4" for="address_no">จังหวัด </label> <span className="col-7">{this.state.data.address_province }</span>
-
-                    </div>
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-4" for="address_no">เขต </label> <span className="col-7">{this.state.data.address_state }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-4" for="address_no">แขวง </label> <span className="col-7">{this.state.data.address_dist }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-6" for="address_no">รหัสไปรษณีย์ </label> <span className="col-6">{this.state.data.address_postcode }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-6" for="address_no">รหัสประจำบ้าน </label> <span className="col-6">{this.state.data.address_home_code }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-6" for="address_no">โทรศัพท์ </label> <span className="col-6">{this.state.data.address_phone }</span>
-
-                    </div>
-                    <div className="form-group col-lg-4 row">
-                        <label className="label col-6" for="address_no">E-mail </label> <span className="col-6">{this.state.data.address_email }</span>
-
-                    </div>
-
-
-
-                </div>
-                <hr />
-                <h3>ผู้ถือหุ้น</h3>
-                {  content }
-                <hr />
-                <h3>ทุนจดทะเบียน</h3>
-                <div className="row">
-                     <div className="form-group  col-lg-6 row">
-                        <label className="label col-6" for="capital_invencount">จำนวนทุนจดทะเบียน</label>
-                        <span className="col-6">{this.state.data.capital_invencount} </span>
-
-                     </div>
-                     <div className="form-group  col-lg-6 row">
-                        <label className="label col-6" for="capital_invencount">จำนวนหุ้น</label>
-                        <span className="col-6">{this.state.data.capital_sharecount} </span>
-
-                     </div>
-
-
-
-
-                 </div>
-                 <div className="row">
-                    <div className="form-group  col-lg-3">
-                        <label>ชำระค่าหุ้นในวันจดทะเบียน</label>
-
-                    </div>
-                    <div className="form-group  col-lg-3">
-                        {this.state.data.capital_shareprice}25%
-
-                    </div>
-
-                 </div>
-                 { contentcap }
-                 <hr />
-                 <h3>ข้อมูลผู้ก่อตั้งบริษัท</h3>
-                 { contentstart }
-                 <hr />
-                 <h3>ข้อมูลกรรมการ</h3>
-                 { contentsa }
-                 <div className="row">
-                    <div className="form-group  col-lg-12 row">
-                        <label className="label col-4" for="power_type" >อำนาจกรรมการแบบไม่ระบุชื่อ </label>
-                        <span className="col-6">{this.state.data.power_type}</span>
-                    </div>
-
-                </div>
-                <h4>กรรมการที่มีอำนาจลงนาม</h4>
-                { signs }
-                <hr />
-                <h3>การประชุมจัดตั้ง</h3>
-                <div className="row">
-                    <div className="form-group  col-lg-6 row">
-                        <label className="label col-4" for="meeting_date">เลือกวัน</label>
-                        <span className="col-8">{ this.state.data.meeting_date}</span>
-                    </div>
-                    <div className="form-group  col-lg-6 row">
-                        <label className="label col-4" for="meeting_date">เลือกเวลา</label>
-                        <span className="col-8">{ this.state.data.meetingtime_hours }:{ this.state.data.meetingtime_minute }</span>
-                    </div>
-
-                </div>
-                <h3>สถานที่</h3>
-                <div className="row">
-
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">เลขที่</label>
-                        <span className="col-7">{this.state.data.meeting_address_no }</span>
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">อาคาร</label>
-                        <span className="col-7">{this.state.data.meeting_address_tower }</span>
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">ชั้น</label>
-                        <span className="col-7">{this.state.data.meeting_address_level }</span>
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">ห้องเลขที่</label>
-                        <span className="col-7">{this.state.data.meeting_address_room }</span>
-                    </div>
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group  col-lg-4 row">
-                        <label className="label col-3" for="meeting_address_no">ซอย</label>
-                        <span className="col-9">{ this.state.data.meeting_address_soi }</span>
-                    </div>
-                    <div className="form-group  col-lg-4 row">
-                        <label className="label col-3" for="meeting_address_no">ถนน</label>
-                        <span className="col-9">{ this.state.data.meeting_address_road }</span>
-                    </div>
-                    <div className="form-group  col-lg-4 row">
-                        <label className="label col-3" for="meeting_address_no">จังหวัด</label>
-                        <span className="col-9">{ this.state.data.meeting_address_province }</span>
-                    </div>
-
-
-
-
-                </div>
-                <div className="row">
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">เขต</label>
-                        <span className="col-7">{this.state.data.meeting_address_state }</span>
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-5" for="meeting_address_no">แขวง</label>
-                        <span className="col-7">{this.state.data.meeting_address_dist }</span>
-                    </div>
-                    <div className="form-group col-md-6 col-lg-3 row">
-                        <label className="label col-9" for="meeting_address_no">รหัสไปรษณีย์</label>
-                        <span className="col-3">{this.state.data.meeting_address_postcode }</span>
-                    </div>
-
-
-
-
-                </div>
+                
                 <hr />
                 <div className="row">
                     <div className="col-6">
@@ -1385,7 +1272,7 @@ export default class Form_company extends React.Component {
                     </div>
                     <div className="col-5">
                     <button className="btn-company-next"  onClick={(e) => { this.clickBack(6) }}  value="1">ย้อนกลับ</button>
-                        <button className="btn-company-next"  onClick={(e) => { this.clickStep(8) }}  value="1">SAVE </button>
+                        <button className="btn-company-next"  onClick={(e) => { this.handleSubmit() }}  value="1">SAVE </button>
                     </div>
 
                 </div>

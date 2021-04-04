@@ -49,13 +49,14 @@ module.exports = {
       resolve: "gatsby-plugin-firebase",
       options: {
         credentials: {
-          apiKey: "AIzaSyAcuRid40eaVEx5TKKn5yibuDTFNDyQxAU",
-          authDomain: "promp-d2fc3.firebaseapp.com",
-          databaseURL: "https://promp-d2fc3.firebaseio.com",
-          projectId: "promp-d2fc3",
-          storageBucket: "promp-d2fc3.appspot.com",
-          messagingSenderId: "660976897097",
-          uid:'MzmCVg9pCnYPslxJrfN8cQs4uJ42',
+          apiKey: "AIzaSyAh-79toPF9pZO3kBUlUBA4Dy8X-7EWQ4U",
+          authDomain: "promp-c6f68.firebaseapp.com",
+          databaseURL: "https://promp-c6f68-default-rtdb.firebaseio.co",
+          projectId: "promp-c6f68",
+          storageBucket: "promp-c6f68.appspot.com",
+          messagingSenderId: "234208904228",
+          appId: "1:234208904228:web:56988528a850f030de04b1",
+          measurementId: "G-2BM5S48DB0"
         }
       }
     },
