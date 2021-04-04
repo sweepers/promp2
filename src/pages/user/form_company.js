@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-
+import fetch from 'cross-fetch';
+//import * as firebase from "firebase/app"
 import firebase from 'firebase';
 import 'firebase/database'
-import "firebase/auth"
-import "firebase/firestore"
-import "firebase/functions"
-import "firebase/storage"
+
 import { Helmet } from 'react-helmet'
 
 //import firebase from 'gatsby-plugin-firebase';
@@ -36,6 +34,7 @@ export default class Form_company extends React.Component {
     
     constructor(props) {
         super(props)
+       
         if (!firebase.apps.length) {
             var firebaseConfig = {
                 apiKey: "AIzaSyAh-79toPF9pZO3kBUlUBA4Dy8X-7EWQ4U",

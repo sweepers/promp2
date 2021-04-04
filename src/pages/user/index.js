@@ -1,11 +1,9 @@
 import React from 'react'
 //import * as firebase from "firebase/app"
+//import * as firebase from "firebase/app"
 import firebase from 'firebase';
 import 'firebase/database'
-import "firebase/auth"
-import "firebase/firestore"
-import "firebase/functions"
-import "firebase/storage"
+
 import { navigate } from 'gatsby-link'
 import Layout from '../../components/Layout'
 import Navbar from '../../components/Navbar'
@@ -23,8 +21,11 @@ function encode(data) {
 }
 
 export default class Index extends React.Component {
+  
   constructor(props) {
+    
     super(props)
+   
     if (!firebase.apps.length) {
       var firebaseConfig = {
           apiKey: "AIzaSyAh-79toPF9pZO3kBUlUBA4Dy8X-7EWQ4U",
