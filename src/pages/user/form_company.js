@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+
 import firebase from 'firebase';
 import 'firebase/database'
+import "firebase/auth"
+import "firebase/firestore"
+import "firebase/functions"
+import "firebase/storage"
 import { Helmet } from 'react-helmet'
 
 //import firebase from 'gatsby-plugin-firebase';
