@@ -93,6 +93,10 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         if (regex.test(request)) {
           return callback(null, `umd ${request}`);
         }
+        const rege = /^@?jspdf(\/(.+))?/;
+        if (rege.test(request)) {
+          return callback(null, `umd ${request}`);
+        }
         callback();
       }),
     });
